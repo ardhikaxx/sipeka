@@ -124,7 +124,7 @@
             </table>
         </div>
         <div class="p-4 border-top">
-            {{ $fasilitas->links() }}
+            {{ $fasilitas->links('partials.pagination-numbers') }}
         </div>
     </div>
 </div>

@@ -130,7 +130,7 @@
             </table>
         </div>
         <div class="p-4 border-top">
-            {{ $users->links() }}
+            {{ $users->links('partials.pagination-numbers') }}
         </div>
     </div>
 </div>
