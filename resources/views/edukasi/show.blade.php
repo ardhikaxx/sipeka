@@ -86,44 +86,64 @@
 
     <!-- Sidebar -->
     <div class="col-12 col-lg-4">
-        <!-- Help Card -->
-        <div class="card border-0 bg-peka-primary-pale rounded-xl mb-4">
-            <div class="card-body p-4">
-                <div class="bg-white rounded-circle d-flex align-items-center justify-content-center text-peka-primary shadow-sm mb-3" style="width: 50px; height: 50px;">
-                    <i class="fas fa-hand-holding-heart fs-4"></i>
+        <!-- Premium Help Card -->
+        <div class="card border-0 shadow-card rounded-xl overflow-hidden mb-4 position-relative">
+            <div class="bg-peka-primary p-4 text-white">
+                <div class="d-flex align-items-center gap-3 mb-3">
+                    <div class="bg-white bg-opacity-20 rounded-circle d-flex align-items-center justify-content-center" style="width: 44px; height: 44px; font-size: 1.2rem;">
+                        <i class="fas fa-comment-medical"></i>
+                    </div>
+                    <h6 class="fw-800 mb-0">Konsultasi Medis</h6>
                 </div>
-                <h6 class="fw-bold text-peka-primary mb-2">Butuh Konsultasi?</h6>
-                <p class="text-muted small mb-3">Jika anda mengalami gejala yang tidak biasa, segera hubungi tim medis kami melalui portal pasien.</p>
-                <a href="{{ route('portal.index') }}" class="btn btn-peka-primary w-100 rounded-pill">Hubungi Bidan</a>
+                <p class="small opacity-75 mb-4">Tim bidan kami siap membantu menjawab pertanyaan anda seputar kesehatan kehamilan.</p>
+                <a href="{{ route('portal.index') }}" class="btn btn-white w-100 rounded-pill fw-800 shadow-sm">
+                    Tanya Bidan Sekarang
+                </a>
+            </div>
+            <div class="p-3 bg-peka-primary-pale text-center">
+                <span class="text-peka-primary small fw-bold"><i class="fas fa-clock me-1"></i> Layanan 24 Jam untuk Darurat</span>
             </div>
         </div>
 
-        <!-- Latest Articles -->
-        <div class="card border-0 shadow-card rounded-xl">
-            <div class="card-header bg-white border-0 pt-4 px-4">
-                <h6 class="fw-bold mb-0">Artikel Terbaru</h6>
+        <!-- Latest Articles with modern list -->
+        <div class="card border-0 shadow-card rounded-xl overflow-hidden">
+            <div class="card-header bg-white border-0 pt-4 px-4 pb-2">
+                <h6 class="fw-800 text-dark mb-0">Materi Terkait Lainnya</h6>
             </div>
-            <div class="card-body p-4">
-                <div class="d-flex flex-column gap-3">
-                    <div class="list-item-modern p-0 bg-transparent border-0">
-                        <div class="flex-grow-1">
-                            <div class="fw-bold text-dark small line-clamp-2">Tips Menjaga Nutrisi Selama Trimester Pertama</div>
-                            <div class="text-muted small mt-1">5 Menit Lalu</div>
+            <div class="card-body p-0">
+                <div class="list-group list-group-flush">
+                    <a href="#" class="list-group-item list-group-item-action border-0 px-4 py-3 d-flex gap-3 align-items-center">
+                        <div class="bg-light rounded-lg flex-shrink-0" style="width: 50px; height: 50px;"></div>
+                        <div>
+                            <div class="fw-bold text-dark small line-clamp-2">Pola Makan Sehat Trimester Pertama</div>
+                            <div class="text-muted" style="font-size: 0.7rem;">5 Menit Baca • Tips</div>
                         </div>
-                    </div>
-                    <div class="list-item-modern p-0 bg-transparent border-0">
-                        <div class="flex-grow-1">
-                            <div class="fw-bold text-dark small line-clamp-2">Olahraga Aman untuk Ibu Hamil</div>
-                            <div class="text-muted small mt-1">2 Jam Lalu</div>
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action border-0 px-4 py-3 d-flex gap-3 align-items-center">
+                        <div class="bg-light rounded-lg flex-shrink-0" style="width: 50px; height: 50px;"></div>
+                        <div>
+                            <div class="fw-bold text-dark small line-clamp-2">Olahraga Ringan untuk Ibu Hamil</div>
+                            <div class="text-muted" style="font-size: 0.7rem;">3 Menit Baca • Aktivitas</div>
                         </div>
-                    </div>
+                    </a>
                 </div>
-                <hr class="divider-h opacity-50">
-                <a href="{{ route('edukasi.index') }}" class="btn btn-sm btn-peka-outline w-100 rounded-pill">Lihat Katalog</a>
+                <div class="p-4 pt-0">
+                    <hr class="divider-h opacity-25">
+                    <a href="{{ route('edukasi.index') }}" class="btn btn-sm btn-peka-outline w-100 rounded-pill fw-bold">
+                        Eksplor Semua Materi
+                    </a>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+<style>
+    .fw-800 { font-weight: 800; }
+    .rounded-lg { border-radius: 12px; }
+    .btn-white { background: white; color: var(--peka-primary); border: none; }
+    .btn-white:hover { background: var(--peka-primary-pale); color: var(--peka-primary); }
+</style>
 
 @push('scripts')
 <script>
