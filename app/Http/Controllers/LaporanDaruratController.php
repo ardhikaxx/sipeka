@@ -10,12 +10,20 @@ class LaporanDaruratController extends Controller
 {
     public function index()
     {
-        $laporans = LaporanDarurat::with(['pasien', 'bidan'])
-            ->when(Auth::user()->role === 'bidan', fn ($q) => $q->where('bidan_id', Auth::id()))
-            ->latest()
-            ->get();
+        $user = Auth::user();
+        $query = LaporanDarurat::with(['pasien', 'bidan'])
+            ->when($user->role === 'bidan', fn ($q) => $q->where('bidan_id', $user->id));
 
-        return view('darurat.index', compact('laporans'));
+        $stats = [
+            'total' => (clone $query)->count(),
+            'baru' => (clone $query)->where('status', 'Dikirim')->count(),
+            'proses' => (clone $query)->where('status', 'Diproses')->count(),
+            'selesai' => (clone $query)->where('status', 'Ditangani')->count(),
+        ];
+
+        $laporans = $query->latest()->get();
+
+        return view('darurat.index', compact('laporans', 'stats'));
     }
 
     public function update(Request $request, LaporanDarurat $darurat)
