@@ -134,8 +134,9 @@
                     </tbody>
                 </table>
             </div>
-            <div class="p-3 border-top text-center">
-                <div class="text-hint">Menampilkan total {{ $rujukans->count() }} data rujukan digital.</div>
+            <div class="p-4 border-top d-flex justify-content-between align-items-center">
+                <div class="text-hint">Menampilkan {{ $rujukans->count() }} data rujukan.</div>
+                {{ $rujukans->links('partials.pagination-numbers') }}
             </div>
         @endif
     </div>

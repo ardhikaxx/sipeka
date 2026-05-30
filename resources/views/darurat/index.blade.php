@@ -153,6 +153,9 @@
                 </tbody>
             </table>
         </div>
+        <div class="p-4 border-top">
+            {{ $laporans->links('partials.pagination-numbers') }}
+        </div>
     </div>
 </div>
 

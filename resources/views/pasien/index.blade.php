@@ -141,8 +141,9 @@
                     </tbody>
                 </table>
             </div>
-            <div class="p-4 border-top">
-                <div class="text-hint">Menampilkan {{ $pasiens->count() }} pasien binaan terdaftar.</div>
+            <div class="p-4 border-top d-flex justify-content-between align-items-center">
+                <div class="text-hint">Menampilkan {{ $pasiens->count() }} dari {{ $pasiens->total() }} pasien binaan.</div>
+                {{ $pasiens->links('partials.pagination-numbers') }}
             </div>
         @endif
     </div>

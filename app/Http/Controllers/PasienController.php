@@ -36,7 +36,7 @@ class PasienController extends Controller
                 $q->where('status', 'aktif')->latest();
             }, 'kehamilanAktif.kunjunganAncs.skriningRisiko'])
             ->latest()
-            ->get();
+            ->paginate(15);
 
         return view('pasien.index', compact('pasiens', 'stats'));
     }

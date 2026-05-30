@@ -30,7 +30,7 @@ class RujukanController extends Controller
             'selesai' => (clone $query)->where('status', 'selesai')->count(),
         ];
 
-        $rujukans = $query->latest()->get();
+        $rujukans = $query->latest()->paginate(15);
         return view('rujukan.index', compact('rujukans', 'stats'));
     }
 

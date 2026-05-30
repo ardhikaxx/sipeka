@@ -21,7 +21,7 @@ class LaporanDaruratController extends Controller
             'selesai' => (clone $query)->where('status', 'Ditangani')->count(),
         ];
 
-        $laporans = $query->latest()->get();
+        $laporans = $query->latest()->paginate(15);
 
         return view('darurat.index', compact('laporans', 'stats'));
     }
