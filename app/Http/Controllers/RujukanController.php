@@ -16,14 +16,22 @@ class RujukanController extends Controller
 {
     public function index()
     {
-        $rujukans = Rujukan::with(['kehamilan.pasien', 'fasilitasTujuan', 'dokter', 'catatanDokter'])
-            ->when(Auth::user()->role === 'bidan', fn ($q) => $q->where('bidan_id', Auth::id()))
-            ->when(Auth::user()->role === 'dokter', fn ($q) => $q->where(function ($query) {
-                $query->where('dokter_id', Auth::id())->orWhereNull('dokter_id');
-            }))
-            ->latest()
-            ->get();
-        return view('rujukan.index', compact('rujukans'));
+        $user = Auth::user();
+        $query = Rujukan::with(['kehamilan.pasien', 'fasilitasTujuan', 'dokter', 'catatanDokter'])
+            ->when($user->role === 'bidan', fn ($q) => $q->where('bidan_id', $user->id))
+            ->when($user->role === 'dokter', fn ($q) => $q->where(function ($query) use ($user) {
+                $query->where('dokter_id', $user->id)->orWhere('fasilitas_tujuan_id', $user->fasilitas_id);
+            }));
+
+        $stats = [
+            'total' => (clone $query)->count(),
+            'menunggu' => (clone $query)->whereIn('status', ['dibuat', 'dikirim'])->count(),
+            'diproses' => (clone $query)->where('status', 'diterima')->count(),
+            'selesai' => (clone $query)->where('status', 'selesai')->count(),
+        ];
+
+        $rujukans = $query->latest()->get();
+        return view('rujukan.index', compact('rujukans', 'stats'));
     }
 
     public function create(Request $request)
