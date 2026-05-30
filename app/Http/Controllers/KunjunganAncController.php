@@ -23,16 +23,23 @@ class KunjunganAncController extends Controller
 
     public function index()
     {
-        $kunjungans = KunjunganAnc::with(['kehamilan.pasien', 'skriningRisiko'])
+        $query = KunjunganAnc::with(['kehamilan.pasien', 'skriningRisiko'])
             ->when(Auth::user()->role === 'bidan', fn ($q) => $q->where('bidan_id', Auth::id()))
             ->when(Auth::user()->role === 'dokter', fn ($q) => $q->whereHas('kehamilan.rujukans', function ($query) {
                 $query->where('dokter_id', Auth::id())
                     ->orWhere('fasilitas_tujuan_id', Auth::user()->fasilitas_id);
-            }))
-            ->latest('tanggal')
-            ->paginate(15);
+            }));
 
-        return view('kunjungan.index', compact('kunjungans'));
+        $stats = [
+            'total' => (clone $query)->count(),
+            'rendah' => (clone $query)->whereHas('skriningRisiko', fn($q) => $q->where('level_risiko', 'HIJAU'))->count(),
+            'sedang' => (clone $query)->whereHas('skriningRisiko', fn($q) => $q->where('level_risiko', 'KUNING'))->count(),
+            'tinggi' => (clone $query)->whereHas('skriningRisiko', fn($q) => $q->whereIn('level_risiko', ['MERAH', 'MERAH_KRITIS']))->count(),
+        ];
+
+        $kunjungans = $query->latest('tanggal')->paginate(15);
+
+        return view('kunjungan.index', compact('kunjungans', 'stats'));
     }
 
     public function create(Request $request)
@@ -139,5 +146,12 @@ class KunjunganAncController extends Controller
         }
 
         return redirect()->route('pasien.show', $kehamilan->pasien_id)->with('success', $statusMsg);
+    }
+
+    public function show(KunjunganAnc $kunjungan)
+    {
+        $kunjungan->load(['kehamilan.pasien', 'skriningRisiko', 'bidan.fasilitas']);
+        
+        return view('kunjungan.show', compact('kunjungan'));
     }
 }
