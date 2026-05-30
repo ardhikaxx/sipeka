@@ -175,7 +175,7 @@
                 </table>
             </div>
             <div class="p-4 border-top">
-                {{ $kunjungans->links() }}
+                {{ $kunjungans->links('partials.pagination-numbers') }}
             </div>
         </div>
     </div>
