@@ -56,10 +56,12 @@ class DashboardController extends Controller
 
         $monthlyYellow = [];
         $monthlyRed = [];
+        $monthlyRujukan = [];
         $labels = [];
         for ($i = 5; $i >= 0; $i--) {
             $date = now()->subMonths($i);
             $labels[] = $date->isoFormat('MMM');
+            
             $monthlyYellow[] = KunjunganAnc::whereYear('tanggal', $date->year)
                 ->whereMonth('tanggal', $date->month)
                 ->when($user->role === 'bidan', fn ($q) => $q->where('bidan_id', $user->id))
@@ -68,6 +70,7 @@ class DashboardController extends Controller
                 }))
                 ->whereHas('skriningRisiko', fn ($q) => $q->where('level_risiko', 'KUNING'))
                 ->count();
+                
             $monthlyRed[] = KunjunganAnc::whereYear('tanggal', $date->year)
                 ->whereMonth('tanggal', $date->month)
                 ->when($user->role === 'bidan', fn ($q) => $q->where('bidan_id', $user->id))
@@ -75,6 +78,14 @@ class DashboardController extends Controller
                     $query->where('dokter_id', $user->id)->orWhere('fasilitas_tujuan_id', $user->fasilitas_id);
                 }))
                 ->whereHas('skriningRisiko', fn ($q) => $q->whereIn('level_risiko', ['MERAH', 'MERAH_KRITIS']))
+                ->count();
+
+            $monthlyRujukan[] = Rujukan::whereYear('created_at', $date->year)
+                ->whereMonth('created_at', $date->month)
+                ->when($user->role === 'bidan', fn ($q) => $q->where('bidan_id', $user->id))
+                ->when($user->role === 'dokter', fn ($q) => $q->where(function ($query) use ($user) {
+                    $query->where('dokter_id', $user->id)->orWhere('fasilitas_tujuan_id', $user->fasilitas_id);
+                }))
                 ->count();
         }
 
@@ -90,6 +101,7 @@ class DashboardController extends Controller
             'monthly_labels' => $labels,
             'monthly_yellow' => $monthlyYellow,
             'monthly_red' => $monthlyRed,
+            'monthly_rujukan' => $monthlyRujukan,
             'rujukan_masuk' => Rujukan::with(['kehamilan.pasien', 'fasilitasTujuan'])
                 ->when($user->role === 'bidan', fn ($q) => $q->where('bidan_id', $user->id))
                 ->when($user->role === 'dokter', fn ($q) => $q->where(function ($query) use ($user) {
