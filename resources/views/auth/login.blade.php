@@ -29,14 +29,14 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 24px;
+      padding: 16px;
     }
 
     .login-shell {
       width: 100%;
-      max-width: 1000px;
-      display: grid;
-      grid-template-columns: 1.1fr 1fr;
+      max-width: 480px;
+      display: flex;
+      flex-direction: column;
       background: #fff;
       border: 1px solid rgba(255,255,255,.7);
       border-radius: 24px;
@@ -45,20 +45,34 @@
       animation: fadeInUp .6s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
+    @media (min-width: 992px) {
+      .login-shell {
+        max-width: 1000px;
+        display: grid;
+        grid-template-columns: 1.1fr 1fr;
+      }
+    }
+
     @keyframes fadeInUp {
       from { opacity: 0; transform: translateY(30px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
     .login-hero {
+      display: none;
       background: linear-gradient(135deg, var(--peka-primary) 0%, #114b4b 100%);
       padding: 60px;
-      display: flex;
       flex-direction: column;
       justify-content: center;
       color: white;
       position: relative;
       overflow: hidden;
+    }
+
+    @media (min-width: 992px) {
+      .login-hero {
+        display: flex;
+      }
     }
 
     .login-hero::before {
@@ -73,57 +87,97 @@
     }
 
     .hero-icon {
-      font-size: 4rem;
-      margin-bottom: 30px;
+      font-size: 3rem;
+      margin-bottom: 20px;
       color: rgba(255,255,255,0.9);
       filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1));
     }
 
+    @media (min-width: 1200px) {
+      .hero-icon { font-size: 4rem; margin-bottom: 30px; }
+    }
+
     .hero-title {
       font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 3rem;
+      font-size: 2.5rem;
       font-weight: 800;
       line-height: 1.1;
-      margin-bottom: 15px;
+      margin-bottom: 12px;
+    }
+
+    @media (min-width: 1200px) {
+      .hero-title { font-size: 3.5rem; margin-bottom: 20px; }
     }
 
     .hero-tagline {
-      font-size: 1.25rem;
+      font-size: 1.1rem;
       font-weight: 500;
       color: rgba(255,255,255,0.8);
-      margin-bottom: 25px;
+      margin-bottom: 20px;
+    }
+
+    @media (min-width: 1200px) {
+      .hero-tagline { font-size: 1.4rem; margin-bottom: 30px; }
     }
 
     .hero-desc {
-      font-size: 1rem;
+      font-size: 0.95rem;
       line-height: 1.6;
       color: rgba(255,255,255,0.7);
       max-width: 400px;
     }
 
     .login-panel {
-      padding: 60px;
+      padding: 32px 24px;
       display: flex;
       flex-direction: column;
       justify-content: center;
     }
 
+    @media (min-width: 576px) {
+      .login-panel { padding: 40px; }
+    }
+
+    @media (min-width: 992px) {
+      .login-panel { padding: 60px; }
+    }
+
     .brand-logo {
-      display: none; /* Branding is now in the hero section */
+      display: flex;
+      width: 54px;
+      height: 54px;
+      background: var(--peka-primary);
+      border-radius: 16px;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.6rem;
+      margin-bottom: 24px;
+      box-shadow: 0 8px 20px rgba(26,107,107,0.2);
+    }
+
+    @media (min-width: 992px) {
+      .brand-logo {
+        display: none;
+      }
     }
 
     .brand-title {
       font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 2rem;
+      font-size: 1.75rem;
       font-weight: 800;
       color: var(--peka-primary);
       margin-bottom: 8px;
     }
 
+    @media (min-width: 576px) {
+      .brand-title { font-size: 2rem; }
+    }
+
     .brand-subtitle {
       color: var(--gray-500);
-      font-size: 1rem;
-      margin-bottom: 40px;
+      font-size: 0.95rem;
+      margin-bottom: 32px;
     }
 
     .form-label {
@@ -136,10 +190,14 @@
     .form-control-peka {
       border: 2px solid #E2E8F0;
       border-radius: 14px;
-      padding: 14px 16px;
+      padding: 12px 16px;
       width: 100%;
       font-size: 1rem;
       transition: all .2s;
+    }
+
+    @media (min-width: 576px) {
+      .form-control-peka { padding: 14px 16px; }
     }
 
     .form-control-peka:focus {
@@ -151,14 +209,22 @@
     .input-icon {
       position: absolute;
       left: 18px;
-      top: 46px;
+      top: 42px;
       color: #94A3B8;
       pointer-events: none;
-      font-size: 1.1rem;
+      font-size: 1rem;
+    }
+
+    @media (min-width: 576px) {
+      .input-icon { top: 46px; font-size: 1.1rem; }
     }
 
     .has-icon .form-control-peka {
-      padding-left: 50px;
+      padding-left: 48px;
+    }
+
+    @media (min-width: 576px) {
+      .has-icon .form-control-peka { padding-left: 50px; }
     }
 
     .btn-peka {
@@ -170,13 +236,18 @@
       width: 100%;
       font-weight: 700;
       font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 1.05rem;
+      font-size: 1rem;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 10px;
       margin-top: 10px;
       transition: all .3s;
+      cursor: pointer;
+    }
+
+    @media (min-width: 576px) {
+      .btn-peka { font-size: 1.05rem; }
     }
 
     .btn-peka:hover {
@@ -185,42 +256,16 @@
       box-shadow: 0 10px 25px rgba(26,107,107,0.25);
     }
 
+    .btn-peka:active {
+      transform: translateY(0);
+    }
+
     .helper-text {
       color: var(--gray-500);
       font-size: .875rem;
       margin-top: 30px;
       text-align: center;
       line-height: 1.5;
-    }
-
-    @media (max-width: 992px) {
-      .login-shell {
-        max-width: 500px;
-        grid-template-columns: 1fr;
-      }
-      .login-hero {
-        display: none;
-      }
-      .login-panel {
-        padding: 40px;
-      }
-      .brand-logo {
-        display: flex;
-        width: 60px;
-        height: 60px;
-        background: var(--peka-primary);
-        border-radius: 16px;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        font-size: 1.8rem;
-        margin-bottom: 20px;
-      }
-    }
-
-    @media (max-width: 576px) {
-      body { padding: 15px; }
-      .login-panel { padding: 30px 20px; }
     }
   </style>
 </head>
