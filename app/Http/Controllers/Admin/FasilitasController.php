@@ -10,9 +10,16 @@ class FasilitasController extends Controller
 {
     public function index()
     {
+        $stats = [
+            'total' => FasilitasKesehatan::count(),
+            'puskesmas' => FasilitasKesehatan::where('tipe', 'Puskesmas')->count(),
+            'rs' => FasilitasKesehatan::whereIn('tipe', ['RSUD', 'RSIA'])->count(),
+            'lainnya' => FasilitasKesehatan::whereNotIn('tipe', ['Puskesmas', 'RSUD', 'RSIA'])->count(),
+        ];
+
         $fasilitas = FasilitasKesehatan::latest()->paginate(15);
 
-        return view('admin.fasilitas.index', compact('fasilitas'));
+        return view('admin.fasilitas.index', compact('fasilitas', 'stats'));
     }
 
     public function create()
