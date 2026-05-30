@@ -285,6 +285,8 @@ class DatabaseSeeder extends Seeder
                 'model' => 'System',
                 'detail' => ['patients' => 150, 'facilities' => 15, 'visits' => 'Hundreds']
             ]);
+
+            $this->call(EdukasiSeeder::class);
         });
     }
 }
