@@ -3,14 +3,13 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<UserFactory> */
+    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
     /**
@@ -22,6 +21,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
+        'fasilitas_id',
     ];
 
     /**
@@ -45,5 +46,25 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function fasilitas()
+    {
+        return $this->belongsTo(FasilitasKesehatan::class, 'fasilitas_id');
+    }
+
+    public function pasiens()
+    {
+        return $this->hasMany(Pasien::class, 'bidan_id');
+    }
+
+    public function pasien()
+    {
+        return $this->hasOne(Pasien::class);
+    }
+
+    public function notifikasis()
+    {
+        return $this->hasMany(Notifikasi::class);
     }
 }
