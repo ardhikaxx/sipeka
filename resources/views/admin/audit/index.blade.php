@@ -6,7 +6,7 @@
 @section('content')
 <!-- Summary Section -->
 <div class="row g-3 mb-4">
-    <div class="col-md-3">
+    <div class="col-12 col-sm-6 col-lg-3">
         <div class="stat-card border-0 shadow-sm">
             <div class="stat-card__icon bg-primary-subtle text-primary">
                 <i class="fas fa-list-check"></i>
@@ -17,7 +17,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-3">
+    <div class="col-12 col-sm-6 col-lg-3">
         <div class="stat-card border-0 shadow-sm">
             <div class="stat-card__icon bg-info-subtle text-info">
                 <i class="fas fa-calendar-day"></i>
@@ -28,7 +28,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-3">
+    <div class="col-12 col-sm-6 col-lg-3">
         <div class="stat-card border-0 shadow-sm">
             <div class="stat-card__icon bg-success-subtle text-success">
                 <i class="fas fa-plus-circle"></i>
@@ -39,7 +39,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-3">
+    <div class="col-12 col-sm-6 col-lg-3">
         <div class="stat-card border-0 shadow-sm">
             <div class="stat-card__icon bg-danger-subtle text-danger">
                 <i class="fas fa-trash-can"></i>
@@ -53,15 +53,15 @@
 </div>
 
 <div class="card border-0 shadow-card rounded-xl overflow-hidden">
-    <div class="card-header bg-white py-4 px-4 border-bottom-0">
-        <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
+    <div class="card-header bg-white py-3 py-md-4 px-3 px-md-4 border-bottom-0">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
             <div>
                 <h5 class="section-title mb-1">Jejak Digital Sistem</h5>
-                <p class="text-hint mb-0">Pemantauan riwayat perubahan data oleh semua pengguna</p>
+                <p class="text-hint mb-0">Pemantauan riwayat perubahan data</p>
             </div>
             <div class="d-flex gap-2">
-                <button class="btn btn-light border btn-sm"><i class="fas fa-filter me-1"></i> Filter</button>
-                <button class="btn btn-light border btn-sm"><i class="fas fa-download me-1"></i> Export</button>
+                <button class="btn btn-light border btn-sm flex-fill flex-md-grow-0"><i class="fas fa-filter me-1"></i> Filter</button>
+                <button class="btn btn-light border btn-sm flex-fill flex-md-grow-0"><i class="fas fa-download me-1"></i> Export</button>
             </div>
         </div>
     </div>
@@ -70,23 +70,23 @@
             <table class="table table-hover align-middle mb-0">
                 <thead class="bg-light text-muted uppercase-font" style="font-size: 0.7rem; letter-spacing: 0.05em;">
                     <tr>
-                        <th class="ps-4">WAKTU</th>
+                        <th class="ps-3 ps-md-4">WAKTU</th>
                         <th>PENGGUNA</th>
                         <th>AKSI</th>
-                        <th>ENTITAS / MODEL</th>
-                        <th class="pe-4">DETAIL PERUBAHAN</th>
+                        <th class="d-none d-lg-table-cell">ENTITAS</th>
+                        <th class="pe-3 pe-md-4">DETAIL</th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse($logs as $log)
                     <tr>
-                        <td class="ps-4 py-3">
+                        <td class="ps-3 ps-md-4 py-3">
                             <div class="fw-bold text-dark" style="font-size: 0.85rem;">{{ $log->created_at->isoFormat('D MMM YYYY') }}</div>
                             <div class="text-hint x-small">{{ $log->created_at->format('H:i:s') }}</div>
                         </td>
                         <td>
                             <div class="d-flex align-items-center gap-2">
-                                <div class="bg-light text-muted rounded-circle d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
+                                <div class="bg-light text-muted rounded-circle d-none d-sm-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
                                     <i class="fas fa-user-gear" style="font-size: 0.8rem;"></i>
                                 </div>
                                 <div>
@@ -108,13 +108,13 @@
                                 {{ $log->aksi }}
                             </span>
                         </td>
-                        <td class="text-muted" style="font-size: 0.8rem;">
+                        <td class="text-muted d-none d-lg-table-cell" style="font-size: 0.8rem;">
                             <span class="p-1 px-2 bg-light rounded border small">
                                 <i class="fas fa-cube me-1 opacity-50"></i> {{ class_basename($log->model) ?: 'System' }}
                             </span>
                         </td>
-                        <td class="pe-4 py-3">
-                            <div class="json-detail-box bg-light p-2 rounded border border-white shadow-sm" style="max-width: 350px;">
+                        <td class="pe-3 pe-md-4 py-3">
+                            <div class="json-detail-box bg-light p-2 rounded border border-white shadow-sm" style="max-width: 250px;">
                                 <pre class="mb-0 x-small text-dark overflow-auto" style="max-height: 80px; font-family: var(--font-mono);">{{ json_encode($log->detail, JSON_PRETTY_PRINT) }}</pre>
                             </div>
                         </td>
