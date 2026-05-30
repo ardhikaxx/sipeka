@@ -14,18 +14,31 @@ class PasienController extends Controller
 {
     public function index()
     {
-        $pasiens = Pasien::with(['kehamilans' => function($q) {
-            $q->where('status', 'aktif')->latest();
-        }, 'kehamilanAktif.kunjunganAncs.skriningRisiko'])
-            ->when(Auth::user()->role === 'bidan', fn ($query) => $query->where('bidan_id', Auth::id()))
-            ->when(Auth::user()->role === 'dokter', fn ($query) => $query->whereHas('kehamilans.rujukans', function ($q) {
-                $q->where('dokter_id', Auth::id())
-                    ->orWhere('fasilitas_tujuan_id', Auth::user()->fasilitas_id);
-            }))
+        $user = Auth::user();
+        $query = Pasien::query()
+            ->when($user->role === 'bidan', fn ($q) => $q->where('bidan_id', $user->id))
+            ->when($user->role === 'dokter', fn ($q) => $q->whereHas('kehamilans.rujukans', function ($q) use ($user) {
+                $q->where('dokter_id', $user->id)
+                    ->orWhere('fasilitas_tujuan_id', $user->fasilitas_id);
+            }));
+
+        $stats = [
+            'total' => (clone $query)->count(),
+            'risiko_tinggi' => (clone $query)->whereHas('kehamilanAktif.kunjunganAncs.skriningRisiko', function($q) {
+                $q->whereIn('level_risiko', ['MERAH', 'MERAH_KRITIS']);
+            })->count(),
+            'perlu_kunjungan' => (clone $query)->whereHas('kehamilanAktif.jadwalKunjungans', function($q) {
+                $q->where('tanggal_rencana', '<=', now())->where('status', 'Terjadwal');
+            })->count(),
+        ];
+
+        $pasiens = $query->with(['kehamilans' => function($q) {
+                $q->where('status', 'aktif')->latest();
+            }, 'kehamilanAktif.kunjunganAncs.skriningRisiko'])
             ->latest()
             ->get();
 
-        return view('pasien.index', compact('pasiens'));
+        return view('pasien.index', compact('pasiens', 'stats'));
     }
 
     public function create()
