@@ -20,7 +20,7 @@ SIPEKA adalah sistem informasi berbasis web yang dibangun menggunakan **Laravel 
 | Alert / Dialog | SweetAlert2 (CDN) |
 | Chart / Grafik | Chart.js (CDN) |
 | Database | MySQL 8+ |
-| Auth | Laravel Breeze / Sanctum |
+| Auth | Auth Custom |
 | Export | DomPDF / Maatwebsite Excel |
 | Notifikasi Real-time | Laravel Echo + Pusher (opsional) |
 
