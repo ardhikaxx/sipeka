@@ -4,10 +4,51 @@
 @section('page_title', 'Pusat Edukasi')
 
 @section('content')
+<!-- Search & Header Section -->
+<div class="row align-items-center mb-5">
+    <div class="col-lg-6">
+        <h2 class="fw-800 text-dark mb-1">Pusat Pengetahuan <span class="text-peka-primary">SIPEKA</span></h2>
+        <p class="text-muted">Temukan informasi terpercaya seputar kehamilan dan preeklampsia.</p>
+    </div>
+    <div class="col-lg-6">
+        <div class="input-group-peka shadow-sm">
+            <div class="position-relative w-100">
+                <i class="fas fa-search input-icon" style="top: 50%;"></i>
+                <input type="text" class="form-control-peka ps-5 rounded-pill border-0" placeholder="Cari topik kesehatan (misal: Nutrisi, Tekanan Darah)..." style="height: 50px;">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Featured Article (if exists) -->
+@if($edukasis->count() > 0)
+@php $featured = $edukasis->first(); @endphp
+<div class="welcome-card mb-5 p-0 overflow-hidden" style="min-height: 350px;">
+    <div class="row g-0 h-100">
+        <div class="col-lg-7 p-4 p-lg-5 d-flex flex-column justify-content-center">
+            <div class="mb-3">
+                <span class="badge bg-white text-peka-primary rounded-pill px-3 py-2 fw-bold">MATERI UNGGULAN</span>
+            </div>
+            <h2 class="fw-800 mb-3 display-6">{{ $featured->judul }}</h2>
+            <p class="mb-4 opacity-75 line-clamp-3">{{ \Illuminate\Support\Str::limit(strip_tags($featured->konten), 200) }}</p>
+            <div>
+                <a href="{{ route('edukasi.show', $featured) }}" class="btn btn-light rounded-pill px-4 fw-bold">
+                    Baca Sekarang <i class="fas fa-arrow-right ms-2"></i>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-5 d-none d-lg-block">
+            <div class="w-100 h-100 bg-light opacity-25 d-flex align-items-center justify-content-center">
+                <i class="fas fa-book-open" style="font-size: 8rem;"></i>
+            </div>
+        </div>
+    </div>
+</div>
+@endif
+
 <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
     <div>
-        <h5 class="section-title mb-1">Materi Edukasi Kesehatan</h5>
-        <p class="text-muted small mb-0">Pelajari berbagai panduan tentang preeklampsia dan kesehatan kehamilan.</p>
+        <h5 class="section-title mb-0">Katalog Materi Lengkap</h5>
     </div>
     @if(auth()->user()->role === 'admin')
         <a href="{{ route('admin.edukasi.create') }}" class="btn btn-peka-primary shadow-sm rounded-pill px-4">
@@ -16,13 +57,12 @@
     @endif
 </div>
 
-<!-- Category Filters (Visual Only) -->
+<!-- Category Filters -->
 <div class="d-flex gap-2 mb-4 overflow-x-auto pb-2 scrollbar-hidden">
-    <button class="btn btn-peka-primary rounded-pill px-3 py-1 fw-bold small">Semua</button>
-    <button class="btn btn-white border rounded-pill px-3 py-1 small text-muted">Artikel</button>
-    <button class="btn btn-white border rounded-pill px-3 py-1 small text-muted">Video</button>
-    <button class="btn btn-white border rounded-pill px-3 py-1 small text-muted">Infografis</button>
-    <button class="btn btn-white border rounded-pill px-3 py-1 small text-muted">FAQ</button>
+    <button class="btn btn-peka-primary rounded-pill px-4 py-2 fw-bold small">Semua Materi</button>
+    <button class="btn btn-white border rounded-pill px-4 py-2 small text-muted fw-bold">Artikel Kesehatan</button>
+    <button class="btn btn-white border rounded-pill px-4 py-2 small text-muted fw-bold">Video Edukasi</button>
+    <button class="btn btn-white border rounded-pill px-4 py-2 small text-muted fw-bold">Panduan / FAQ</button>
 </div>
 
 <div class="row g-4">
