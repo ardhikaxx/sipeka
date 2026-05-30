@@ -1,39 +1,18 @@
 @extends('layouts.app')
 
-@section('title', 'Dasbor Utama')
-@section('page_title', 'Dasbor Kontrol')
+@section('title', 'Dasboard Utama')
+@section('page_title', 'Dasboard Pelayanan Kesehatan Ibu')
 
 @section('content')
-<!-- Pulse Header -->
-<div class="d-flex align-items-center gap-2 mb-4">
-    <div class="pulse-indicator shadow-sm"></div>
-    <div class="text-hint fw-bold uppercase-font" style="font-size: 0.65rem; color: var(--peka-primary-light);">SISTEM AKTIF & TERKONEKSI</div>
-    <div class="ms-auto d-none d-sm-block">
-        <span class="text-hint small fw-medium text-dark"><i class="far fa-clock me-1"></i> Terakhir diperbarui: {{ now()->format('H:i') }} WIB</span>
-    </div>
-</div>
-
-<!-- Welcome Hero Section -->
 <div class="premium-hero mb-5">
     <div class="hero-glow"></div>
     <div class="row align-items-center position-relative" style="z-index: 2;">
         <div class="col-lg-8">
-            <div class="d-flex align-items-center gap-2 mb-3">
-                <span class="badge bg-white bg-opacity-10 text-white rounded-pill px-3 py-1 backdrop-blur border border-white border-opacity-20" style="font-size: 0.7rem;">
-                    <i class="fas fa-user-shield me-1 text-warning"></i> MODE PETUGAS MEDIS
-                </span>
-                <span class="badge bg-success text-white rounded-pill px-3 py-1 shadow-sm" style="font-size: 0.7rem;">
-                    {{ auth()->user()->fasilitas?->nama ?? 'Unit Pelayanan' }}
-                </span>
-            </div>
             <h1 class="fw-extrabold mb-3 text-white" style="font-family: var(--font-heading); font-size: 2.8rem; letter-spacing: -0.03em; line-height: 1.1;">
                 Selamat Pagi,<br> {{ auth()->user()->name }}! 
             </h1>
-            <p class="mb-4 text-white opacity-80 fs-5 fw-medium" style="max-width: 550px; line-height: 1.6;">
-                Hari ini terdapat <strong class="text-warning fw-bold">{{ $kunjungan_hari_ini }} pasien</strong> yang terjadwal untuk pemeriksaan ANC rutin. 
-            </p>
             <div class="d-flex flex-wrap gap-3 mt-2">
-                <a href="{{ route('pasien.create') }}" class="btn btn-premium-white">
+                <a href="{{ route('pasien.create') }}" class="btn btn-premium-outline">
                     <i class="fas fa-plus-circle me-2"></i> REGISTRASI PASIEN
                 </a>
                 <a href="{{ route('pasien.index') }}" class="btn btn-premium-outline">
@@ -115,11 +94,11 @@
             <div class="card-header bg-white py-4 px-4 border-0 d-flex justify-content-between align-items-center">
                 <div>
                     <h5 class="section-title mb-1">Health Intelligence <span class="badge bg-peka-primary-pale text-peka-primary small ms-2" style="font-size: 0.6rem;">REAL-TIME</span></h5>
-                    <p class="text-hint mb-0">Visualisasi tren kasus Preeklampsia bulanan</p>
+                    <p class="text-hint mb-0" id="chartSubtitle">Visualisasi tren kasus Preeklampsia bulanan</p>
                 </div>
                 <div class="btn-group shadow-sm rounded-pill p-1 bg-light">
-                    <button class="btn btn-sm btn-white rounded-pill px-3 active fw-bold">Kasus</button>
-                    <button class="btn btn-sm btn-light rounded-pill px-3 fw-bold">Rujukan</button>
+                    <button class="btn btn-sm btn-white rounded-pill px-3 active fw-bold" id="btnShowKasus" onclick="switchChart('kasus')">Kasus</button>
+                    <button class="btn btn-sm btn-light rounded-pill px-3 fw-bold" id="btnShowRujukan" onclick="switchChart('rujukan')">Rujukan</button>
                 </div>
             </div>
             <div class="card-body px-4 pb-4 pt-2">
@@ -299,34 +278,72 @@
 
 @push('scripts')
 <script>
+let mainChart;
+const chartLabels = @json($monthly_labels);
+const dataKasus = {
+    labels: chartLabels,
+    datasets: [
+        {
+            label: 'Waspada (Kuning)',
+            data: @json($monthly_yellow),
+            backgroundColor: '#F59E0B',
+            borderRadius: 50,
+            barThickness: 10,
+        },
+        {
+            label: 'Preeklampsia (Merah)',
+            data: @json($monthly_red),
+            backgroundColor: '#EF4444',
+            borderRadius: 50,
+            barThickness: 10,
+        }
+    ]
+};
+
+const dataRujukan = {
+    labels: chartLabels,
+    datasets: [{
+        label: 'Total Rujukan',
+        data: @json($monthly_rujukan),
+        backgroundColor: '#1A6B6B',
+        borderRadius: 50,
+        barThickness: 20,
+    }]
+};
+
+function switchChart(type) {
+    const subtitle = document.getElementById('chartSubtitle');
+    const btnKasus = document.getElementById('btnShowKasus');
+    const btnRujukan = document.getElementById('btnShowRujukan');
+
+    if (type === 'kasus') {
+        mainChart.data = dataKasus;
+        subtitle.innerText = 'Visualisasi tren kasus Preeklampsia bulanan';
+        btnKasus.classList.add('btn-white', 'active');
+        btnKasus.classList.remove('btn-light');
+        btnRujukan.classList.remove('btn-white', 'active');
+        btnRujukan.classList.add('btn-light');
+    } else {
+        mainChart.data = dataRujukan;
+        subtitle.innerText = 'Visualisasi tren rujukan pasien ke Rumah Sakit';
+        btnRujukan.classList.add('btn-white', 'active');
+        btnRujukan.classList.remove('btn-light');
+        btnKasus.classList.remove('btn-white', 'active');
+        btnKasus.classList.add('btn-light');
+    }
+    mainChart.update();
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     // Chart Settings Global
     Chart.defaults.font.family = "'Plus Jakarta Sans', sans-serif";
     Chart.defaults.color = "#94A3B8";
 
-    // Chart Kasus Bulanan
-    const ctxBulanan = document.getElementById('chartKasusBulanan').getContext('2d');
-    new Chart(ctxBulanan, {
+    // Main Trend Chart
+    const ctxMain = document.getElementById('chartKasusBulanan').getContext('2d');
+    mainChart = new Chart(ctxMain, {
         type: 'bar',
-        data: {
-            labels: @json($monthly_labels),
-            datasets: [
-                {
-                    label: 'Waspada (Kuning)',
-                    data: @json($monthly_yellow),
-                    backgroundColor: '#F59E0B',
-                    borderRadius: 50,
-                    barThickness: 10,
-                },
-                {
-                    label: 'Preeklampsia (Merah)',
-                    data: @json($monthly_red),
-                    backgroundColor: '#EF4444',
-                    borderRadius: 50,
-                    barThickness: 10,
-                }
-            ]
-        },
+        data: dataKasus,
         options: {
             responsive: true,
             maintainAspectRatio: false,
