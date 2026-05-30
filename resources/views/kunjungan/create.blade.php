@@ -7,9 +7,9 @@
 <div class="row">
     <div class="col-12 col-xl-10 mx-auto">
         <!-- Patient Header Card -->
-        <div class="patient-card border-0 shadow-card mb-4 p-4" style="background: linear-gradient(to right, #ffffff, #f8fafc);">
-            <div class="patient-card__avatar bg-peka-primary text-white shadow-sm" style="width: 60px; height: 60px; font-size: 1.5rem;">
-                <i class="fas fa-person-pregnant text-danger"></i>
+        <div class="patient-card d-flex flex-row justify-content-start align-items-center gap-2 border-0 shadow-card mb-4 p-4" style="background: linear-gradient(to right, #ffffff, #f8fafc);">
+            <div class="patient-card__avatar bg-danger d-flex justify-content-center align-items-center text-center text-white shadow-sm rounded-4" style="width: 60px; height: 60px; font-size: 1.5rem;">
+                <i class="fas fa-person-pregnant text-white"></i>
             </div>
             <div class="patient-card__info ms-2">
                 <div class="d-flex justify-content-between align-items-start">
