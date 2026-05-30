@@ -13,34 +13,34 @@
         </div>
 
         <div class="card border-0 shadow-card rounded-xl overflow-hidden">
-            <div class="card-header bg-white border-0 pt-4 pb-0 px-4">
+            <div class="card-header bg-white border-0 pt-4 pb-0 px-3 px-md-4">
                 <h5 class="section-title mb-1 d-flex align-items-center">
-                    <span class="bg-primary-subtle text-primary p-2 rounded-3 me-3">
+                    <span class="bg-primary-subtle text-primary p-2 rounded-3 me-2 me-md-3">
                         <i class="fas fa-hospital-plus"></i>
                     </span>
-                    Form Registrasi Fasilitas Kesehatan
+                    Form Registrasi Fasilitas
                 </h5>
-                <p class="text-hint mb-0 ms-5 ps-2">Daftarkan unit pelayanan kesehatan baru ke dalam jaringan SIPEKA</p>
+                <p class="text-hint mb-0 ms-0 ms-md-5 ps-0 ps-md-2 small">Daftarkan unit pelayanan kesehatan baru</p>
             </div>
             
             <form method="POST" action="{{ route('admin.fasilitas.store') }}">
                 @csrf
-                <div class="card-body p-4">
-                    <div class="row g-4">
+                <div class="card-body p-3 p-md-4">
+                    <div class="row g-3 g-md-4">
                         <!-- Informasi Dasar -->
                         <div class="col-12">
                             <h6 class="text-uppercase small fw-bold text-muted mb-3" style="letter-spacing: 0.1em;">Informasi Pelayanan</h6>
-                            <div class="row g-4">
-                                <div class="col-md-7">
-                                    <label class="form-label form-label-required fw-bold">Nama Fasilitas Kesehatan</label>
+                            <div class="row g-3 g-md-4">
+                                <div class="col-12 col-lg-7">
+                                    <label class="form-label form-label-required fw-bold small">Nama Fasilitas Kesehatan</label>
                                     <div class="input-group-peka">
                                         <i class="fas fa-clinic-medical input-icon"></i>
-                                        <input name="nama" class="form-control-peka @error('nama') is-invalid @enderror" placeholder="Contoh: RSUD Dr. Soebandi / Puskesmas Patrang" value="{{ old('nama') }}" required>
+                                        <input name="nama" class="form-control-peka @error('nama') is-invalid @enderror" placeholder="Contoh: RSUD Dr. Soebandi" value="{{ old('nama') }}" required>
                                     </div>
                                     @error('nama') <div class="invalid-feedback d-block">{{ $message }}</div> @enderror
                                 </div>
-                                <div class="col-md-5">
-                                    <label class="form-label form-label-required fw-bold">Tipe Fasilitas</label>
+                                <div class="col-12 col-lg-5">
+                                    <label class="form-label form-label-required fw-bold small">Tipe Fasilitas</label>
                                     <div class="input-group-peka">
                                         <i class="fas fa-tags input-icon"></i>
                                         <select name="tipe" class="form-control-peka @error('tipe') is-invalid @enderror" required>
@@ -61,23 +61,23 @@
                         <!-- Lokasi -->
                         <div class="col-12">
                             <h6 class="text-uppercase small fw-bold text-muted mb-3" style="letter-spacing: 0.1em;">Lokasi & Wilayah Kerja</h6>
-                            <div class="row g-4">
-                                <div class="col-md-4">
-                                    <label class="form-label fw-bold">Kecamatan</label>
+                            <div class="row g-3 g-md-4">
+                                <div class="col-12 col-md-4">
+                                    <label class="form-label fw-bold small">Kecamatan</label>
                                     <div class="input-group-peka">
                                         <i class="fas fa-map-location-dot input-icon"></i>
                                         <input name="kecamatan" class="form-control-peka" placeholder="Wilayah kecamatan" value="{{ old('kecamatan') }}">
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <label class="form-label fw-bold">Kabupaten / Kota</label>
+                                <div class="col-12 col-md-4">
+                                    <label class="form-label fw-bold small">Kabupaten / Kota</label>
                                     <div class="input-group-peka">
                                         <i class="fas fa-city input-icon"></i>
                                         <input name="kabupaten" class="form-control-peka" placeholder="Contoh: Jember" value="{{ old('kabupaten', 'Jember') }}">
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <label class="form-label fw-bold">Provinsi</label>
+                                <div class="col-12 col-md-4">
+                                    <label class="form-label fw-bold small">Provinsi</label>
                                     <div class="input-group-peka">
                                         <i class="fas fa-map input-icon"></i>
                                         <input name="provinsi" class="form-control-peka" placeholder="Contoh: Jawa Timur" value="{{ old('provinsi', 'Jawa Timur') }}">
@@ -88,10 +88,10 @@
                     </div>
                 </div>
                 
-                <div class="card-footer bg-light border-0 p-4">
-                    <div class="d-flex justify-content-end gap-2">
-                        <button type="reset" class="btn btn-light border px-4">Reset</button>
-                        <button type="submit" class="btn btn-peka-primary px-5 shadow-sm">
+                <div class="card-footer bg-light border-0 p-3 p-md-4">
+                    <div class="d-flex flex-column flex-sm-row justify-content-end gap-2">
+                        <button type="reset" class="btn btn-light border px-4 order-2 order-sm-1">Reset</button>
+                        <button type="submit" class="btn btn-peka-primary px-5 shadow-sm order-1 order-sm-2">
                             <i class="fas fa-save me-2"></i> Simpan Fasilitas
                         </button>
                     </div>
