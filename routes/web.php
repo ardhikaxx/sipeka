@@ -26,7 +26,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::middleware('role:admin,dokter,bidan')->group(function () {
         Route::resource('pasien', PasienController::class)->only(['index', 'create', 'store', 'show']);
-        Route::resource('kunjungan', KunjunganAncController::class)->only(['index', 'create', 'store']);
+        Route::resource('kunjungan', KunjunganAncController::class)->only(['index', 'create', 'store', 'show']);
         Route::resource('rujukan', RujukanController::class)->only(['index', 'create', 'store', 'show']);
         Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.index');
     });
