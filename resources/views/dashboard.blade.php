@@ -214,15 +214,12 @@
                                     <i class="far fa-clock"></i> <span>Diterima {{ $darurat->created_at->diffForHumans() }}</span>
                                 </div>
                             </div>
-                            <div class="align-self-center">
-                                <div class="btn btn-sm btn-danger rounded-circle p-2 shadow-sm"><i class="fas fa-chevron-right fs-6"></i></div>
-                            </div>
                         </div>
                     </a>
                     @endforeach
                 </div>
                 <div class="p-3 text-center bg-danger bg-opacity-5">
-                    <a href="{{ route('darurat.index') }}" class="small text-danger fw-bold text-decoration-none hvr-icon-forward">
+                    <a href="{{ route('darurat.index') }}" class="small text-white fw-bold text-decoration-none hvr-icon-forward">
                         RESPON SEMUA DARURAT <i class="fas fa-arrow-right ms-2 hvr-icon"></i>
                     </a>
                 </div>
