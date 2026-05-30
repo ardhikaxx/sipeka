@@ -78,7 +78,7 @@
                         @endif
 
                         <!-- Floating Category Badge -->
-                        <div class="position-absolute top-0 end-0 p-3">
+                        <div class="position-absolute top-0 inset-e-0 p-3">
                             @php
                                 $katClass = match ($edukasi->kategori) {
                                     'Artikel' => 'bg-info',
@@ -109,7 +109,7 @@
                                 class="text-decoration-none text-dark">{{ $edukasi->judul }}</a>
                         </h5>
 
-                        <p class="text-muted small line-clamp-3 mb-4 flex-grow-1" style="line-height: 1.6;">
+                        <p class="text-muted small line-clamp-3 mb-4 grow" style="line-height: 1.6;">
                             {{ \Illuminate\Support\Str::limit(strip_tags($edukasi->konten), 120) }}
                         </p>
 
