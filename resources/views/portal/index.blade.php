@@ -112,90 +112,86 @@
     <div class="col-12 col-xxl-10 mx-auto">
         
         <!-- Welcome Hero Section -->
-        <div class="portal-hero">
+        <div class="portal-hero mb-3 mb-md-4 p-3 p-md-4 p-lg-5">
             <div class="row align-items-center">
-                <div class="col-lg-7">
-                    <h1 class="display-6 fw-bold mb-2">Halo, Bunda {{ explode(' ', $pasien->nama)[0] }}! 👋</h1>
-                    <p class="fs-5 opacity-90 mb-4">Senang melihat Bunda kembali. Terus pantau kesehatan Bunda dan si kecil ya.</p>
+                <div class="col-12 col-lg-7 text-center text-lg-start">
+                    <h1 class="display-6 fw-bold mb-2 fs-3 fs-md-2">Halo, Bunda {{ explode(' ', $pasien->nama)[0] }}! 👋</h1>
+                    <p class="fs-6 opacity-90 mb-4 px-2 px-lg-0">Mari terus pantau kesehatan Bunda dan si kecil bersama SIPEKA.</p>
                     
                     @if($kehamilanAktif)
-                    <div class="row g-3">
-                        <div class="col-sm-6">
+                    <div class="row g-2 g-md-3">
+                        <div class="col-6">
                             <div class="hero-stat">
-                                <div class="small opacity-75">Usia Kandungan</div>
-                                <div class="fs-4 fw-bold">{{ \Carbon\Carbon::parse($kehamilanAktif->hpht)->diffInWeeks(now()) }} <span class="fs-6 fw-normal">Minggu</span></div>
+                                <div class="x-small opacity-75">Usia Kandungan</div>
+                                <div class="fs-5 fw-bold">{{ \Carbon\Carbon::parse($kehamilanAktif->hpht)->diffInWeeks(now()) }} <span class="x-small fw-normal">Mg</span></div>
                             </div>
                         </div>
-                        <div class="col-sm-6">
+                        <div class="col-6">
                             <div class="hero-stat">
-                                <div class="small opacity-75">Taksiran Persalinan</div>
-                                <div class="fs-4 fw-bold">{{ \Carbon\Carbon::parse($kehamilanAktif->tp)->format('d M') }} <span class="fs-6 fw-normal">{{ \Carbon\Carbon::parse($kehamilanAktif->tp)->format('Y') }}</span></div>
+                                <div class="x-small opacity-75">Taksiran Lahir</div>
+                                <div class="fs-5 fw-bold">{{ \Carbon\Carbon::parse($kehamilanAktif->tp)->format('d M') }}</div>
                             </div>
                         </div>
                     </div>
                     @endif
                 </div>
                 <div class="col-lg-5 d-none d-lg-block text-end">
-                    <img src="https://img.freepik.com/free-vector/pregnant-woman-concept-illustration_114360-3103.jpg" class="img-fluid rounded-4 shadow-sm" style="max-height: 200px; mix-blend-mode: multiply; opacity: 0.8;" alt="Pregnancy Illustration">
+                    <img src="https://img.freepik.com/free-vector/pregnant-woman-concept-illustration_114360-3103.jpg" class="img-fluid rounded-4 shadow-sm" style="max-height: 200px; mix-blend-mode: multiply; opacity: 0.8;" alt="Pregnancy">
                 </div>
             </div>
         </div>
 
         <!-- Vital Stats Grid -->
-        <div class="row g-4 mb-4">
+        <div class="row g-3 g-md-4 mb-4">
             @if($kehamilanAktif && $kehamilanAktif->kunjunganAncs->isNotEmpty())
                 @php 
-                    $lastVisit = $kehamilanAktif->kunjunganAncs->first(); 
+                    $lastVisit = $kehamilanAktif->kunjunganAncs->sortByDesc('tanggal')->first(); 
                     $rawLevel = $lastVisit->skriningRisiko?->level_risiko ?? 'HIJAU';
-                    $statusColor = [
+                    $statusColor = match($rawLevel) {
                         'HIJAU' => 'success',
                         'KUNING' => 'warning',
-                        'MERAH' => 'danger',
-                        'MERAH_KRITIS' => 'danger'
-                    ][$rawLevel] ?? 'success';
+                        'MERAH', 'MERAH_KRITIS' => 'danger',
+                        default => 'success'
+                    };
                 @endphp
                 
-                <div class="col-md-4">
+                <div class="col-6 col-md-4">
                     <div class="card shadow-card portal-card h-100">
-                        <div class="card-body p-4 text-center">
-                            <div class="stat-card__icon bg-primary-subtle text-primary mx-auto mb-3" style="width: 56px; height: 56px;">
+                        <div class="card-body p-3 p-md-4 text-center">
+                            <div class="stat-card__icon bg-primary-subtle text-primary mx-auto mb-2 mb-md-3" style="width: 44px; height: 44px; font-size: 1.2rem;">
                                 <i class="fas fa-heart-pulse"></i>
                             </div>
-                            <h6 class="text-muted mb-2">Tekanan Darah Terakhir</h6>
-                            <h2 class="fw-extrabold mb-1" style="font-family: var(--font-heading);">{{ $lastVisit->tekanan_darah_sistolik }}/{{ $lastVisit->tekanan_darah_diastolik }} <small class="fs-6 fw-normal text-muted">mmHg</small></h2>
-                            <div class="small text-{{ $lastVisit->tekanan_darah_sistolik < 140 ? 'success' : 'danger' }}">
-                                <i class="fas fa-circle me-1" style="font-size: 0.5rem;"></i> {{ $lastVisit->tekanan_darah_sistolik < 140 ? 'Normal' : 'Tinggi' }}
+                            <h6 class="text-muted x-small mb-1">Tensi Terakhir</h6>
+                            <h3 class="fw-extrabold mb-0 small" style="font-family: var(--font-heading);">{{ $lastVisit->tekanan_darah_sistolik }}/{{ $lastVisit->tekanan_darah_diastolik }}</h3>
+                            <div class="x-small text-{{ $lastVisit->tekanan_darah_sistolik < 140 ? 'success' : 'danger' }} mt-1">
+                                {{ $lastVisit->tekanan_darah_sistolik < 140 ? 'Normal' : 'Tinggi' }}
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-md-4">
+                <div class="col-6 col-md-4">
                     <div class="card shadow-card portal-card h-100">
-                        <div class="card-body p-4 text-center">
-                            <div class="stat-card__icon bg-info-subtle text-info mx-auto mb-3" style="width: 56px; height: 56px;">
+                        <div class="card-body p-3 p-md-4 text-center">
+                            <div class="stat-card__icon bg-info-subtle text-info mx-auto mb-2 mb-md-3" style="width: 44px; height: 44px; font-size: 1.2rem;">
                                 <i class="fas fa-weight-scale"></i>
                             </div>
-                            <h6 class="text-muted mb-2">Berat Badan Bunda</h6>
-                            <h2 class="fw-extrabold mb-1" style="font-family: var(--font-heading);">{{ $lastVisit->berat_badan }} <small class="fs-6 fw-normal text-muted">kg</small></h2>
-                            <div class="text-hint">Naik {{ $lastVisit->penambahan_bb ?? 0 }} kg dari periksa lalu</div>
+                            <h6 class="text-muted x-small mb-1">Berat Bunda</h6>
+                            <h3 class="fw-extrabold mb-0 small" style="font-family: var(--font-heading);">{{ $lastVisit->berat_badan }} <small class="x-small fw-normal">kg</small></h3>
+                            <div class="text-hint x-small mt-1">+{{ $lastVisit->penambahan_bb ?? 0 }} kg</div>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-md-4">
+                <div class="col-12 col-md-4">
                     <div class="card shadow-card portal-card h-100 border-top border-4 border-{{ $statusColor }}">
-                        <div class="card-body p-4 text-center">
-                            <h6 class="text-muted mb-3">Kondisi Kesehatan</h6>
-                            <div class="status-pill bg-{{ $statusColor }}-subtle text-{{ $statusColor }} d-inline-block mb-3">
+                        <div class="card-body p-3 p-md-4 text-center">
+                            <h6 class="text-muted x-small mb-2">Kondisi Bunda</h6>
+                            <div class="status-pill bg-{{ $statusColor }}-subtle text-{{ $statusColor }} d-inline-block mb-2 py-1 px-3" style="font-size: 0.65rem;">
                                 {{ str_replace('_', ' ', $lastVisit->skriningRisiko?->status ?? 'NORMAL') }}
                             </div>
-                            <p class="small text-muted px-2">
-                                @if($rawLevel == 'HIJAU')
-                                    Alhamdulillah, Bunda dalam kondisi sehat. Tetap jaga pola makan ya!
-                                @else
-                                    Perhatian ekstra diperlukan. Mohon ikuti saran Bidan/Dokter dengan teliti.
-                                @endif
+                            <p class="x-small text-muted mb-0 lh-sm">
+                                {{ $rawLevel == 'HIJAU' ? 'Bunda & janin terpantau sehat.' : 'Mohon perhatikan saran bidan.' }}
                             </p>
                         </div>
                     </div>
@@ -203,49 +199,52 @@
             @endif
         </div>
 
-        <div class="row g-4">
+        <div class="row g-3 g-md-4">
             <!-- Timeline Section -->
-            <div class="col-lg-8">
+            <div class="col-12 col-lg-8">
                 <div class="card shadow-card portal-card h-100">
-                    <div class="card-header bg-white border-bottom p-4 d-flex justify-content-between align-items-center">
-                        <h5 class="section-title mb-0">Catatan Perjalanan Bunda</h5>
+                    <div class="card-header bg-white border-bottom p-3 p-md-4 d-flex justify-content-between align-items-center">
+                        <h6 class="section-title mb-0 small fw-bold">Riwayat Pemeriksaan</h6>
                         <i class="fas fa-shoe-prints text-muted opacity-25"></i>
                     </div>
-                    <div class="card-body p-4">
+                    <div class="card-body p-3 p-md-4">
                         @if($kehamilanAktif && $kehamilanAktif->kunjunganAncs->isNotEmpty())
-                            <div class="timeline-modern mt-3">
-                                @foreach($kehamilanAktif->kunjunganAncs as $index => $k)
+                            <div class="timeline-modern mt-2">
+                                @foreach($kehamilanAktif->kunjunganAncs->sortByDesc('tanggal') as $index => $k)
                                     @php
                                         $rLevel = $k->skriningRisiko?->level_risiko ?? 'HIJAU';
-                                        $dotClass = $rLevel == 'HIJAU' ? ($index == 0 ? 'active' : '') : (str_contains($rLevel, 'MERAH') ? 'danger' : 'warning');
+                                        $dotClass = match($rLevel) {
+                                            'HIJAU' => ($index == 0 ? 'active' : ''),
+                                            'KUNING' => 'warning',
+                                            default => 'danger'
+                                        };
                                     @endphp
                                     <div class="timeline-modern-item">
                                         <div class="timeline-dot {{ $dotClass }}">
-                                            <i class="fas {{ $index == 0 ? 'fa-check' : 'fa-calendar-check' }} small"></i>
+                                            <i class="fas {{ $index == 0 ? 'fa-check' : 'fa-calendar-check' }} x-small"></i>
                                         </div>
                                         <div class="bg-light rounded-4 p-3 border border-white shadow-sm">
-                                            <div class="d-flex justify-content-between align-items-start mb-2">
-                                                <h6 class="fw-bold mb-0 text-dark">{{ $k->tanggal->format('d F Y') }}</h6>
-                                                <span class="badge bg-white text-primary border rounded-pill">{{ $k->usia_kehamilan_minggu }} Minggu</span>
+                                            <div class="d-flex justify-content-between align-items-start mb-2 gap-2">
+                                                <h6 class="fw-bold mb-0 text-dark x-small">{{ $k->tanggal->format('d M Y') }}</h6>
+                                                <span class="badge bg-white text-primary border rounded-pill x-small" style="font-size: 0.6rem;">{{ $k->usia_kehamilan_minggu }} Mg</span>
                                             </div>
-                                            <div class="row g-2 mb-3">
-                                                <div class="col-sm-4">
-                                                    <div class="small text-muted">Tensi</div>
-                                                    <div class="fw-bold">{{ $k->tekanan_darah_sistolik }}/{{ $k->tekanan_darah_diastolik }}</div>
+                                            <div class="row g-2 mb-2 text-center text-sm-start">
+                                                <div class="col-4">
+                                                    <div class="x-small text-muted">Tensi</div>
+                                                    <div class="x-small fw-bold">{{ $k->tekanan_darah_sistolik }}/{{ $k->tekanan_darah_diastolik }}</div>
                                                 </div>
-                                                <div class="col-sm-4">
-                                                    <div class="small text-muted">Protein Urine</div>
-                                                    <div class="fw-bold text-{{ $k->protein_urine == 'Negatif' ? 'success' : 'danger' }}">{{ $k->protein_urine }}</div>
+                                                <div class="col-4">
+                                                    <div class="x-small text-muted">Protein</div>
+                                                    <div class="x-small fw-bold {{ $k->protein_urine == 'Negatif' ? 'text-success' : 'text-danger' }}">{{ $k->protein_urine }}</div>
                                                 </div>
-                                                <div class="col-sm-4">
-                                                    <div class="small text-muted">Denyut Janin</div>
-                                                    <div class="fw-bold">{{ $k->djj }} x/mnt</div>
+                                                <div class="col-4">
+                                                    <div class="x-small text-muted">DJJ</div>
+                                                    <div class="x-small fw-bold">{{ $k->djj }}</div>
                                                 </div>
                                             </div>
                                             @if($k->catatan_bidan)
-                                                <div class="bg-white rounded-3 p-2 border-start border-4 border-primary">
-                                                    <div class="small fw-bold text-primary mb-1">Pesan Bidan:</div>
-                                                    <p class="small text-muted mb-0">"{{ $k->catatan_bidan }}"</p>
+                                                <div class="bg-white rounded-3 p-2 border-start border-3 border-primary mt-2">
+                                                    <p class="x-small text-muted mb-0 italic">"{{ \Illuminate\Support\Str::limit($k->catatan_bidan, 100) }}"</p>
                                                 </div>
                                             @endif
                                         </div>
@@ -253,10 +252,9 @@
                                 @endforeach
                             </div>
                         @else
-                            <div class="empty-state py-5">
-                                <i class="fas fa-clipboard-list fa-3x text-light mb-3"></i>
-                                <h6>Belum ada riwayat periksa.</h6>
-                                <p class="text-muted">Kunjungi Bidan untuk mulai memantau perkembangan Bunda.</p>
+                            <div class="empty-state py-5 text-center">
+                                <i class="fas fa-clipboard-list fa-2x text-light mb-3 opacity-50"></i>
+                                <h6 class="x-small">Belum ada riwayat.</h6>
                             </div>
                         @endif
                     </div>
@@ -264,46 +262,36 @@
             </div>
 
             <!-- Sidebar Info/Jadwal -->
-            <div class="col-lg-4">
-                <div class="card shadow-card portal-card mb-4 bg-primary text-white">
-                    <div class="card-body p-4">
-                        <h6 class="fw-bold mb-3"><i class="fas fa-calendar-alt me-2"></i> Jadwal Berikutnya</h6>
+            <div class="col-12 col-lg-4">
+                <div class="card shadow-card portal-card mb-3 mb-md-4 bg-primary text-white">
+                    <div class="card-body p-4 text-center text-lg-start">
+                        <h6 class="fw-bold mb-3 small"><i class="fas fa-calendar-alt me-2"></i> Jadwal Periksa</h6>
                         @php $nextJadwal = $kehamilanAktif?->jadwalKunjungans?->where('status', 'Terjadwal')->first(); @endphp
                         @if($nextJadwal)
-                            <div class="bg-white bg-opacity-20 rounded-3 p-3 mb-3 border border-white border-opacity-20">
-                                <div class="h3 fw-bold mb-1">{{ $nextJadwal->tanggal_rencana->format('d M') }}</div>
-                                <div class="small opacity-80">{{ $nextJadwal->tanggal_rencana->format('l, Y') }}</div>
+                            <div class="bg-white bg-opacity-20 rounded-3 p-3 mb-3 border border-white border-opacity-20 d-inline-block d-lg-block w-100">
+                                <div class="h3 fw-bold mb-0 small">{{ $nextJadwal->tanggal_rencana->format('d M Y') }}</div>
                             </div>
-                            <p class="small mb-0">Jangan lupa untuk periksa tepat waktu demi kesehatan Bunda dan Janin.</p>
+                            <p class="x-small mb-0 opacity-80">Siapkan buku KIA dan tetap semangat ya Bunda!</p>
                         @else
-                            <div class="text-center py-3">
-                                <p class="small mb-0 opacity-80">Belum ada jadwal tersusun.</p>
-                            </div>
+                            <div class="py-2"><p class="x-small opacity-80 mb-0">Belum ada jadwal.</p></div>
                         @endif
                     </div>
                 </div>
 
-                <div class="card shadow-card portal-card mb-4">
-                    <div class="card-header bg-white border-bottom p-4">
-                        <h6 class="fw-bold mb-0">Edukasi Bunda</h6>
+                <div class="card shadow-card portal-card mb-5">
+                    <div class="card-header bg-white border-bottom p-3 p-md-4">
+                        <h6 class="fw-bold mb-0 small">Edukasi Pilihan</h6>
                     </div>
                     <div class="card-body p-0">
-                        <a href="#" class="list-group-item list-group-item-action border-0 p-4 border-bottom">
-                            <div class="d-flex w-100 justify-content-between mb-2">
-                                <h6 class="fw-bold mb-0">Waspadai Preeklampsia</h6>
-                                <i class="fas fa-chevron-right small text-muted"></i>
-                            </div>
-                            <p class="small text-muted mb-0">Mengenali gejala awal tekanan darah tinggi dalam kehamilan.</p>
-                        </a>
-                        <a href="#" class="list-group-item list-group-item-action border-0 p-4 border-bottom">
-                            <div class="d-flex w-100 justify-content-between mb-2">
-                                <h6 class="fw-bold mb-0">Gizi Selama Hamil</h6>
-                                <i class="fas fa-chevron-right small text-muted"></i>
-                            </div>
-                            <p class="small text-muted mb-0">Daftar makanan super untuk perkembangan otak janin.</p>
-                        </a>
-                        <div class="p-3 text-center">
-                            <a href="#" class="btn btn-link btn-sm text-decoration-none fw-bold">Lihat Semua Edukasi</a>
+                        <div class="list-group list-group-flush">
+                            <a href="#" class="list-group-item list-group-item-action border-0 px-4 py-3 border-bottom">
+                                <h6 class="fw-bold mb-1 small">Waspada Preeklampsia</h6>
+                                <p class="x-small text-muted mb-0">Kenali gejalanya sedini mungkin.</p>
+                            </a>
+                            <a href="#" class="list-group-item list-group-item-action border-0 px-4 py-3 border-bottom">
+                                <h6 class="fw-bold mb-1 small">Nutrisi Bumil</h6>
+                                <p class="x-small text-muted mb-0">Daftar makanan super si kecil.</p>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -313,8 +301,8 @@
 </div>
 
 <!-- Support Float Button -->
-<button class="btn btn-emergency btn-emergency-float" onclick="laporDarurat()">
-    <i class="fas fa-phone-alt me-2"></i> LAPOR DARURAT
+<button class="btn btn-danger btn-emergency-float shadow-lg px-4 py-3" onclick="laporDarurat()">
+    <i class="fas fa-phone-alt me-2"></i> DARURAT
 </button>
 
 <form id="formDarurat" method="POST" action="{{ route('portal.darurat.store') }}" class="d-none">
