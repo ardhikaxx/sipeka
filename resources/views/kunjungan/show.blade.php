@@ -49,37 +49,33 @@
             </div>
         </div>
 
-        <div class="row g-4">
-            <div class="col-lg-4">
+        <div class="row g-3 g-lg-4">
+            <div class="col-12 col-lg-4">
                 <!-- Data Pasien Card -->
-                <div class="card border-0 shadow-card rounded-xl mb-4 overflow-hidden">
-                    <div class="card-header bg-peka-primary text-white py-3 px-4 border-0">
-                        <h6 class="mb-0 fw-bold">Informasi Pasien</h6>
+                <div class="card border-0 shadow-card rounded-xl mb-3 mb-lg-4 overflow-hidden">
+                    <div class="card-header bg-peka-primary text-white py-3 px-3 px-md-4 border-0">
+                        <h6 class="mb-0 fw-bold small">Informasi Pasien</h6>
                     </div>
-                    <div class="card-body p-4">
-                        <div class="text-center mb-4">
-                            <div class="bg-peka-primary-pale text-peka-primary rounded-circle d-inline-flex align-items-center justify-content-center mb-3 shadow-sm" style="width: 70px; height: 70px; font-size: 2rem;">
+                    <div class="card-body p-3 p-md-4 text-center text-md-start">
+                        <div class="d-flex flex-column align-items-center mb-3">
+                            <div class="bg-peka-primary-pale text-peka-primary rounded-circle d-inline-flex align-items-center justify-content-center mb-2 shadow-sm" style="width: 60px; height: 60px; font-size: 1.8rem;">
                                 <i class="fas fa-person-pregnant"></i>
                             </div>
-                            <h5 class="fw-bold mb-1">{{ $kunjungan->kehamilan->pasien->nama }}</h5>
-                            <div class="text-hint small">NIK: {{ $kunjungan->kehamilan->pasien->nik }}</div>
+                            <h5 class="fw-bold mb-0 small fs-6">{{ $kunjungan->kehamilan->pasien->nama }}</h5>
+                            <div class="text-hint x-small">NIK: {{ $kunjungan->kehamilan->pasien->nik }}</div>
                         </div>
-                        <div class="border-top pt-3 mt-3">
+                        <div class="border-top pt-3">
                             <div class="d-flex justify-content-between mb-2">
-                                <span class="text-hint small">Usia / Tgl Lahir</span>
-                                <span class="fw-bold small">{{ \Carbon\Carbon::parse($kunjungan->kehamilan->pasien->tgl_lahir)->age }} Thn / {{ \Carbon\Carbon::parse($kunjungan->kehamilan->pasien->tgl_lahir)->format('d-m-y') }}</span>
+                                <span class="text-hint x-small">Usia Kehamilan</span>
+                                <span class="fw-bold text-primary x-small">{{ $kunjungan->usia_kehamilan_minggu }} Mg</span>
                             </div>
                             <div class="d-flex justify-content-between mb-2">
-                                <span class="text-hint small">Usia Kehamilan</span>
-                                <span class="fw-bold text-primary small">{{ $kunjungan->usia_kehamilan_minggu }} Minggu</span>
-                            </div>
-                            <div class="d-flex justify-content-between mb-2">
-                                <span class="text-hint small">GPA</span>
-                                <span class="fw-bold small text-dark">G{{ $kunjungan->kehamilan->gravida }} P{{ $kunjungan->kehamilan->para }} A{{ $kunjungan->kehamilan->abortus }}</span>
+                                <span class="text-hint x-small">GPA</span>
+                                <span class="fw-bold x-small">G{{ $kunjungan->kehamilan->gravida }} P{{ $kunjungan->kehamilan->para }} A{{ $kunjungan->kehamilan->abortus }}</span>
                             </div>
                             <div class="d-flex justify-content-between mb-0">
-                                <span class="text-hint small">HPHT / TP</span>
-                                <span class="fw-bold small text-dark">{{ \Carbon\Carbon::parse($kunjungan->kehamilan->hpht)->format('d/m/y') }} / {{ \Carbon\Carbon::parse($kunjungan->kehamilan->tp)->format('d/m/y') }}</span>
+                                <span class="text-hint x-small">Tanggal Periksa</span>
+                                <span class="fw-bold x-small">{{ $kunjungan->tanggal->format('d/m/y') }}</span>
                             </div>
                         </div>
                     </div>
@@ -87,129 +83,107 @@
 
                 <!-- Bidan/Pemeriksa Card -->
                 <div class="card border-0 shadow-card rounded-xl overflow-hidden">
-                    <div class="card-body p-4">
+                    <div class="card-body p-3 p-md-4">
                         <div class="d-flex align-items-center gap-3">
-                            <div class="bg-light text-secondary rounded-circle d-flex align-items-center justify-content-center" style="width: 45px; height: 45px;">
-                                <i class="fas fa-user-md"></i>
+                            <div class="bg-light text-secondary rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width: 40px; height: 40px;">
+                                <i class="fas fa-user-md small"></i>
                             </div>
-                            <div>
+                            <div class="grow overflow-hidden">
                                 <div class="text-hint x-small uppercase-font">PEMERIKSA</div>
-                                <div class="fw-bold text-dark">{{ $kunjungan->bidan->name }}</div>
-                                <div class="text-hint small">{{ $kunjungan->bidan->fasilitas?->nama ?? 'Faskes' }}</div>
+                                <div class="fw-bold text-dark text-truncate small">{{ $kunjungan->bidan->name }}</div>
                             </div>
-                        </div>
-                        <div class="mt-3 pt-3 border-top d-flex justify-content-between">
-                            <span class="text-hint small">Tanggal Periksa</span>
-                            <span class="fw-bold small">{{ $kunjungan->tanggal->format('d M Y') }}</span>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="col-lg-8">
+            <div class="col-12 col-lg-8">
                 <!-- Temuan Klinis Card -->
-                <div class="card border-0 shadow-card rounded-xl mb-4 overflow-hidden">
-                    <div class="card-header bg-white py-3 px-4 border-bottom d-flex align-items-center">
+                <div class="card border-0 shadow-card rounded-xl mb-3 mb-lg-4 overflow-hidden">
+                    <div class="card-header bg-white py-3 px-3 px-md-4 border-bottom d-flex align-items-center">
                         <i class="fas fa-file-waveform text-danger me-2"></i>
-                        <h6 class="mb-0 fw-bold">Temuan Fisik & Vital</h6>
+                        <h6 class="mb-0 fw-bold small">Fisik & Vital</h6>
                     </div>
-                    <div class="card-body p-4">
-                        <div class="row g-4">
-                            <div class="col-md-6">
-                                <div class="p-3 bg-light rounded-4 border-start border-4 border-danger">
+                    <div class="card-body p-3 p-md-4">
+                        <div class="row g-3">
+                            <div class="col-12 col-sm-6">
+                                <div class="p-3 bg-light rounded-4 border-start border-4 border-danger h-100">
                                     <div class="text-hint x-small uppercase-font mb-1">Tekanan Darah</div>
-                                    <div class="h4 fw-extrabold text-dark mb-0">{{ $kunjungan->tekanan_darah_sistolik }}/{{ $kunjungan->tekanan_darah_diastolik }} <small class="fw-normal text-muted">mmHg</small></div>
-                                    <div class="text-hint x-small mt-1">MAP: {{ $kunjungan->map }} mmHg</div>
+                                    <div class="h5 fw-extrabold text-dark mb-0">{{ $kunjungan->tekanan_darah_sistolik }}/{{ $kunjungan->tekanan_darah_diastolik }} <small class="fw-normal text-muted">mmHg</small></div>
+                                    <div class="text-hint x-small mt-1">MAP: {{ $kunjungan->map }}</div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="p-3 bg-light rounded-4 border-start border-4 border-primary">
-                                    <div class="text-hint x-small uppercase-font mb-1">Berat Badan & IMT</div>
-                                    <div class="h4 fw-extrabold text-dark mb-0">{{ $kunjungan->berat_badan }} <small class="fw-normal text-muted">kg</small></div>
+                            <div class="col-12 col-sm-6">
+                                <div class="p-3 bg-light rounded-4 border-start border-4 border-primary h-100">
+                                    <div class="text-hint x-small uppercase-font mb-1">Berat & IMT</div>
+                                    <div class="h5 fw-extrabold text-dark mb-0">{{ $kunjungan->berat_badan }} <small class="fw-normal text-muted">kg</small></div>
                                     <div class="text-hint x-small mt-1">IMT: {{ $kunjungan->imt ?? '-' }} | Naik: {{ $kunjungan->penambahan_bb ?? 0 }} kg</div>
                                 </div>
                             </div>
-                            <div class="col-md-4 col-6">
-                                <div class="text-hint small mb-1">Nadi</div>
-                                <div class="fw-bold text-dark">{{ $kunjungan->nadi }} <small class="text-muted">x/mnt</small></div>
+                            <div class="col-6 col-md-4">
+                                <div class="text-hint x-small mb-1">DJJ Janin</div>
+                                <div class="fw-bold text-dark small">{{ $kunjungan->djj }} <small class="text-muted">x/m</small></div>
                             </div>
-                            <div class="col-md-4 col-6">
-                                <div class="text-hint small mb-1">Pernapasan</div>
-                                <div class="fw-bold text-dark">{{ $kunjungan->respirasi ?? '-' }} <small class="text-muted">x/mnt</small></div>
+                            <div class="col-6 col-md-4">
+                                <div class="text-hint x-small mb-1">TFU</div>
+                                <div class="fw-bold text-dark small">{{ $kunjungan->tinggi_fundus_uteri }} <small class="text-muted">cm</small></div>
                             </div>
-                            <div class="col-md-4 col-6">
-                                <div class="text-hint small mb-1">Suhu Tubuh</div>
-                                <div class="fw-bold text-dark">{{ $kunjungan->suhu ?? '-' }} <small class="text-muted">°C</small></div>
-                            </div>
-                            <div class="col-md-4 col-6 border-top pt-3">
-                                <div class="text-hint small mb-1">Tinggi Fundus (TFU)</div>
-                                <div class="fw-bold text-dark">{{ $kunjungan->tinggi_fundus_uteri }} <small class="text-muted">cm</small></div>
-                            </div>
-                            <div class="col-md-4 col-6 border-top pt-3">
-                                <div class="text-hint small mb-1">DJJ Janin</div>
-                                <div class="fw-bold text-dark">{{ $kunjungan->djj }} <small class="text-muted">x/mnt</small></div>
-                            </div>
-                            <div class="col-md-4 col-6 border-top pt-3">
-                                <div class="text-hint small mb-1">Edema (Bengkak)</div>
-                                <div class="fw-bold text-{{ $kunjungan->edema === 'Tidak' ? 'dark' : 'danger' }}">{{ $kunjungan->edema }}</div>
+                            <div class="col-6 col-md-4">
+                                <div class="text-hint x-small mb-1">Edema</div>
+                                <div class="fw-bold small text-{{ $kunjungan->edema === 'Tidak' ? 'dark' : 'danger' }}">{{ $kunjungan->edema }}</div>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Laboratorium & Gejala -->
-                <div class="row g-4 mb-4">
-                    <div class="col-md-6">
+                <div class="row g-3 mb-3 mb-lg-4">
+                    <div class="col-12 col-md-6">
                         <div class="card border-0 shadow-card rounded-xl h-100 overflow-hidden">
-                            <div class="card-header bg-white py-3 px-4 border-bottom d-flex align-items-center">
+                            <div class="card-header bg-white py-3 px-3 px-md-4 border-bottom d-flex align-items-center">
                                 <i class="fas fa-microscope text-warning me-2"></i>
-                                <h6 class="mb-0 fw-bold">Pemeriksaan Lab</h6>
+                                <h6 class="mb-0 fw-bold small">Lab</h6>
                             </div>
-                            <div class="card-body p-4">
-                                <div class="mb-3">
-                                    <div class="text-hint small mb-1">Protein Urine</div>
-                                    <div class="badge-risk {{ $kunjungan->protein_urine === 'Negatif' ? 'badge-risk--green' : 'badge-risk--red' }} w-100 py-2 fs-6">
+                            <div class="card-body p-3 p-md-4">
+                                <div class="mb-3 text-center">
+                                    <div class="text-hint x-small mb-1">Protein Urine</div>
+                                    <div class="badge-risk {{ $kunjungan->protein_urine === 'Negatif' ? 'badge-risk--green' : 'badge-risk--red' }} py-2 x-small w-100">
                                         {{ $kunjungan->protein_urine }}
                                     </div>
                                 </div>
-                                <div class="row g-3">
-                                    <div class="col-6">
-                                        <div class="text-hint x-small">Hemoglobin (Hb)</div>
-                                        <div class="fw-bold small">{{ $kunjungan->hb ?? '-' }} g/dL</div>
+                                <div class="row g-2 text-center">
+                                    <div class="col-4">
+                                        <div class="text-hint x-small">Hb</div>
+                                        <div class="fw-bold x-small">{{ $kunjungan->hb ?? '-' }}</div>
                                     </div>
-                                    <div class="col-6">
-                                        <div class="text-hint x-small">Trombosit</div>
-                                        <div class="fw-bold small">{{ $kunjungan->trombosit ?? '-' }} /μL</div>
+                                    <div class="col-4">
+                                        <div class="text-hint x-small">Tromb.</div>
+                                        <div class="fw-bold x-small">{{ $kunjungan->trombosit ?? '-' }}</div>
                                     </div>
-                                    <div class="col-6">
-                                        <div class="text-hint x-small">Kreatinin</div>
-                                        <div class="fw-bold small">{{ $kunjungan->kreatinin ?? '-' }} mg/dL</div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="text-hint x-small">Glukosa Urine</div>
-                                        <div class="fw-bold small">{{ $kunjungan->glukosa_urine ?? '-' }}</div>
+                                    <div class="col-4">
+                                        <div class="text-hint x-small">Kreat.</div>
+                                        <div class="fw-bold x-small">{{ $kunjungan->kreatinin ?? '-' }}</div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-12 col-md-6">
                         <div class="card border-0 shadow-card rounded-xl h-100 overflow-hidden">
-                            <div class="card-header bg-white py-3 px-4 border-bottom d-flex align-items-center">
+                            <div class="card-header bg-white py-3 px-3 px-md-4 border-bottom d-flex align-items-center">
                                 <i class="fas fa-triangle-exclamation text-danger me-2"></i>
-                                <h6 class="mb-0 fw-bold">Gejala Subjektif</h6>
+                                <h6 class="mb-0 fw-bold small">Gejala</h6>
                             </div>
-                            <div class="card-body p-4">
-                                <div class="d-flex flex-wrap gap-2 mb-3">
-                                    <span class="badge {{ $kunjungan->nyeri_kepala_hebat ? 'bg-danger' : 'bg-light text-muted border' }} px-3 rounded-pill small">Sakit Kepala</span>
-                                    <span class="badge {{ $kunjungan->gangguan_penglihatan ? 'bg-danger' : 'bg-light text-muted border' }} px-3 rounded-pill small">Pandangan Kabur</span>
-                                    <span class="badge {{ $kunjungan->nyeri_ulu_hati ? 'bg-danger' : 'bg-light text-muted border' }} px-3 rounded-pill small">Nyeri Ulu Hati</span>
-                                    <span class="badge {{ $kunjungan->ada_riwayat_kejang ? 'bg-danger' : 'bg-light text-muted border' }} px-3 rounded-pill small">Kejang</span>
-                                    <span class="badge {{ $kunjungan->edema_paru ? 'bg-danger' : 'bg-light text-muted border' }} px-3 rounded-pill small">Sesak Napas</span>
+                            <div class="card-body p-3 p-md-4">
+                                <div class="d-flex flex-wrap gap-1 mb-3">
+                                    @foreach(['nyeri_kepala_hebat' => 'Pusing', 'gangguan_penglihatan' => 'Kabur', 'nyeri_ulu_hati' => 'Ulu Hati', 'ada_riwayat_kejang' => 'Kejang'] as $field => $label)
+                                        <span class="badge {{ $kunjungan->$field ? 'bg-danger' : 'bg-light text-muted border' }} x-small px-2 py-1 rounded-pill">
+                                            {{ $label }}
+                                        </span>
+                                    @endforeach
                                 </div>
-                                <div class="text-hint x-small uppercase-font mb-1">Keluhan Lainnya</div>
-                                <div class="p-3 bg-light rounded-3 small text-dark border-start border-3 border-secondary">
-                                    {{ $kunjungan->keluhan_subjektif ?: 'Tidak ada keluhan subjektif lainnya.' }}
+                                <div class="p-2 bg-light rounded-3 x-small text-muted border-start border-3">
+                                    {{ \Illuminate\Support\Str::limit($kunjungan->keluhan_subjektif ?: 'Tidak ada keluhan.', 60) }}
                                 </div>
                             </div>
                         </div>
@@ -218,13 +192,13 @@
 
                 <!-- Catatan Bidan Card -->
                 <div class="card border-0 shadow-card rounded-xl overflow-hidden">
-                    <div class="card-header bg-white py-3 px-4 border-bottom d-flex align-items-center">
+                    <div class="card-header bg-white py-3 px-3 px-md-4 border-bottom d-flex align-items-center">
                         <i class="fas fa-comment-medical text-primary me-2"></i>
-                        <h6 class="mb-0 fw-bold">Rencana Tindak Lanjut & Instruksi</h6>
+                        <h6 class="mb-0 fw-bold small">Instruksi Bidan</h6>
                     </div>
-                    <div class="card-body p-4">
-                        <div class="p-4 bg-primary-subtle bg-opacity-10 rounded-4 border border-primary border-opacity-25 shadow-sm">
-                            <p class="mb-0 text-dark" style="line-height: 1.6;">{{ $kunjungan->catatan_bidan ?: 'Belum ada catatan tindak lanjut khusus dari bidan.' }}</p>
+                    <div class="card-body p-3 p-md-4">
+                        <div class="p-3 bg-primary-subtle bg-opacity-10 rounded-3 border border-primary border-opacity-25 shadow-sm">
+                            <p class="mb-0 text-dark x-small" style="line-height: 1.5;">{{ $kunjungan->catatan_bidan ?: 'Tidak ada catatan.' }}</p>
                         </div>
                     </div>
                 </div>
