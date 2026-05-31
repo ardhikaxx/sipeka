@@ -114,41 +114,55 @@
                     <table class="table table-hover align-middle mb-0 border-top">
                         <thead class="bg-light text-muted uppercase-font" style="font-size: 0.65rem;">
                             <tr>
-                                <th class="ps-3 ps-md-4 py-3">PASIEN</th>
-                                <th class="d-none d-sm-table-cell">UK</th>
-                                <th class="d-none d-md-table-cell">T. DARAH</th>
-                                <th>STATUS</th>
-                                <th class="pe-3 pe-md-4 text-end">AKSI</th>
+                                <th class="ps-3 ps-md-4 py-3 border-0">PASIEN</th>
+                                <th class="d-none d-sm-table-cell border-0">UK</th>
+                                <th class="d-none d-md-table-cell border-0">TEMUAN (TD & PROT)</th>
+                                <th class="border-0">STATUS</th>
+                                <th class="pe-3 pe-md-4 text-end border-0">AKSI</th>
                             </tr>
                         </thead>
                         <tbody>
                             @forelse($pasien_terbaru as $p)
+                            @php
+                                $bgAvatar = match($p['risiko']) {
+                                    'kritis', 'merah_kritis' => 'bg-danger text-white',
+                                    'merah' => 'bg-danger-subtle text-danger',
+                                    'kuning' => 'bg-warning-subtle text-warning',
+                                    default => 'bg-success-subtle text-success'
+                                };
+                            @endphp
                             <tr class="clickable-row" onclick="window.location='{{ route('pasien.show', $p['id']) }}'">
                                 <td class="ps-3 ps-md-4 py-3">
                                     <div class="d-flex align-items-center gap-2 gap-md-3">
-                                        <div class="avatar-sm bg-peka-primary-pale text-peka-primary rounded-circle d-none d-sm-flex align-items-center justify-content-center fw-bold"
-                                            style="width: 32px; height: 32px; font-size: 0.8rem;">
+                                        <div class="avatar-sm {{ $bgAvatar }} rounded-circle d-none d-sm-flex align-items-center justify-content-center fw-bold shadow-sm border border-white"
+                                            style="width: 36px; height: 36px; font-size: 0.9rem;">
                                             {{ substr($p['nama'], 0, 1) }}
                                         </div>
                                         <div>
-                                            <div class="fw-bold text-dark small">{{ $p['nama'] }}</div>
-                                            <div class="text-hint x-small"><i class="fas fa-map-marker-alt me-1 opacity-50"></i> {{ $p['desa'] }}</div>
+                                            <div class="fw-bold text-dark small mb-1">{{ $p['nama'] }}</div>
+                                            <div class="text-hint x-small"><i class="fas fa-map-marker-alt text-peka-primary opacity-50 me-1"></i> {{ $p['desa'] }}</div>
                                         </div>
                                     </div>
                                 </td>
                                 <td class="d-none d-sm-table-cell">
-                                    <span class="badge bg-light text-dark border fw-medium px-2 py-1 x-small">{{ $p['uk'] }} Mg</span>
+                                    <span class="badge bg-light text-dark border fw-bold px-2 py-1 x-small shadow-sm">{{ $p['uk'] }} Mg</span>
                                 </td>
                                 <td class="d-none d-md-table-cell">
-                                    <span class="text-dark x-small fw-bold border-bottom border-secondary border-2 pb-1">{{ $p['td'] }}</span>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <div class="text-dark x-small fw-bold px-2 py-1 bg-light rounded-2 border-start border-3 border-secondary">{{ $p['td'] }}</div>
+                                        <span class="text-hint x-small">Prot: <strong class="{{ $p['protein'] === 'Negatif' ? 'text-success' : 'text-danger' }}">{{ $p['protein'] }}</strong></span>
+                                    </div>
                                 </td>
                                 <td>
-                                    <span class="badge-risk-premium {{ $p['risiko'] }}" style="font-size: 0.6rem; padding: 4px 10px;">
+                                    <span class="badge-risk-premium {{ $p['risiko'] }} shadow-sm" style="font-size: 0.6rem; padding: 5px 12px;">
                                         {{ strtoupper($p['risiko_label']) }}
                                     </span>
                                 </td>
                                 <td class="pe-3 pe-md-4 text-end">
-                                    <a href="{{ route('pasien.show', $p['id']) }}" class="btn btn-sm btn-light border p-1 px-2 text-primary" title="Buka Rekam Medis"><i class="fas fa-folder-open x-small"></i></a>
+                                    <a href="{{ route('pasien.show', $p['id']) }}" class="btn btn-sm btn-white border shadow-sm p-1 px-2 text-primary rounded-3 hvr-icon-forward" title="Buka Rekam Medis">
+                                        <span class="d-none d-xl-inline x-small fw-bold me-1">Buka</span>
+                                        <i class="fas fa-arrow-right x-small hvr-icon"></i>
+                                    </a>
                                 </td>
                             </tr>
                             @empty
