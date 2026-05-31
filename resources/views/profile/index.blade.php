@@ -10,7 +10,7 @@
         <div class="card border-0 shadow-card rounded-xl overflow-hidden mb-4">
             <div class="card-header bg-gradient-premium p-5 text-center position-relative">
                 <div class="position-absolute top-0 end-0 p-3">
-                    <span class="badge bg-white text-peka-primary rounded-pill px-3 py-2 fw-bold shadow-sm" style="font-size: 0.7rem;">
+                    <span class="badge bg-white text-dark rounded-pill px-3 py-2 fw-bold shadow-sm" style="font-size: 0.7rem;">
                         {{ strtoupper($user->role) }}
                     </span>
                 </div>
@@ -61,15 +61,17 @@
                 <p class="text-hint ms-5 ps-2 mb-0">Perbarui data diri dan preferensi akun Anda.</p>
             </div>
             <div class="card-body p-4">
-                <form action="#" method="POST">
+                <form action="{{ route('profile.update') }}" method="POST">
                     @csrf
+                    @method('PUT')
                     <div class="row g-4">
                         <div class="col-12 col-md-6">
                             <label class="form-label fw-bold small">Nama Lengkap</label>
                             <div class="input-group-peka">
                                 <i class="fas fa-user input-icon"></i>
-                                <input type="text" class="form-control-peka" value="{{ $user->name }}" placeholder="Nama Lengkap">
+                                <input type="text" name="name" class="form-control-peka @error('name') is-invalid @enderror" value="{{ old('name', $user->name) }}" placeholder="Nama Lengkap" required>
                             </div>
+                            @error('name') <div class="invalid-feedback d-block">{{ $message }}</div> @enderror
                         </div>
                         <div class="col-12 col-md-6">
                             <label class="form-label fw-bold small">Alamat Email</label>
@@ -80,13 +82,6 @@
                             <div class="form-text x-small text-muted mt-1"><i class="fas fa-lock me-1"></i> Email digunakan untuk login, tidak dapat diubah.</div>
                         </div>
                         <div class="col-12 col-md-6">
-                            <label class="form-label fw-bold small">Nomor Telepon</label>
-                            <div class="input-group-peka">
-                                <i class="fas fa-phone input-icon"></i>
-                                <input type="text" class="form-control-peka" placeholder="0812...">
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6">
                             <label class="form-label fw-bold small">Pekerjaan / Spesialisasi</label>
                             <div class="input-group-peka">
                                 <i class="fas fa-briefcase input-icon"></i>
@@ -94,7 +89,7 @@
                             </div>
                         </div>
                         <div class="col-12 text-end mt-4 pt-3 border-top">
-                            <button type="button" class="btn btn-peka-primary px-4 py-2 rounded-pill shadow-sm" onclick="Toast.fire({icon: 'info', title: 'Fitur simpan profil segera hadir!'})">
+                            <button type="submit" class="btn btn-peka-primary px-4 py-2 rounded-pill shadow-sm">
                                 <i class="fas fa-save me-2"></i> Simpan Perubahan
                             </button>
                         </div>
@@ -114,16 +109,40 @@
                 </h5>
             </div>
             <div class="card-body p-4">
-                <div class="d-flex align-items-center justify-content-between p-3 bg-light rounded-3 border mb-3">
-                    <div class="d-flex align-items-center gap-3">
-                        <div class="icon-box-sm bg-white border shadow-sm rounded-circle"><i class="fas fa-key text-secondary"></i></div>
-                        <div>
-                            <div class="fw-bold text-dark small">Kata Sandi Akun</div>
-                            <div class="text-hint x-small">Terakhir diubah: Belum pernah</div>
+                <form action="{{ route('profile.password') }}" method="POST">
+                    @csrf
+                    @method('PUT')
+                    <div class="row g-4">
+                        <div class="col-12">
+                            <label class="form-label fw-bold small">Kata Sandi Saat Ini</label>
+                            <div class="input-group-peka">
+                                <i class="fas fa-key input-icon"></i>
+                                <input type="password" name="current_password" class="form-control-peka @error('current_password', 'updatePassword') is-invalid @enderror" placeholder="Masukkan kata sandi lama" required>
+                            </div>
+                            @error('current_password', 'updatePassword') <div class="invalid-feedback d-block">{{ $message }}</div> @enderror
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label class="form-label fw-bold small">Kata Sandi Baru</label>
+                            <div class="input-group-peka">
+                                <i class="fas fa-lock input-icon"></i>
+                                <input type="password" name="password" class="form-control-peka @error('password', 'updatePassword') is-invalid @enderror" placeholder="Minimal 8 karakter" required>
+                            </div>
+                            @error('password', 'updatePassword') <div class="invalid-feedback d-block">{{ $message }}</div> @enderror
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label class="form-label fw-bold small">Konfirmasi Kata Sandi Baru</label>
+                            <div class="input-group-peka">
+                                <i class="fas fa-check-circle input-icon"></i>
+                                <input type="password" name="password_confirmation" class="form-control-peka" placeholder="Ulangi kata sandi baru" required>
+                            </div>
+                        </div>
+                        <div class="col-12 text-end mt-2">
+                            <button type="submit" class="btn btn-outline-danger px-4 py-2 rounded-pill shadow-sm">
+                                <i class="fas fa-key me-2"></i> Perbarui Kata Sandi
+                            </button>
                         </div>
                     </div>
-                    <button class="btn btn-sm btn-outline-secondary rounded-pill px-3 fw-bold" onclick="Toast.fire({icon: 'info', title: 'Fitur ubah sandi segera hadir!'})">Ubah</button>
-                </div>
+                </form>
             </div>
         </div>
     </div>
