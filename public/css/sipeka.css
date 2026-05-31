@@ -309,6 +309,10 @@ body { font-family: var(--font-body); font-size: 14px; line-height: 1.6; color: 
 .divider-h { height: 1px; background: var(--gray-200); margin: 20px 0; border: 0; }
 .text-hint { font-size: 0.75rem; color: var(--text-muted); font-weight: 500; }
 
+.bg-gradient-premium {
+    background: linear-gradient(135deg, var(--peka-primary) 0%, #114b4b 100%);
+}
+
 @media (max-width: 768px) {
   .sipeka-content { padding: 15px; }
   .sipeka-topbar { height: 60px; padding: 0 12px; }
