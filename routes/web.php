@@ -30,7 +30,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/settings', [\App\Http\Controllers\SettingController::class, 'index'])->name('settings');
 
     Route::middleware('role:admin,dokter,bidan')->group(function () {
-        Route::resource('pasien', PasienController::class)->only(['index', 'create', 'store', 'show']);
+        Route::resource('pasien', PasienController::class)->only(['index', 'create', 'store', 'show', 'update']);
         Route::resource('kunjungan', KunjunganAncController::class)->only(['index', 'create', 'store', 'show']);
         Route::resource('rujukan', RujukanController::class)->only(['index', 'create', 'store', 'show']);
         Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.index');

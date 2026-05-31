@@ -143,6 +143,33 @@ class PasienController extends Controller
         return view('pasien.show', compact('pasien', 'kehamilanAktif', 'chartData'));
     }
 
+    public function update(Request $request, Pasien $pasien)
+    {
+        $this->authorizePasienAccess($pasien);
+
+        $validated = $request->validate([
+            'nama' => 'required|string|max:255',
+            'nik' => 'required|string|size:16|unique:pasiens,nik,' . $pasien->id,
+            'tgl_lahir' => 'required|date',
+            'alamat' => 'required|string',
+            'no_hp' => 'nullable|string|max:20',
+            'tinggi_badan' => 'nullable|numeric|min:120|max:200',
+            'golongan_darah' => 'nullable|string|max:5',
+            'status_pernikahan' => 'nullable|string|max:50',
+            'nama_suami' => 'nullable|string|max:255',
+        ]);
+
+        $pasien->update($validated);
+
+        if ($pasien->user) {
+            $pasien->user->update([
+                'name' => $validated['nama'],
+            ]);
+        }
+
+        return redirect()->route('pasien.show', $pasien)->with('success', 'Data profil pasien berhasil diperbarui.');
+    }
+
     private function authorizePasienAccess(Pasien $pasien): void
     {
         $user = Auth::user();

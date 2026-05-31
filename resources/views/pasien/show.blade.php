@@ -335,6 +335,76 @@
     </div>
 </div>
 @endif
+
+<!-- Modal Edit Pasien -->
+<div class="modal fade" id="modalEditPasien" tabindex="-1" aria-labelledby="modalEditPasienLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content border-0 shadow-card rounded-xl">
+            <div class="modal-header bg-light border-0 py-3 px-4">
+                <h5 class="modal-title fw-bold small" id="modalEditPasienLabel"><i class="fas fa-user-edit text-primary me-2"></i>Edit Data Pasien</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="{{ route('pasien.update', $pasien->id) }}" method="POST">
+                @csrf
+                @method('PUT')
+                <div class="modal-body p-4">
+                    <div class="row g-3">
+                        <div class="col-12 col-md-6">
+                            <label class="form-label form-label-required small fw-bold">Nama Lengkap</label>
+                            <input type="text" name="nama" class="form-control-peka @error('nama') is-invalid @enderror" value="{{ old('nama', $pasien->nama) }}" required>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label class="form-label form-label-required small fw-bold">NIK</label>
+                            <input type="text" name="nik" class="form-control-peka @error('nik') is-invalid @enderror" value="{{ old('nik', $pasien->nik) }}" maxlength="16" required>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label class="form-label form-label-required small fw-bold">Tanggal Lahir</label>
+                            <input type="date" name="tgl_lahir" class="form-control-peka @error('tgl_lahir') is-invalid @enderror" value="{{ old('tgl_lahir', $pasien->tgl_lahir) }}" required>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label class="form-label small fw-bold">Nomor HP</label>
+                            <input type="text" name="no_hp" class="form-control-peka" value="{{ old('no_hp', $pasien->no_hp) }}">
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <label class="form-label small fw-bold">Gol. Darah</label>
+                            <select name="golongan_darah" class="form-control-peka">
+                                <option value="" @selected(empty($pasien->golongan_darah))>-- Pilih --</option>
+                                <option value="A" @selected($pasien->golongan_darah === 'A')>A</option>
+                                <option value="B" @selected($pasien->golongan_darah === 'B')>B</option>
+                                <option value="AB" @selected($pasien->golongan_darah === 'AB')>AB</option>
+                                <option value="O" @selected($pasien->golongan_darah === 'O')>O</option>
+                            </select>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <label class="form-label small fw-bold">Tinggi Badan (cm)</label>
+                            <input type="number" step="0.1" name="tinggi_badan" class="form-control-peka" value="{{ old('tinggi_badan', $pasien->tinggi_badan) }}">
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <label class="form-label small fw-bold">Status Nikah</label>
+                            <select name="status_pernikahan" class="form-control-peka">
+                                <option value="Menikah" @selected($pasien->status_pernikahan === 'Menikah')>Menikah</option>
+                                <option value="Belum Menikah" @selected($pasien->status_pernikahan === 'Belum Menikah')>Belum Menikah</option>
+                                <option value="Cerai" @selected($pasien->status_pernikahan === 'Cerai')>Cerai</option>
+                            </select>
+                        </div>
+                        <div class="col-12 col-md-12">
+                            <label class="form-label small fw-bold">Nama Suami/Wali</label>
+                            <input type="text" name="nama_suami" class="form-control-peka" value="{{ old('nama_suami', $pasien->nama_suami) }}">
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label form-label-required small fw-bold">Alamat Domisili</label>
+                            <textarea name="alamat" class="form-control-peka @error('alamat') is-invalid @enderror" rows="2" required>{{ old('alamat', $pasien->alamat) }}</textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer border-0 p-4">
+                    <button type="button" class="btn btn-light border px-4 rounded-pill" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-peka-primary px-4 rounded-pill shadow-sm">Simpan Perubahan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 @endsection
 
 @push('styles')
