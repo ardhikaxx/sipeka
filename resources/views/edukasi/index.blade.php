@@ -68,14 +68,14 @@
                         @if ($edukasi->thumbnail)
                             <img src="{{ $edukasi->thumbnail }}"
                                 class="object-fit-cover w-100 h-100 card-img-top transition-transform"
-                                alt="{{ $edukasi->judul }}">
-                        @else
-                            <div
-                                class="w-100 h-100 d-flex align-items-center justify-content-center bg-gradient-premium text-white card-img-top">
-                                <i
-                                    class="fas {{ $edukasi->kategori === 'Video' ? 'fa-circle-play' : 'fa-file-lines' }} display-4 opacity-50"></i>
-                            </div>
+                                alt="{{ $edukasi->judul }}"
+                                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                         @endif
+                        
+                        <div class="w-100 h-100 d-flex align-items-center justify-content-center bg-gradient-premium text-white card-img-top" 
+                             style="{{ $edukasi->thumbnail ? 'display: none;' : '' }}">
+                            <i class="fas {{ $edukasi->kategori === 'Video' ? 'fa-circle-play' : 'fa-file-lines' }} display-4 opacity-50"></i>
+                        </div>
 
                         <!-- Floating Category Badge -->
                         <div class="position-absolute top-0 inset-e-0 p-3">
