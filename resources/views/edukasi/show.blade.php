@@ -21,13 +21,13 @@
         <article class="card border-0 shadow-card rounded-xl overflow-hidden mb-4">
             <!-- Hero Image/Banner -->
             @if($edukasi->thumbnail)
-                <div class="ratio ratio-21x9 bg-peka-primary-pale overflow-hidden">
+                <div class="ratio ratio-16x9 ratio-md-21x9 bg-peka-primary-pale overflow-hidden">
                     <img src="{{ $edukasi->thumbnail }}" class="object-fit-cover" alt="{{ $edukasi->judul }}">
                 </div>
             @endif
 
-            <div class="card-body p-4 p-lg-5">
-                <header class="mb-5">
+            <div class="card-body p-3 p-md-4 p-lg-5">
+                <header class="mb-4 mb-md-5">
                     <div class="d-flex align-items-center gap-2 mb-3">
                         @php
                             $katClass = match($edukasi->kategori) {
@@ -37,46 +37,46 @@
                                 default => 'bg-light text-dark border-secondary-subtle'
                             };
                         @endphp
-                        <span class="badge {{ $katClass }} border rounded-pill px-3 py-2" style="font-weight: 700;">
+                        <span class="badge {{ $katClass }} border rounded-pill px-3 py-2" style="font-weight: 700; font-size: 0.7rem;">
                             {{ strtoupper($edukasi->kategori) }}
                         </span>
-                        <span class="text-muted small"><i class="far fa-clock me-1"></i> 6 Menit Baca</span>
+                        <span class="text-muted small"><i class="far fa-clock me-1"></i> 6 Mnt</span>
                     </div>
                     
-                    <h1 class="fw-800 text-dark display-6 mb-3">{{ $edukasi->judul }}</h1>
+                    <h1 class="fw-800 text-dark fs-3 fs-md-2 mb-3">{{ $edukasi->judul }}</h1>
                     
-                    <div class="d-flex align-items-center gap-4 text-muted small border-top pt-4 mt-4">
+                    <div class="d-flex flex-column flex-sm-row align-items-sm-center gap-3 gap-md-4 text-muted small border-top pt-4 mt-4">
                         <div class="d-flex align-items-center gap-2">
-                            <div class="bg-light rounded-circle d-flex align-items-center justify-content-center" style="width: 36px; height: 36px;">
-                                <i class="fas fa-user-doctor"></i>
+                            <div class="bg-light rounded-circle d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
+                                <i class="fas fa-user-doctor" style="font-size: 0.8rem;"></i>
                             </div>
                             <div>
-                                <div class="fw-bold text-dark">Tim Medis SIPEKA</div>
-                                <div>Penulis Konten</div>
+                                <div class="fw-bold text-dark x-small">Tim Medis SIPEKA</div>
+                                <div class="x-small">Penulis Konten</div>
                             </div>
                         </div>
-                        <div class="vr opacity-25"></div>
-                        <div>
+                        <div class="vr d-none d-sm-block opacity-25"></div>
+                        <div class="x-small">
                             <i class="far fa-calendar-alt me-1"></i>
                             {{ optional($edukasi->published_at)->isoFormat('D MMMM YYYY') ?? $edukasi->created_at->isoFormat('D MMMM YYYY') }}
                         </div>
                     </div>
                 </header>
 
-                <div class="content-body" style="font-size: 1.125rem; line-height: 1.9; color: var(--gray-800);">
+                <div class="content-body" style="font-size: 1.05rem; line-height: 1.8; color: var(--gray-800);">
                     {!! nl2br(e($edukasi->konten)) !!}
                 </div>
 
-                <footer class="mt-5 pt-5 border-top">
+                <footer class="mt-5 pt-4 border-top">
                     <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
                         <div class="d-flex align-items-center gap-2">
-                            <span class="text-muted small">Bagikan Artikel:</span>
+                            <span class="text-muted small">Bagikan:</span>
                             <button class="btn btn-sm btn-light border rounded-circle" style="width: 32px; height: 32px;"><i class="fab fa-whatsapp text-success"></i></button>
                             <button class="btn btn-sm btn-light border rounded-circle" style="width: 32px; height: 32px;"><i class="fab fa-facebook text-primary"></i></button>
                             <button class="btn btn-sm btn-light border rounded-circle" style="width: 32px; height: 32px;"><i class="fab fa-twitter text-info"></i></button>
                         </div>
-                        <div class="text-muted small italic">
-                            ID Konten: #EDU-{{ str_pad($edukasi->id, 4, '0', STR_PAD_LEFT) }}
+                        <div class="text-muted x-small italic">
+                            ID: #EDU-{{ str_pad($edukasi->id, 4, '0', STR_PAD_LEFT) }}
                         </div>
                     </div>
                 </footer>
@@ -90,47 +90,47 @@
         <div class="card border-0 shadow-card rounded-xl overflow-hidden mb-4 position-relative">
             <div class="bg-peka-primary p-4 text-white">
                 <div class="d-flex align-items-center gap-3 mb-3">
-                    <div class="bg-white bg-opacity-20 rounded-circle d-flex align-items-center justify-content-center" style="width: 44px; height: 44px; font-size: 1.2rem;">
+                    <div class="bg-white bg-opacity-20 rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px; font-size: 1rem;">
                         <i class="fas fa-comment-medical"></i>
                     </div>
                     <h6 class="fw-800 mb-0">Konsultasi Medis</h6>
                 </div>
                 <p class="small opacity-75 mb-4">Tim bidan kami siap membantu menjawab pertanyaan anda seputar kesehatan kehamilan.</p>
-                <a href="{{ route('portal.index') }}" class="btn btn-white w-100 rounded-pill fw-800 shadow-sm">
-                    Tanya Bidan Sekarang
+                <a href="{{ route('portal.index') }}" class="btn btn-white w-100 rounded-pill fw-800 shadow-sm py-2">
+                    Tanya Bidan
                 </a>
             </div>
             <div class="p-3 bg-peka-primary-pale text-center">
-                <span class="text-peka-primary small fw-bold"><i class="fas fa-clock me-1"></i> Layanan 24 Jam untuk Darurat</span>
+                <span class="text-peka-primary x-small fw-bold"><i class="fas fa-clock me-1"></i> Layanan 24 Jam Darurat</span>
             </div>
         </div>
 
         <!-- Latest Articles with modern list -->
         <div class="card border-0 shadow-card rounded-xl overflow-hidden">
             <div class="card-header bg-white border-0 pt-4 px-4 pb-2">
-                <h6 class="fw-800 text-dark mb-0">Materi Terkait Lainnya</h6>
+                <h6 class="fw-800 text-dark mb-0">Materi Terkait</h6>
             </div>
             <div class="card-body p-0">
                 <div class="list-group list-group-flush">
                     <a href="#" class="list-group-item list-group-item-action border-0 px-4 py-3 d-flex gap-3 align-items-center">
-                        <div class="bg-light rounded-lg flex-shrink-0" style="width: 50px; height: 50px;"></div>
+                        <div class="bg-light rounded-lg flex-shrink-0" style="width: 44px; height: 44px;"></div>
                         <div>
-                            <div class="fw-bold text-dark small line-clamp-2">Pola Makan Sehat Trimester Pertama</div>
-                            <div class="text-muted" style="font-size: 0.7rem;">5 Menit Baca • Tips</div>
+                            <div class="fw-bold text-dark small line-clamp-2" style="font-size: 0.8rem;">Pola Makan Sehat Bumil</div>
+                            <div class="text-muted" style="font-size: 0.65rem;">5 Mnt Baca</div>
                         </div>
                     </a>
                     <a href="#" class="list-group-item list-group-item-action border-0 px-4 py-3 d-flex gap-3 align-items-center">
-                        <div class="bg-light rounded-lg flex-shrink-0" style="width: 50px; height: 50px;"></div>
+                        <div class="bg-light rounded-lg flex-shrink-0" style="width: 44px; height: 44px;"></div>
                         <div>
-                            <div class="fw-bold text-dark small line-clamp-2">Olahraga Ringan untuk Ibu Hamil</div>
-                            <div class="text-muted" style="font-size: 0.7rem;">3 Menit Baca • Aktivitas</div>
+                            <div class="fw-bold text-dark small line-clamp-2" style="font-size: 0.8rem;">Olahraga Ringan Hamil</div>
+                            <div class="text-muted" style="font-size: 0.65rem;">3 Mnt Baca</div>
                         </div>
                     </a>
                 </div>
-                <div class="p-4 pt-0">
+                <div class="p-4 pt-2">
                     <hr class="divider-h opacity-25">
-                    <a href="{{ route('edukasi.index') }}" class="btn btn-sm btn-peka-outline w-100 rounded-pill fw-bold">
-                        Eksplor Semua Materi
+                    <a href="{{ route('edukasi.index') }}" class="btn btn-sm btn-peka-outline w-100 rounded-pill fw-bold py-2" style="font-size: 0.75rem;">
+                        Eksplor Semua
                     </a>
                 </div>
             </div>
