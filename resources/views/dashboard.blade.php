@@ -112,12 +112,12 @@
             <div class="card-body p-0">
                 <div class="table-responsive">
                     <table class="table table-hover align-middle mb-0 border-top">
-                        <thead class="bg-light text-muted uppercase-font" style="font-size: 0.65rem;">
+                        <thead class="bg-light text-muted uppercase-font" style="font-size: 0.65rem; border-bottom: 2px solid var(--gray-200);">
                             <tr>
                                 <th class="ps-3 ps-md-4 py-3 border-0">PASIEN</th>
-                                <th class="d-none d-sm-table-cell border-0">UK</th>
-                                <th class="d-none d-md-table-cell border-0">TEMUAN (TD & PROT)</th>
-                                <th class="border-0">STATUS</th>
+                                <th class="d-none d-sm-table-cell border-0">USIA KANDUNGAN</th>
+                                <th class="d-none d-md-table-cell border-0">TANDA VITAL & LAB</th>
+                                <th class="border-0">STATUS KLINIS</th>
                                 <th class="pe-3 pe-md-4 text-end border-0">AKSI</th>
                             </tr>
                         </thead>
@@ -125,48 +125,65 @@
                             @forelse($pasien_terbaru as $p)
                             @php
                                 $bgAvatar = match($p['risiko']) {
-                                    'kritis', 'merah_kritis' => 'bg-danger text-white',
-                                    'merah' => 'bg-danger-subtle text-danger',
-                                    'kuning' => 'bg-warning-subtle text-warning',
-                                    default => 'bg-success-subtle text-success'
+                                    'kritis', 'merah_kritis' => 'bg-danger text-white border-danger-subtle',
+                                    'merah' => 'bg-danger-subtle text-danger border-white',
+                                    'kuning' => 'bg-warning-subtle text-warning border-white',
+                                    default => 'bg-success-subtle text-success border-white'
                                 };
                             @endphp
-                            <tr class="clickable-row" onclick="window.location='{{ route('pasien.show', $p['id']) }}'">
+                            <tr class="clickable-row" onclick="window.location='{{ route('pasien.show', $p['id']) }}'" style="border-bottom: 1px solid var(--gray-100); transition: all 0.2s ease;">
                                 <td class="ps-3 ps-md-4 py-3">
-                                    <div class="d-flex align-items-center gap-2 gap-md-3">
-                                        <div class="avatar-sm {{ $bgAvatar }} rounded-circle d-none d-sm-flex align-items-center justify-content-center fw-bold shadow-sm border border-white"
-                                            style="width: 36px; height: 36px; font-size: 0.9rem;">
+                                    <div class="d-flex align-items-center gap-3">
+                                        <div class="avatar-sm {{ $bgAvatar }} rounded-circle d-none d-sm-flex align-items-center justify-content-center fw-bold shadow-sm border-2"
+                                            style="width: 40px; height: 40px; font-size: 0.95rem;">
                                             {{ substr($p['nama'], 0, 1) }}
                                         </div>
                                         <div>
-                                            <div class="fw-bold text-dark small mb-1">{{ $p['nama'] }}</div>
-                                            <div class="text-hint x-small"><i class="fas fa-map-marker-alt text-peka-primary opacity-50 me-1"></i> {{ $p['desa'] }}</div>
+                                            <div class="fw-bold text-dark mb-1" style="font-size: 0.85rem;">{{ $p['nama'] }}</div>
+                                            <div class="text-hint x-small d-flex align-items-center gap-1"><i class="fas fa-map-marker-alt text-peka-primary opacity-50"></i> {{ $p['desa'] }}</div>
                                         </div>
                                     </div>
                                 </td>
-                                <td class="d-none d-sm-table-cell">
-                                    <span class="badge bg-light text-dark border fw-bold px-2 py-1 x-small shadow-sm">{{ $p['uk'] }} Mg</span>
-                                </td>
-                                <td class="d-none d-md-table-cell">
-                                    <div class="d-flex align-items-center gap-2">
-                                        <div class="text-dark x-small fw-bold px-2 py-1 bg-light rounded-2 border-start border-3 border-secondary">{{ $p['td'] }}</div>
-                                        <span class="text-hint x-small">Prot: <strong class="{{ $p['protein'] === 'Negatif' ? 'text-success' : 'text-danger' }}">{{ $p['protein'] }}</strong></span>
+                                <td class="d-none d-sm-table-cell align-middle">
+                                    <div class="d-inline-flex align-items-center gap-2 bg-light border rounded-pill px-3 py-1 shadow-sm">
+                                        <i class="fas fa-baby text-peka-primary opacity-75 x-small"></i>
+                                        <span class="text-dark fw-bold" style="font-size: 0.75rem;">{{ $p['uk'] }} <span class="fw-normal text-muted">Mg</span></span>
                                     </div>
                                 </td>
-                                <td>
-                                    <span class="badge-risk-premium {{ $p['risiko'] }} shadow-sm" style="font-size: 0.6rem; padding: 5px 12px;">
+                                <td class="d-none d-md-table-cell align-middle">
+                                    <div class="d-flex align-items-center gap-3">
+                                        <div class="d-flex align-items-center gap-2">
+                                            <i class="fas fa-heart-pulse text-danger x-small opacity-75"></i>
+                                            <span class="text-dark fw-bold border-bottom border-danger-subtle border-2 pb-1" style="font-size: 0.8rem;">{{ $p['td'] }}</span>
+                                        </div>
+                                        <div class="vr opacity-25" style="height: 15px;"></div>
+                                        <div class="d-flex align-items-center gap-1 x-small text-muted">
+                                            <span>Prot:</span>
+                                            <strong class="px-2 py-1 rounded-2 {{ $p['protein'] === 'Negatif' ? 'bg-success-subtle text-success' : 'bg-danger-subtle text-danger' }}" style="font-size: 0.7rem;">{{ $p['protein'] }}</strong>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="align-middle">
+                                    <span class="badge-risk-premium {{ $p['risiko'] }} shadow-sm" style="font-size: 0.65rem; padding: 6px 14px; letter-spacing: 0.05em;">
                                         {{ strtoupper($p['risiko_label']) }}
                                     </span>
                                 </td>
-                                <td class="pe-3 pe-md-4 text-end">
-                                    <a href="{{ route('pasien.show', $p['id']) }}" class="btn btn-sm btn-white border shadow-sm p-1 px-2 text-primary rounded-3 hvr-icon-forward" title="Buka Rekam Medis">
-                                        <span class="d-none d-xl-inline x-small fw-bold me-1">Buka</span>
+                                <td class="pe-3 pe-md-4 text-end align-middle">
+                                    <a href="{{ route('pasien.show', $p['id']) }}" class="btn btn-sm btn-white border shadow-sm px-3 text-primary rounded-pill hvr-icon-forward d-inline-flex align-items-center gap-2" title="Buka Rekam Medis">
+                                        <span class="d-none d-xl-inline x-small fw-bold">Detail</span>
                                         <i class="fas fa-arrow-right x-small hvr-icon"></i>
                                     </a>
                                 </td>
                             </tr>
                             @empty
-                            <tr><td colspan="5" class="text-center py-5 text-muted x-small">Tidak ada aktivitas pasien baru.</td></tr>
+                            <tr>
+                                <td colspan="5" class="text-center py-5">
+                                    <div class="empty-state">
+                                        <div class="icon-box-sm bg-light text-muted rounded-circle mx-auto mb-3" style="width: 48px; height: 48px;"><i class="fas fa-user-slash"></i></div>
+                                        <p class="text-muted small fw-bold mb-0">Belum ada pasien yang diperiksa.</p>
+                                    </div>
+                                </td>
+                            </tr>
                             @endforelse
                         </tbody>
                     </table>
