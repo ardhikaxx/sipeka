@@ -18,6 +18,7 @@
 </head>
 <body>
 <div class="sipeka-layout">
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
   @include('layouts.partials.sidebar')
   
   <main class="sipeka-main">

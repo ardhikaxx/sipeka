@@ -168,6 +168,25 @@ body { font-family: var(--font-body); font-size: 14px; line-height: 1.6; color: 
 .sipeka-topbar { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(12px); padding: 0 28px; height: 70px; border-bottom: 1px solid var(--gray-200); display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 50; }
 .sipeka-content { padding: 30px; flex: 1; }
 
+.sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(15, 23, 42, 0.5);
+    backdrop-filter: blur(4px);
+    z-index: 90;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.sidebar-overlay.is-active {
+    display: block;
+    opacity: 1;
+}
+
 @media (max-width: 992px) {
   .sipeka-sidebar { transform: translateX(-100%); }
   .sipeka-sidebar.is-open { transform: translateX(0); }
