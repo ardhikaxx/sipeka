@@ -206,17 +206,22 @@
       outline: none;
     }
 
+    .input-group-wrapper {
+      position: relative;
+    }
+
     .input-icon {
       position: absolute;
       left: 18px;
-      top: 42px;
+      top: 50%;
+      transform: translateY(-50%);
       color: #94A3B8;
       pointer-events: none;
       font-size: 1rem;
     }
 
     @media (min-width: 576px) {
-      .input-icon { top: 46px; font-size: 1.1rem; }
+      .input-icon { font-size: 1.1rem; }
     }
 
     .has-icon .form-control-peka {
@@ -295,16 +300,20 @@
 
       <form method="POST" action="{{ route('login.post') }}">
         @csrf
-        <div class="mb-3 position-relative has-icon">
+        <div class="mb-3">
           <label class="form-label">Email Akun</label>
-          <i class="fas fa-envelope input-icon"></i>
-          <input type="email" id="email" name="email" class="form-control-peka" placeholder="Masukkan email anda" value="{{ old('email') }}" required autofocus>
+          <div class="input-group-wrapper has-icon">
+            <i class="fas fa-envelope input-icon"></i>
+            <input type="email" id="email" name="email" class="form-control-peka" placeholder="Masukkan email anda" value="{{ old('email') }}" required autofocus>
+          </div>
         </div>
 
-        <div class="mb-4 position-relative has-icon">
+        <div class="mb-4">
           <label class="form-label">Password</label>
-          <i class="fas fa-lock input-icon"></i>
-          <input type="password" id="password" name="password" class="form-control-peka" placeholder="Masukkan password anda" required>
+          <div class="input-group-wrapper has-icon">
+            <i class="fas fa-lock input-icon"></i>
+            <input type="password" id="password" name="password" class="form-control-peka" placeholder="Masukkan password anda" required>
+          </div>
         </div>
 
         <button type="submit" class="btn-peka">
