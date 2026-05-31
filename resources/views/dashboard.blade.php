@@ -4,7 +4,7 @@
 @section('page_title', 'Dasboard Pelayanan Kesehatan Ibu')
 
 @section('content')
-<div class="premium-hero mb-4 mb-md-5 p-4 p-md-5">
+<div class="premium-hero mb-3 mb-md-4 p-4 p-md-5">
     <div class="hero-glow"></div>
     <div class="row align-items-center position-relative" style="z-index: 2;">
         <div class="col-12 col-lg-8 text-center text-lg-start">
@@ -42,7 +42,7 @@
 </div>
 
 <!-- Dynamic Stats Cards -->
-<div class="row g-2 g-md-3 mb-4">
+<div class="row g-2 g-md-3 mb-3">
     <div class="col-6 col-xl-3">
         <div class="card-stat-premium primary h-100 p-3 p-md-4">
             <div class="card-stat-premium__icon d-none d-sm-flex"><i class="fas fa-hospital-user"></i></div>
@@ -165,7 +165,6 @@
                 </div>
             </div>
         </div>
-...
 
         <!-- Command Emergency Center -->
         @if(count($laporan_darurat) > 0)
