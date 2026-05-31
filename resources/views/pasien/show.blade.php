@@ -67,10 +67,13 @@
                             </div>
                         </div>
                     @else
-                        <div class="text-center py-2">
+                        <div class="text-center py-2 mb-2">
                             <i class="fas fa-info-circle text-muted mb-1 fs-4"></i>
                             <p class="x-small text-muted mb-0">Tidak ada kehamilan aktif.</p>
                         </div>
+                        <button class="btn btn-white border w-100 py-2 small fw-bold" data-bs-toggle="modal" data-bs-target="#modalEditPasien">
+                            <i class="fas fa-edit me-1"></i> EDIT DATA PASIEN
+                        </button>
                     @endif
                 </div>
             </div>
