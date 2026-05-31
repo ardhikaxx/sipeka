@@ -8,66 +8,68 @@
 <div class="card border-0 shadow-card rounded-xl mb-4 overflow-hidden">
     <div class="card-body p-0">
         <div class="row g-0">
-            <div class="col-md-8 p-4">
-                <div class="d-flex align-items-start gap-4">
-                    <div class="avatar-lg bg-danger text-white rounded-3 d-flex align-items-center justify-content-center shadow-sm" style="width: 80px; height: 80px; font-size: 2.5rem;">
+            <div class="col-12 col-lg-8 p-3 p-md-4">
+                <div class="d-flex flex-column flex-md-row align-items-center align-items-md-start gap-3 gap-md-4 text-center text-md-start">
+                    <div class="avatar-lg bg-danger text-white rounded-4 d-flex align-items-center justify-content-center shadow-sm flex-shrink-0" style="width: 70px; height: 70px; font-size: 2rem;">
                         <i class="fas fa-person-pregnant"></i>
                     </div>
-                    <div class="grow">
-                        <div class="d-flex justify-content-between align-items-start">
+                    <div class="grow w-100">
+                        <div class="d-flex flex-column flex-sm-row justify-content-between align-items-center align-items-sm-start gap-2 mb-3">
                             <div>
-                                <h3 class="fw-bold mb-1">{{ $pasien->nama }}</h3>
-                                <div class="text-muted d-flex align-items-center gap-3 mb-3">
+                                <h4 class="fw-bold mb-1">{{ $pasien->nama }}</h4>
+                                <div class="text-muted d-flex flex-wrap justify-content-center justify-content-md-start align-items-center gap-2 gap-md-3 small">
                                     <span><i class="fas fa-id-card me-1"></i> {{ $pasien->nik }}</span>
-                                    <span><i class="fas fa-cake-candles me-1"></i> {{ \Carbon\Carbon::parse($pasien->tgl_lahir)->age }} Tahun</span>
-                                    <span><i class="fas fa-phone me-1"></i> {{ $pasien->no_hp ?? '-' }}</span>
+                                    <span class="d-none d-sm-inline opacity-25">|</span>
+                                    <span><i class="fas fa-cake-candles me-1"></i> {{ \Carbon\Carbon::parse($pasien->tgl_lahir)->age }} Thn</span>
                                 </div>
                             </div>
-                            <div class="text-end">
-                                <span class="badge bg-peka-primary-pale text-peka-primary px-3 py-2 rounded-pill fw-bold">
+                            <div class="mt-1 mt-sm-0">
+                                <span class="badge bg-peka-primary-pale text-peka-primary px-3 py-2 rounded-pill fw-bold small">
                                     G{{ $kehamilanAktif?->gravida ?? 0 }} P{{ $kehamilanAktif?->para ?? 0 }} A{{ $kehamilanAktif?->abortus ?? 0 }}
                                 </span>
                             </div>
                         </div>
-                        <div class="p-3 bg-light rounded-3 d-flex gap-4">
-                            <div>
-                                <div class="text-hint mb-1">HPHT</div>
-                                <div class="fw-bold">{{ $kehamilanAktif ? \Carbon\Carbon::parse($kehamilanAktif->hpht)->format('d M Y') : '-' }}</div>
-                            </div>
-                            <div class="border-start ps-4">
-                                <div class="text-hint mb-1">Taksiran Persalinan (TP)</div>
-                                <div class="fw-bold text-primary">{{ $kehamilanAktif ? \Carbon\Carbon::parse($kehamilanAktif->tp)->format('d M Y') : '-' }}</div>
-                            </div>
-                            <div class="border-start ps-4">
-                                <div class="text-hint mb-1">Alamat</div>
-                                <div class="fw-bold text-truncate" style="max-width: 250px;">{{ $pasien->alamat }}</div>
+                        <div class="p-3 bg-light rounded-3">
+                            <div class="row g-3">
+                                <div class="col-6 col-md-4 text-center text-md-start">
+                                    <div class="text-hint x-small mb-1">HPHT</div>
+                                    <div class="fw-bold small">{{ $kehamilanAktif ? \Carbon\Carbon::parse($kehamilanAktif->hpht)->format('d/m/y') : '-' }}</div>
+                                </div>
+                                <div class="col-6 col-md-4 text-center text-md-start border-start-md">
+                                    <div class="text-hint x-small mb-1">TP (Taksiran)</div>
+                                    <div class="fw-bold text-primary small">{{ $kehamilanAktif ? \Carbon\Carbon::parse($kehamilanAktif->tp)->format('d/m/y') : '-' }}</div>
+                                </div>
+                                <div class="col-12 col-md-4 text-center text-md-start border-start-md">
+                                    <div class="text-hint x-small mb-1">Wilayah / Alamat</div>
+                                    <div class="fw-bold text-truncate small mx-auto mx-md-0" style="max-width: 200px;">{{ $pasien->alamat }}</div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 bg-light border-start p-4 d-flex flex-column justify-content-center">
+            <div class="col-12 col-lg-4 bg-light border-start-lg p-3 p-md-4 d-flex flex-column justify-content-center">
                 <div class="d-grid gap-2">
                     @if($kehamilanAktif)
-                        <a href="{{ route('kunjungan.create', ['kehamilan_id' => $kehamilanAktif->id]) }}" class="btn btn-peka-primary py-2 shadow-sm">
-                            <i class="fas fa-plus me-2"></i> Input Kunjungan ANC
+                        <a href="{{ route('kunjungan.create', ['kehamilan_id' => $kehamilanAktif->id]) }}" class="btn btn-peka-primary py-2 shadow-sm fw-bold small">
+                            <i class="fas fa-plus me-2"></i> INPUT KUNJUNGAN ANC
                         </a>
                         <div class="row g-2">
                             <div class="col-6">
-                                <a href="{{ route('persalinan.create', $kehamilanAktif) }}" class="btn btn-peka-outline w-100 py-2">
-                                    <i class="fas fa-baby me-1"></i> Persalinan
+                                <a href="{{ route('persalinan.create', $kehamilanAktif) }}" class="btn btn-peka-outline w-100 py-2 small fw-bold">
+                                    <i class="fas fa-baby me-1"></i> PERSALINAN
                                 </a>
                             </div>
                             <div class="col-6">
-                                <button class="btn btn-light border w-100 py-2" data-bs-toggle="modal" data-bs-target="#modalEditPasien">
-                                    <i class="fas fa-edit me-1"></i> Edit Profil
+                                <button class="btn btn-white border w-100 py-2 small fw-bold" data-bs-toggle="modal" data-bs-target="#modalEditPasien">
+                                    <i class="fas fa-edit me-1"></i> EDIT
                                 </button>
                             </div>
                         </div>
                     @else
-                        <div class="text-center py-3">
-                            <i class="fas fa-info-circle text-muted mb-2 fa-2x"></i>
-                            <p class="small text-muted mb-0">Pasien tidak memiliki kehamilan aktif saat ini.</p>
+                        <div class="text-center py-2">
+                            <i class="fas fa-info-circle text-muted mb-1 fs-4"></i>
+                            <p class="x-small text-muted mb-0">Tidak ada kehamilan aktif.</p>
                         </div>
                     @endif
                 </div>
@@ -78,26 +80,26 @@
 
 @if($kehamilanAktif)
 <!-- Main Tabs Navigation -->
-<div class="nav-wrapper mb-4">
-    <ul class="nav nav-pills gap-2 p-1 bg-white rounded-pill shadow-sm d-inline-flex" id="pills-tab" role="tablist">
+<div class="nav-wrapper mb-4 scrollbar-hidden">
+    <ul class="nav nav-pills flex-nowrap gap-2 p-1 bg-white rounded-pill shadow-sm d-inline-flex" id="pills-tab" role="tablist">
         <li class="nav-item" role="presentation">
-            <button class="nav-link active rounded-pill px-4 py-2" id="pills-riwayat-tab" data-bs-toggle="pill" data-bs-target="#pills-riwayat" type="button" role="tab">
-                <i class="fas fa-notes-medical me-2"></i> Riwayat ANC
+            <button class="nav-link active rounded-pill px-3 px-md-4 py-2 small" id="pills-riwayat-tab" data-bs-toggle="pill" data-bs-target="#pills-riwayat" type="button" role="tab">
+                <i class="fas fa-notes-medical me-1 me-md-2"></i> Riwayat
             </button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link rounded-pill px-4 py-2" id="pills-grafik-tab" data-bs-toggle="pill" data-bs-target="#pills-grafik" type="button" role="tab">
-                <i class="fas fa-chart-line me-2"></i> Tren Vital
+            <button class="nav-link rounded-pill px-3 px-md-4 py-2 small" id="pills-grafik-tab" data-bs-toggle="pill" data-bs-target="#pills-grafik" type="button" role="tab">
+                <i class="fas fa-chart-line me-1 me-md-2"></i> Tren
             </button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link rounded-pill px-4 py-2" id="pills-jadwal-tab" data-bs-toggle="pill" data-bs-target="#pills-jadwal" type="button" role="tab">
-                <i class="fas fa-calendar-alt me-2"></i> Jadwal
+            <button class="nav-link rounded-pill px-3 px-md-4 py-2 small" id="pills-jadwal-tab" data-bs-toggle="pill" data-bs-target="#pills-jadwal" type="button" role="tab">
+                <i class="fas fa-calendar-alt me-1 me-md-2"></i> Jadwal
             </button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link rounded-pill px-4 py-2" id="pills-rujukan-tab" data-bs-toggle="pill" data-bs-target="#pills-rujukan" type="button" role="tab">
-                <i class="fas fa-ambulance me-2"></i> Rujukan
+            <button class="nav-link rounded-pill px-3 px-md-4 py-2 small" id="pills-rujukan-tab" data-bs-toggle="pill" data-bs-target="#pills-rujukan" type="button" role="tab">
+                <i class="fas fa-ambulance me-1 me-md-2"></i> Rujukan
             </button>
         </li>
     </ul>
@@ -107,73 +109,71 @@
     <!-- Riwayat Kunjungan Tab -->
     <div class="tab-pane fade show active" id="pills-riwayat" role="tabpanel">
         <div class="card border-0 shadow-card rounded-xl">
-            <div class="card-header bg-white py-3 px-4 d-flex justify-content-between align-items-center">
-                <h5 class="section-title mb-0">Riwayat Kunjungan ANC</h5>
-                <span class="badge bg-light text-dark border">{{ $kehamilanAktif->kunjunganAncs->count() }} Kali Kunjungan</span>
+            <div class="card-header bg-white py-3 px-3 px-md-4 d-flex justify-content-between align-items-center">
+                <h6 class="section-title mb-0">Riwayat ANC</h6>
+                <span class="badge bg-light text-dark border small">{{ $kehamilanAktif->kunjunganAncs->count() }} Kunjungan</span>
             </div>
             <div class="card-body p-0">
                 @if($kehamilanAktif->kunjunganAncs->isEmpty())
                     <div class="empty-state py-5">
-                        <i class="fas fa-stethoscope fa-3x text-light mb-3"></i>
-                        <h6>Belum Ada Riwayat Kunjungan</h6>
-                        <p class="text-muted">Klik tombol "Input Kunjungan" untuk mencatat pemeriksaan pertama.</p>
+                        <i class="fas fa-stethoscope fa-2x text-light mb-3 opacity-50"></i>
+                        <h6 class="small fw-bold">Belum Ada Kunjungan</h6>
                     </div>
                 @else
                     <div class="table-responsive">
                         <table class="table table-hover align-middle mb-0">
-                            <thead class="bg-light text-muted small fw-bold">
+                            <thead class="bg-light text-muted x-small fw-bold">
                                 <tr>
-                                    <th class="ps-4">TANGGAL</th>
+                                    <th class="ps-3 ps-md-4">TANGGAL</th>
                                     <th>UK</th>
-                                    <th>BB & IMT</th>
-                                    <th>VITAL (TD/MAP)</th>
-                                    <th>LAB (PROTEIN)</th>
-                                    <th>STATUS RISIKO</th>
-                                    <th class="pe-4 text-end">AKSI</th>
+                                    <th class="d-none d-md-table-cell">BB & IMT</th>
+                                    <th>VITAL</th>
+                                    <th class="d-none d-sm-table-cell text-center">PROT.</th>
+                                    <th>RISIKO</th>
+                                    <th class="pe-3 pe-md-4 text-end">AKSI</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($kehamilanAktif->kunjunganAncs as $kunjungan)
+                                @foreach($kehamilanAktif->kunjunganAncs->sortByDesc('tanggal') as $kunjungan)
                                 @php
                                     $level = $kunjungan->skriningRisiko?->level_risiko ?? 'HIJAU';
                                     $badge = $level === 'MERAH_KRITIS' ? 'critical' : ($level === 'MERAH' ? 'red' : ($level === 'KUNING' ? 'yellow' : 'green'));
                                 @endphp
                                 <tr>
-                                    <td class="ps-4">
-                                        <div class="fw-bold">{{ $kunjungan->tanggal->format('d M Y') }}</div>
-                                        <div class="text-hint">{{ $kunjungan->tanggal->diffForHumans() }}</div>
+                                    <td class="ps-3 ps-md-4 py-3">
+                                        <div class="fw-bold small">{{ $kunjungan->tanggal->format('d/m/y') }}</div>
+                                        <div class="text-hint x-small">{{ $kunjungan->tanggal->diffForHumans() }}</div>
                                     </td>
-                                    <td><span class="badge bg-light text-dark border">{{ $kunjungan->usia_kehamilan_minggu }} Mgg</span></td>
-                                    <td>
-                                        <div class="fw-medium text-dark">{{ $kunjungan->berat_badan }} kg</div>
-                                        <div class="text-hint">IMT: {{ $kunjungan->imt ?? '-' }}</div>
+                                    <td><span class="badge bg-light text-dark border small">{{ $kunjungan->usia_kehamilan_minggu }} Mg</span></td>
+                                    <td class="d-none d-md-table-cell">
+                                        <div class="fw-medium text-dark small">{{ $kunjungan->berat_badan }} kg</div>
+                                        <div class="text-hint x-small">IMT: {{ $kunjungan->imt ?? '-' }}</div>
                                     </td>
                                     <td>
-                                        <span class="vital-chip vital-chip--td">
-                                            <i class="fas fa-heart-pulse me-1"></i> {{ $kunjungan->tekanan_darah_sistolik }}/{{ $kunjungan->tekanan_darah_diastolik }}
+                                        <span class="vital-chip vital-chip--td small px-2 py-1">
+                                            {{ $kunjungan->tekanan_darah_sistolik }}/{{ $kunjungan->tekanan_darah_diastolik }}
                                         </span>
-                                        <div class="text-hint mt-1">MAP: {{ $kunjungan->map }} mmHg</div>
                                     </td>
-                                    <td>
-                                        <span class="vital-chip {{ $kunjungan->protein_urine === 'Negatif' ? 'vital-chip--normal' : 'vital-chip--protein' }}">
+                                    <td class="d-none d-sm-table-cell text-center">
+                                        <span class="vital-chip {{ $kunjungan->protein_urine === 'Negatif' ? 'vital-chip--normal' : 'vital-chip--protein' }} x-small px-2">
                                             {{ $kunjungan->protein_urine }}
                                         </span>
                                     </td>
                                     <td>
-                                        <span class="badge-risk badge-risk--{{ $badge }}">
+                                        <span class="badge-risk badge-risk--{{ $badge }}" style="font-size: 0.6rem;">
                                             {{ str_replace('_', ' ', $kunjungan->skriningRisiko?->status ?? 'NORMAL') }}
                                         </span>
                                     </td>
-                                    <td class="pe-4 text-end">
+                                    <td class="pe-3 pe-md-4 text-end">
                                         <div class="dropdown">
                                             <button class="btn btn-sm btn-light border" type="button" data-bs-toggle="dropdown">
-                                                <i class="fas fa-ellipsis-h"></i>
+                                                <i class="fas fa-ellipsis-v"></i>
                                             </button>
                                             <ul class="dropdown-menu dropdown-menu-end shadow border-0">
-                                                <li><a class="dropdown-item py-2" href="{{ route('kunjungan.show', $kunjungan) }}"><i class="fas fa-file-invoice text-muted me-2"></i> Detail Pemeriksaan</a></li>
+                                                <li><a class="dropdown-item py-2 small" href="{{ route('kunjungan.show', $kunjungan) }}"><i class="fas fa-file-invoice text-muted me-2"></i> Detail</a></li>
                                                 @if(in_array($level, ['KUNING','MERAH','MERAH_KRITIS']))
                                                 <li><hr class="dropdown-divider"></li>
-                                                <li><a class="dropdown-item py-2 text-danger fw-bold" href="{{ route('rujukan.create', ['kunjungan_id' => $kunjungan->id]) }}"><i class="fas fa-ambulance me-2"></i> Buat Rujukan</a></li>
+                                                <li><a class="dropdown-item py-2 text-danger fw-bold small" href="{{ route('rujukan.create', ['kunjungan_id' => $kunjungan->id]) }}"><i class="fas fa-ambulance me-2"></i> Rujukan</a></li>
                                                 @endif
                                             </ul>
                                         </div>
