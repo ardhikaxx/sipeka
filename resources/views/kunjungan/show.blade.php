@@ -53,7 +53,7 @@
             <div class="col-12 col-lg-4">
                 <!-- Data Pasien Card -->
                 <div class="card border-0 shadow-card rounded-xl mb-3 mb-lg-4 overflow-hidden">
-                    <div class="card-header bg-peka-primary text-white py-3 px-3 px-md-4 border-0">
+                    <div class="card-header bg-peka-primary text-dark py-3 px-3 px-md-4 border-0">
                         <h6 class="mb-0 fw-bold small">Informasi Pasien</h6>
                     </div>
                     <div class="card-body p-3 p-md-4 text-center text-md-start">
@@ -85,7 +85,7 @@
                 <div class="card border-0 shadow-card rounded-xl overflow-hidden">
                     <div class="card-body p-3 p-md-4">
                         <div class="d-flex align-items-center gap-3">
-                            <div class="bg-light text-secondary rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width: 40px; height: 40px;">
+                            <div class="bg-light text-secondary rounded-circle d-flex align-items-center justify-content-center shrink-0" style="width: 40px; height: 40px;">
                                 <i class="fas fa-user-md small"></i>
                             </div>
                             <div class="grow overflow-hidden">
