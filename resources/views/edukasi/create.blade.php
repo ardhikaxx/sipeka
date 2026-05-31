@@ -18,20 +18,20 @@
     
     <form method="POST" action="{{ route('admin.edukasi.store') }}">
         @csrf
-        <div class="card-body p-4">
-            <div class="row g-4">
-                <div class="col-md-8">
+        <div class="card-body p-3 p-md-4">
+            <div class="row g-3 g-md-4">
+                <div class="col-12 col-md-8">
                     <div class="input-group-peka">
-                        <label class="form-label form-label-required">Judul Materi</label>
+                        <label class="form-label form-label-required small fw-bold">Judul Materi</label>
                         <div class="position-relative">
                             <i class="fas fa-heading input-icon"></i>
-                            <input name="judul" class="form-control-peka" placeholder="Contoh: Pentingnya Menjaga Tekanan Darah" value="{{ old('judul') }}" required>
+                            <input name="judul" class="form-control-peka" placeholder="Contoh: Menjaga Tekanan Darah" value="{{ old('judul') }}" required>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-12 col-md-4">
                     <div class="input-group-peka">
-                        <label class="form-label form-label-required">Kategori Konten</label>
+                        <label class="form-label form-label-required small fw-bold">Kategori Konten</label>
                         <div class="position-relative">
                             <i class="fas fa-tags input-icon"></i>
                             <select name="kategori" class="form-control-peka" required>
@@ -45,19 +45,19 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-7">
+                <div class="col-12 col-lg-7">
                     <div class="input-group-peka">
-                        <label class="form-label">Thumbnail / URL Gambar</label>
+                        <label class="form-label small fw-bold">Thumbnail / URL Gambar</label>
                         <div class="position-relative">
                             <i class="fas fa-image input-icon"></i>
                             <input name="thumbnail" class="form-control-peka" placeholder="https://link-gambar.com/foto.jpg" value="{{ old('thumbnail') }}">
                         </div>
-                        <div class="text-hint mt-2">Gunakan URL gambar publik untuk sampul materi.</div>
+                        <div class="text-hint mt-2 x-small">URL gambar publik untuk sampul materi.</div>
                     </div>
                 </div>
-                <div class="col-md-5">
+                <div class="col-12 col-lg-5">
                     <div class="input-group-peka">
-                        <label class="form-label">Tanggal Publikasi</label>
+                        <label class="form-label small fw-bold">Tanggal Publikasi</label>
                         <div class="position-relative">
                             <i class="fas fa-calendar-check input-icon"></i>
                             <input type="datetime-local" name="published_at" class="form-control-peka" value="{{ old('published_at', now()->format('Y-m-d\TH:i')) }}">
@@ -66,19 +66,21 @@
                 </div>
                 <div class="col-12">
                     <div class="input-group-peka">
-                        <label class="form-label form-label-required">Isi Materi / Konten</label>
-                        <textarea name="konten" class="form-control-peka" rows="12" placeholder="Tuliskan isi materi secara detail di sini..." required>{{ old('konten') }}</textarea>
+                        <label class="form-label form-label-required small fw-bold">Isi Materi / Konten</label>
+                        <textarea name="konten" class="form-control-peka" rows="10" placeholder="Tuliskan isi materi secara detail di sini..." required>{{ old('konten') }}</textarea>
                     </div>
-                    <div class="text-hint mt-2"><i class="fas fa-circle-info me-1"></i> Gunakan bahasa yang mudah dipahami oleh ibu hamil.</div>
+                    <div class="text-hint mt-2 small"><i class="fas fa-circle-info me-1"></i> Gunakan bahasa yang mudah dipahami ibu hamil.</div>
                 </div>
             </div>
         </div>
         
-        <div class="card-footer bg-light border-0 p-4 text-end">
-            <button type="reset" class="btn btn-light border px-4 me-2 rounded-pill">Reset</button>
-            <button type="submit" class="btn btn-peka-primary px-5 rounded-pill shadow-sm">
-                <i class="fas fa-paper-plane me-2"></i> Publikasikan Materi
-            </button>
+        <div class="card-footer bg-light border-0 p-3 p-md-4">
+            <div class="d-flex flex-column flex-sm-row justify-content-end gap-2">
+                <button type="reset" class="btn btn-light border px-4 rounded-pill order-2 order-sm-1">Reset</button>
+                <button type="submit" class="btn btn-peka-primary px-5 rounded-pill shadow-sm order-1 order-sm-2">
+                    <i class="fas fa-paper-plane me-2"></i> Publikasikan
+                </button>
+            </div>
         </div>
     </form>
 </div>
