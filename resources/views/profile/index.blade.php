@@ -37,7 +37,7 @@
                         </div>
                     </div>
                     <div class="d-flex align-items-center gap-3 p-3 bg-light rounded-3 border border-white shadow-sm">
-                        <div class="icon-box-sm bg-info-subtle text-info rounded-circle flex-shrink-0"><i class="fas fa-shield-check"></i></div>
+                        <div class="icon-box-sm bg-info-subtle text-info rounded-circle flex-shrink-0"><i class="fas fa-user-check"></i></div>
                         <div class="grow">
                             <div class="text-hint x-small uppercase-font mb-1">STATUS AKUN</div>
                             <div class="fw-bold text-dark small">Aktif & Terverifikasi</div>
