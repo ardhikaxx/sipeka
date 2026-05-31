@@ -20,11 +20,16 @@
     <div class="col-12 col-lg-8">
         <article class="card border-0 shadow-card rounded-xl overflow-hidden mb-4">
             <!-- Hero Image/Banner -->
-            @if($edukasi->thumbnail)
-                <div class="ratio ratio-16x9 ratio-md-21x9 bg-peka-primary-pale overflow-hidden">
-                    <img src="{{ $edukasi->thumbnail }}" class="object-fit-cover" alt="{{ $edukasi->judul }}">
+            <div class="ratio ratio-16x9 ratio-md-21x9 bg-peka-primary-pale overflow-hidden">
+                @if($edukasi->thumbnail)
+                    <img src="{{ $edukasi->thumbnail }}" class="object-fit-cover w-100 h-100" alt="{{ $edukasi->judul }}"
+                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                @endif
+                <div class="w-100 h-100 align-items-center justify-content-center bg-gradient-premium text-white" 
+                     style="{{ $edukasi->thumbnail ? 'display: none;' : 'display: flex;' }}">
+                    <i class="fas {{ $edukasi->kategori === 'Video' ? 'fa-circle-play' : 'fa-file-lines' }} display-1 opacity-25"></i>
                 </div>
-            @endif
+            </div>
 
             <div class="card-body p-3 p-md-4 p-lg-5">
                 <header class="mb-4 mb-md-5">
