@@ -140,8 +140,8 @@
                     </div>
                     @endif
                 </div>
-                <div class="col-lg-5 d-none d-lg-block text-end">
-                    <img src="https://img.freepik.com/free-vector/pregnant-woman-concept-illustration_114360-3103.jpg" class="img-fluid rounded-4 shadow-lg border border-white border-opacity-20" style="max-height: 220px; mix-blend-mode: multiply; opacity: 0.9;" alt="Pregnancy">
+                <div class="col-lg-5 d-none d-lg-block text-end pe-4">
+                    <i class="fas fa-hand-holding-medical text-white opacity-25" style="font-size: 10rem; transform: rotate(-10deg);"></i>
                 </div>
             </div>
         </div>
@@ -273,7 +273,7 @@
                         <h6 class="fw-bold mb-3 small"><i class="fas fa-calendar-alt me-2"></i> Jadwal Periksa</h6>
                         @php $nextJadwal = $kehamilanAktif?->jadwalKunjungans?->where('status', 'Terjadwal')->first(); @endphp
                         @if($nextJadwal)
-                            <div class="bg-white bg-opacity-20 rounded-3 p-3 mb-3 border border-white border-opacity-20 d-inline-block d-lg-block w-100">
+                            <div class="bg-white bg-opacity-20 rounded-3 p-3 mb-3 border border-white border-opacity-20 d-inline-block d-lg-block w-100 text-dark">
                                 <div class="h3 fw-bold mb-0 small">{{ $nextJadwal->tanggal_rencana->format('d M Y') }}</div>
                             </div>
                             <p class="x-small mb-0 opacity-80">Siapkan buku KIA dan tetap semangat ya Bunda!</p>
