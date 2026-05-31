@@ -81,12 +81,12 @@ class DatabaseSeeder extends Seeder
                 );
             }
 
-            // --- 3. MASSIVE PATIENT SEEDING (150 Patients) ---
-            $firstNames = ['Siti', 'Dewi', 'Nurul', 'Aminah', 'Rina', 'Indah', 'Lani', 'Eka', 'Siska', 'Mega', 'Putri', 'Rahayu', 'Lestari', 'Hidayah', 'Marlina', 'Utami', 'Wulan', 'Fitri', 'Ayu', 'Kartika', 'Bunga', 'Cahaya', 'Dian', 'Endah', 'Gita', 'Hana', 'Intan', 'Juwita', 'Kania', 'Laras'];
-            $lastNames = ['Rahayu', 'Lestari', 'Hidayah', 'Putri', 'Marlina', 'Sari', 'Wijaya', 'Kusuma', 'Pratiwi', 'Anggraini', 'Sulistyo', 'Wulandari', 'Permata', 'Shalihah', 'Aulia'];
-            $villages = ['Kaliwates', 'Sumbersari', 'Patrang', 'Ajung', 'Gebang', 'Antirogo', 'Jember Lor', 'Tegal Besar', 'Mangli', 'Karangrejo', 'Wirolegi', 'Kranjingan'];
+            // --- 3. MASSIVE PATIENT SEEDING (400 Patients) ---
+            $firstNames = ['Siti', 'Dewi', 'Nurul', 'Aminah', 'Rina', 'Indah', 'Lani', 'Eka', 'Siska', 'Mega', 'Putri', 'Rahayu', 'Lestari', 'Hidayah', 'Marlina', 'Utami', 'Wulan', 'Fitri', 'Ayu', 'Kartika', 'Bunga', 'Cahaya', 'Dian', 'Endah', 'Gita', 'Hana', 'Intan', 'Juwita', 'Kania', 'Laras', 'Nia', 'Risma', 'Yuni', 'Tari', 'Ratna'];
+            $lastNames = ['Rahayu', 'Lestari', 'Hidayah', 'Putri', 'Marlina', 'Sari', 'Wijaya', 'Kusuma', 'Pratiwi', 'Anggraini', 'Sulistyo', 'Wulandari', 'Permata', 'Shalihah', 'Aulia', 'Astuti', 'Saputri', 'Maharani'];
+            $villages = ['Kaliwates', 'Sumbersari', 'Patrang', 'Ajung', 'Gebang', 'Antirogo', 'Jember Lor', 'Tegal Besar', 'Mangli', 'Karangrejo', 'Wirolegi', 'Kranjingan', 'Rambipuji', 'Balung', 'Kencong'];
 
-            for ($i = 1; $i <= 150; $i++) {
+            for ($i = 1; $i <= 400; $i++) {
                 $nik = '3509' . str_pad($i + rand(100000000000, 900000000000), 12, '0', STR_PAD_LEFT);
                 $nama = $firstNames[array_rand($firstNames)] . ' ' . $lastNames[array_rand($lastNames)];
                 $email = Str::slug($nama) . $i . '@sipeka.local';
@@ -114,14 +114,14 @@ class DatabaseSeeder extends Seeder
 
                 // --- 4. VARIATIVE PREGNANCY STATUS ---
                 $roll = rand(1, 100);
-                if ($roll <= 20) {
-                    $status = 'selesai'; // 20% finished
+                if ($roll <= 15) {
+                    $status = 'selesai'; // 15% finished
                     $hpht = Carbon::now()->subWeeks(rand(42, 60));
-                } elseif ($roll <= 30) {
+                } elseif ($roll <= 25) {
                     $status = 'aktif'; // 10% very early
                     $hpht = Carbon::now()->subWeeks(rand(4, 12));
                 } else {
-                    $status = 'aktif'; // 70% middle to late
+                    $status = 'aktif'; // 75% middle to late
                     $hpht = Carbon::now()->subWeeks(rand(13, 40));
                 }
 
@@ -132,21 +132,21 @@ class DatabaseSeeder extends Seeder
                     'gravida' => rand(1, 5),
                     'para' => rand(0, 4),
                     'abortus' => rand(0, 2),
-                    'riwayat_preeklampsia' => rand(1, 10) > 8,
-                    'riwayat_hipertensi' => rand(1, 10) > 9,
-                    'riwayat_diabetes' => rand(1, 10) > 9,
-                    'riwayat_ginjal' => rand(1, 100) > 97,
-                    'keluarga_preeklampsia' => rand(1, 10) > 8,
-                    'kehamilan_kembar' => rand(1, 10) > 9,
+                    'riwayat_preeklampsia' => rand(1, 100) > 85, // 15% chance
+                    'riwayat_hipertensi' => rand(1, 100) > 80,   // 20% chance
+                    'riwayat_diabetes' => rand(1, 100) > 90,     // 10% chance
+                    'riwayat_ginjal' => rand(1, 100) > 95,       // 5% chance
+                    'keluarga_preeklampsia' => rand(1, 100) > 85,
+                    'kehamilan_kembar' => rand(1, 100) > 92,
                     'nullipara' => false,
-                    'interval_lebih_10' => rand(1, 10) > 9,
+                    'interval_lebih_10' => rand(1, 100) > 90,
                     'status' => $status,
                 ]);
 
                 // --- 5. ANC JOURNEY SEEDING ---
                 $visitInterval = 4; // weeks
                 $maxPossibleVisits = floor($hpht->diffInWeeks(now()) / $visitInterval);
-                $visitCount = min(rand(1, 8), $maxPossibleVisits);
+                $visitCount = min(rand(1, 12), $maxPossibleVisits);
                 
                 $previousBb = $pasien->tinggi_badan - 100 + rand(-5, 10);
                 
@@ -156,11 +156,12 @@ class DatabaseSeeder extends Seeder
 
                     $uk_minggu = $hpht->diffInWeeks($visitDate);
                     
-                    // Clinical Logic Variation
-                    $isComplicated = rand(1, 100) > 75; // 25% chance of health issues appearing
-                    $sistolik = $isComplicated ? rand(140, 190) : rand(105, 125);
-                    $diastolik = $isComplicated ? rand(90, 120) : rand(65, 85);
-                    $protein = $isComplicated ? (['+1', '+2', '+3', '+4'][rand(0, 3)]) : 'Negatif';
+                    // Clinical Logic Variation (Increased Complication Rate for better charts)
+                    $isComplicated = rand(1, 100) > 60; // 40% chance of health issues appearing (was 25%)
+                    $sistolik = $isComplicated ? rand(135, 190) : rand(105, 125);
+                    $diastolik = $isComplicated ? rand(85, 120) : rand(65, 85);
+                    $protein = $isComplicated ? (['Negatif', '+1', '+2', '+3', '+4'][rand(0, 4)]) : 'Negatif';
+                    if($sistolik > 160) $protein = (['+1', '+2', '+3'][rand(0,2)]); // Ensure severe cases have protein
                     
                     $bb = $previousBb + rand(1, 2);
                     $tinggiMeter = $pasien->tinggi_badan / 100;
@@ -181,16 +182,16 @@ class DatabaseSeeder extends Seeder
                         'respirasi' => rand(18, 26),
                         'tinggi_fundus_uteri' => max(12, $uk_minggu - rand(1, 3)),
                         'djj' => rand(125, 160),
-                        'edema' => $isComplicated ? (['+1', '+2'][rand(0, 1)]) : 'Tidak',
+                        'edema' => $isComplicated ? (['+1', '+2', '+3'][rand(0, 2)]) : 'Tidak',
                         'protein_urine' => $protein,
-                        'glukosa_urine' => rand(1, 10) > 9 ? 'Positif' : 'Negatif',
+                        'glukosa_urine' => rand(1, 100) > 95 ? 'Positif' : 'Negatif',
                         'hb' => 10.5 + (rand(0, 30) / 10),
-                        'trombosit' => $isComplicated ? rand(60000, 130000) : rand(160000, 400000),
-                        'kreatinin' => $isComplicated ? rand(10, 16)/10 : 0.7,
-                        'nyeri_kepala_hebat' => $isComplicated && rand(1, 2) == 1,
-                        'gangguan_penglihatan' => $isComplicated && rand(1, 3) == 1,
-                        'nyeri_ulu_hati' => $isComplicated && rand(1, 3) == 1,
-                        'catatan_bidan' => 'Pemeriksaan rutin. ' . ($isComplicated ? 'Waspada gejala PE.' : 'Kondisi ibu baik.'),
+                        'trombosit' => $isComplicated ? rand(60000, 140000) : rand(160000, 400000),
+                        'kreatinin' => $isComplicated ? rand(10, 18)/10 : 0.7,
+                        'nyeri_kepala_hebat' => $isComplicated && rand(1, 3) == 1,
+                        'gangguan_penglihatan' => $isComplicated && rand(1, 4) == 1,
+                        'nyeri_ulu_hati' => $isComplicated && rand(1, 4) == 1,
+                        'catatan_bidan' => 'Pemeriksaan rutin. ' . ($isComplicated ? 'Terdeteksi gejala mengarah ke PE. Pantau ketat.' : 'Kondisi ibu dan janin baik.'),
                     ];
 
                     $kunjungan = KunjunganAnc::create($ancData);
@@ -209,28 +210,30 @@ class DatabaseSeeder extends Seeder
                             'kunjungan_id' => $kunjungan->id,
                             'level' => $risiko['level'],
                             'deskripsi' => implode(', ', $risiko['peringatan']),
-                            'status' => rand(1, 10) > 4 ? 'selesai' : 'baru'
+                            'status' => rand(1, 10) > 3 ? 'selesai' : 'baru'
                         ]);
 
                         // --- 6. REFERRAL LOGIC ---
-                        if (in_array($risiko['level'], ['MERAH', 'MERAH_KRITIS']) && rand(1, 10) > 3) {
+                        if (in_array($risiko['level'], ['MERAH', 'MERAH_KRITIS']) && rand(1, 10) > 2) {
                             $rujukan = Rujukan::create([
                                 'kehamilan_id' => $kehamilan->id,
                                 'bidan_id' => $pasien->bidan_id,
-                                'fasilitas_tujuan_id' => $facilities[rand(6, 9)]->id,
+                                'fasilitas_tujuan_id' => $facilities[rand(6, 9)]->id, // Refer to RS
                                 'dokter_id' => $dokters[array_rand($dokters)]->id,
-                                'status' => ['dikirim', 'diterima', 'selesai'][rand(0, 2)],
+                                'status' => ['dikirim', 'diterima', 'selesai', 'selesai'][rand(0, 3)], // Weight towards selesai
                                 'diagnosa_sementara' => $risiko['status'],
                                 'alasan_rujukan' => 'Ditemukan komplikasi ' . $risiko['level'] . '. TD ' . $sistolik . '/' . $diastolik . ', Prot: ' . $protein,
+                                'created_at' => $visitDate, // Sync referral time with visit time
+                                'updated_at' => $visitDate
                             ]);
 
                             if ($rujukan->status === 'selesai') {
                                 CatatanDokter::create([
                                     'rujukan_id' => $rujukan->id,
                                     'dokter_id' => $rujukan->dokter_id,
-                                    'diagnosis' => 'Preeklampsia Akut',
-                                    'resep' => 'Protokol MgSO4, Anti-hipertensi, Bedrest.',
-                                    'catatan' => 'Observasi 24 jam ketat. Jika stabil boleh kontrol ke Puskesmas.'
+                                    'diagnosis' => 'Preeklampsia',
+                                    'resep' => 'Protokol MgSO4, Anti-hipertensi Nifedipin, Bedrest total.',
+                                    'catatan' => 'Observasi 24 jam ketat. Pasien distabilkan. Boleh kontrol ulang di Puskesmas minggu depan.'
                                 ]);
                             }
                         }
@@ -243,31 +246,32 @@ class DatabaseSeeder extends Seeder
                     HasilPersalinan::create([
                         'kehamilan_id' => $kehamilan->id,
                         'tanggal' => $hpht->copy()->addWeeks(rand(37, 41))->toDateString(),
-                        'jenis' => ['Normal', 'SC', 'Vakum', 'Forceps'][rand(0, 3)],
+                        'jenis' => ['Normal', 'SC', 'SC', 'Vakum', 'Forceps'][rand(0, 4)], // Higher SC rate
                         'kondisi_ibu' => 'Stabil',
                         'bb_bayi' => rand(2400, 4100),
                         'panjang_bayi' => rand(46, 54),
                         'apgar_score' => '8/9',
                         'kondisi_bayi' => 'Hidup',
-                        'komplikasi' => rand(1, 10) > 8 ? 'Perdarahan Ringan' : 'Tidak ada'
+                        'komplikasi' => rand(1, 10) > 7 ? 'Perdarahan Postpartum Ringan' : 'Tidak ada'
                     ]);
                 }
 
                 // --- 8. EMERGENCY & SCHEDULES ---
-                if (rand(1, 100) > 92) {
+                if (rand(1, 100) > 85) { // 15% chance of emergency
                     LaporanDarurat::create([
                         'pasien_id' => $pasien->id,
                         'bidan_id' => $pasien->bidan_id,
-                        'gejala' => [['Sakit kepala hebat'], ['Kejang-kejang'], ['Sesak napas']][rand(0, 2)],
-                        'deskripsi' => 'Pasien tiba-tiba merasa tidak enak badan dan pandangan kabur.',
-                        'status' => ['Dikirim', 'Diproses', 'Ditangani'][rand(0, 2)]
+                        'gejala' => [['Sakit kepala hebat', 'Pandangan kabur'], ['Kejang-kejang'], ['Sesak napas', 'Nyeri ulu hati']][rand(0, 2)],
+                        'deskripsi' => 'Pasien melaporkan kondisi darurat melalui portal. Segera tindak lanjuti.',
+                        'status' => ['Dikirim', 'Diproses', 'Ditangani'][rand(0, 2)],
+                        'created_at' => Carbon::now()->subDays(rand(0, 14))
                     ]);
                 }
 
                 if ($status === 'aktif') {
                     JadwalKunjungan::create([
                         'kehamilan_id' => $kehamilan->id,
-                        'tanggal_rencana' => Carbon::now()->addDays(rand(-5, 25))->toDateString(),
+                        'tanggal_rencana' => Carbon::now()->addDays(rand(1, 30))->toDateString(),
                         'status' => 'Terjadwal'
                     ]);
                 }
@@ -276,14 +280,13 @@ class DatabaseSeeder extends Seeder
             // --- 9. RICH AUDIT LOGS ---
             foreach ($bidans as $b) {
                 AuditLog::create(['user_id' => $b->id, 'aksi' => 'login', 'model' => 'User', 'detail' => ['ip' => '127.0.0.1']]);
-                AuditLog::create(['user_id' => $b->id, 'aksi' => 'create', 'model' => 'KunjunganAnc', 'detail' => ['keterangan' => 'Pencatatan rutin']]);
             }
 
             AuditLog::create([
                 'user_id' => $admin->id,
                 'aksi' => 'ULTRA_SEEDING',
                 'model' => 'System',
-                'detail' => ['patients' => 150, 'facilities' => 15, 'visits' => 'Hundreds']
+                'detail' => ['patients' => 400, 'facilities' => 15, 'visits' => 'Thousands']
             ]);
 
             // --- 10. EDUKASI DATA ---
