@@ -42,7 +42,7 @@
 </div>
 
 <!-- Dynamic Stats Cards -->
-<div class="row g-2 g-md-4 mb-5">
+<div class="row g-2 g-md-3 mb-4">
     <div class="col-6 col-xl-3">
         <div class="card-stat-premium primary h-100 p-3 p-md-4">
             <div class="card-stat-premium__icon d-none d-sm-flex"><i class="fas fa-hospital-user"></i></div>
@@ -81,7 +81,7 @@
     </div>
 </div>
 
-<div class="row g-3 g-md-4">
+<div class="row g-3 g-md-3">
     <!-- Center Column -->
     <div class="col-12 col-lg-8">
         <!-- Visual Intelligence Card -->
