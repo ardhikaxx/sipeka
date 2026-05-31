@@ -291,6 +291,16 @@ body { font-family: var(--font-body); font-size: 14px; line-height: 1.6; color: 
 .text-hint { font-size: 0.75rem; color: var(--text-muted); font-weight: 500; }
 
 @media (max-width: 768px) {
-  .sipeka-content { padding: 20px; }
-  .sipeka-topbar { height: 60px; padding: 0 16px; }
+  .sipeka-content { padding: 15px; }
+  .sipeka-topbar { height: 60px; padding: 0 12px; }
+  .page-title { font-size: 1.1rem; max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .stat-card { padding: 16px; gap: 12px; }
+  .stat-card__number { font-size: 1.5rem; }
+  .stat-card__icon { width: 44px; height: 44px; font-size: 1.2rem; }
+  .btn-peka-primary, .btn-peka-outline { padding: 8px 16px; font-size: 0.8rem; }
+}
+
+@media (max-width: 576px) {
+  .page-title { max-width: 150px; }
+  .sipeka-topbar .gap-4 { gap: 1.5rem !important; }
 }
