@@ -5,23 +5,23 @@
 
 @section('content')
     <!-- Search & Header Section -->
-    <div class="row align-items-center mb-5">
-        <div class="col-lg-6">
+    <div class="row align-items-center mb-4 mb-lg-5 g-3">
+        <div class="col-12 col-lg-6">
             <h2 class="fw-800 text-dark mb-1">Pusat Pengetahuan <span class="text-peka-primary">SIPEKA</span></h2>
-            <p class="text-muted">Temukan informasi terpercaya seputar kehamilan dan preeklampsia.</p>
+            <p class="text-muted small mb-0">Temukan informasi terpercaya seputar kehamilan dan preeklampsia.</p>
         </div>
-        <div class="col-lg-6">
-            <div class="d-flex gap-3 justify-content-lg-end w-100 align-items-center">
+        <div class="col-12 col-lg-6">
+            <div class="d-flex flex-column flex-sm-row gap-2 gap-sm-3 justify-content-lg-end align-items-sm-center">
                 <div class="input-group-peka w-100" style="max-width: 400px;">
                     <div class="position-relative w-100">
-                        <i class="fas fa-search input-icon" style="top: 50%;"></i>
+                        <i class="fas fa-search input-icon" style="top: 50%; transform: translateY(-50%);"></i>
                         <input type="text" class="form-control-peka ps-5 rounded-pill border-0"
-                            placeholder="Cari topik kesehatan (misal: Nutrisi, Tekanan Darah)..." style="height: 50px;">
+                            placeholder="Cari topik kesehatan..." style="height: 46px; font-size: 0.9rem;">
                     </div>
                 </div>
                 @if (auth()->user()->role === 'admin')
-                    <a href="{{ route('admin.edukasi.create') }}" class="btn btn-peka-primary shadow-sm rounded-pill px-4">
-                        <i class="fas fa-plus me-2"></i> Tambah Materi
+                    <a href="{{ route('admin.edukasi.create') }}" class="btn btn-peka-primary shadow-sm rounded-pill px-4 py-2 flex-shrink-0">
+                        <i class="fas fa-plus me-1"></i> Materi Baru
                     </a>
                 @endif
             </div>
