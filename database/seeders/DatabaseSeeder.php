@@ -112,17 +112,18 @@ class DatabaseSeeder extends Seeder
                     'bidan_id' => $bidans[array_rand($bidans)]->id,
                 ]);
 
-                // --- 4. VARIATIVE PREGNANCY STATUS ---
+                // --- 4. VARIATIVE PREGNANCY STATUS & EVEN DISTRIBUTION ---
                 $roll = rand(1, 100);
-                if ($roll <= 15) {
-                    $status = 'selesai'; // 15% finished
-                    $hpht = Carbon::now()->subWeeks(rand(42, 60));
-                } elseif ($roll <= 25) {
-                    $status = 'aktif'; // 10% very early
-                    $hpht = Carbon::now()->subWeeks(rand(4, 12));
+                
+                // Distribute HPHT evenly across the last 12-14 months to ensure all chart months are populated
+                $randomMonthsBack = rand(0, 14);
+                $randomDaysBack = rand(1, 28);
+                $hpht = Carbon::now()->subMonths($randomMonthsBack)->subDays($randomDaysBack);
+
+                if ($hpht->copy()->addDays(280)->isPast()) {
+                    $status = 'selesai'; 
                 } else {
-                    $status = 'aktif'; // 75% middle to late
-                    $hpht = Carbon::now()->subWeeks(rand(13, 40));
+                    $status = 'aktif';
                 }
 
                 $kehamilan = Kehamilan::create([
@@ -146,13 +147,17 @@ class DatabaseSeeder extends Seeder
                 // --- 5. ANC JOURNEY SEEDING ---
                 $visitInterval = 4; // weeks
                 $maxPossibleVisits = floor($hpht->diffInWeeks(now()) / $visitInterval);
-                $visitCount = min(rand(1, 12), $maxPossibleVisits);
+                $visitCount = min(rand(3, 12), $maxPossibleVisits); // Ensure at least a few visits if possible
                 
                 $previousBb = $pasien->tinggi_badan - 100 + rand(-5, 10);
                 
                 for ($v = 1; $v <= $visitCount; $v++) {
-                    $visitDate = $hpht->copy()->addWeeks($v * $visitInterval)->addDays(rand(-3, 3));
-                    if ($visitDate->gt(now())) continue;
+                    $visitDate = $hpht->copy()->addWeeks($v * $visitInterval)->addDays(rand(-5, 5));
+                    
+                    // Don't create visits in the future
+                    if ($visitDate->isAfter(now())) {
+                        continue;
+                    }
 
                     $uk_minggu = $hpht->diffInWeeks($visitDate);
                     
