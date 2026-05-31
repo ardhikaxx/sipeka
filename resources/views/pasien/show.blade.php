@@ -193,16 +193,42 @@
 
     <!-- Grafik Tren Tab -->
     <div class="tab-pane fade" id="pills-grafik" role="tabpanel">
-        <div class="row g-4">
-            <div class="col-lg-12">
-                <div class="card border-0 shadow-card rounded-xl">
-                    <div class="card-header bg-white border-bottom pt-4 pb-3 px-4 d-flex justify-content-between">
-                        <h5 class="section-title mb-0">Tren Tekanan Darah</h5>
-                        <div class="small text-muted">Berdasarkan riwayat kunjungan ANC</div>
+        <div class="row g-3 g-md-4">
+            <div class="col-12 col-xl-6">
+                <div class="card border-0 shadow-card rounded-xl h-100">
+                    <div class="card-header bg-white border-0 pt-4 px-4 d-flex justify-content-between">
+                        <h6 class="section-title mb-0 small fw-bold">Tren Tekanan Darah</h6>
+                        <span class="text-hint x-small">mmHg</span>
                     </div>
-                    <div class="card-body p-4">
-                        <div style="height: 350px;">
+                    <div class="card-body p-3 p-md-4">
+                        <div style="height: 280px;">
                             <canvas id="chartTekananDarah"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-xl-6">
+                <div class="card border-0 shadow-card rounded-xl h-100">
+                    <div class="card-header bg-white border-0 pt-4 px-4 d-flex justify-content-between">
+                        <h6 class="section-title mb-0 small fw-bold">Tinggi Fundus Uteri (TFU)</h6>
+                        <span class="text-hint x-small">cm</span>
+                    </div>
+                    <div class="card-body p-3 p-md-4">
+                        <div style="height: 280px;">
+                            <canvas id="chartTFU"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="card border-0 shadow-card rounded-xl overflow-hidden">
+                    <div class="card-header bg-white border-0 pt-4 px-4 d-flex justify-content-between">
+                        <h6 class="section-title mb-0 small fw-bold">Denyut Jantung Janin (DJJ)</h6>
+                        <span class="text-hint x-small">x/menit</span>
+                    </div>
+                    <div class="card-body p-3 p-md-4">
+                        <div style="height: 250px;">
+                            <canvas id="chartDJJ"></canvas>
                         </div>
                     </div>
                 </div>
@@ -451,58 +477,96 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const chartData = @json($chartData);
-    const canvas = document.getElementById('chartTekananDarah');
-    if (!canvas) return;
-
-    new Chart(canvas.getContext('2d'), {
-        type: 'line',
-        data: {
-            labels: chartData.labels,
-            datasets: [
-                { 
-                    label: 'Sistolik', 
-                    data: chartData.sistolik, 
-                    borderColor: '#EF4444', 
-                    backgroundColor: 'rgba(239,68,68, 0.1)', 
-                    borderWidth: 3, 
-                    pointBackgroundColor: '#EF4444',
-                    pointRadius: 4,
-                    pointHoverRadius: 6,
-                    tension: 0.3, 
-                    fill: true 
-                },
-                { 
-                    label: 'Diastolik', 
-                    data: chartData.diastolik, 
-                    borderColor: '#3B5BDB', 
-                    backgroundColor: 'rgba(59,91,219, 0.05)', 
-                    borderWidth: 3, 
-                    pointBackgroundColor: '#3B5BDB',
-                    pointRadius: 4,
-                    pointHoverRadius: 6,
-                    tension: 0.3, 
-                    fill: true 
-                }
-            ]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: { position: 'top', labels: { usePointStyle: true, font: { weight: 'bold' } } },
-                tooltip: { padding: 12, cornerRadius: 10, backgroundColor: '#1E293B' }
+    // Main Trend Chart
+    const ctxTD = document.getElementById('chartTekananDarah')?.getContext('2d');
+    if (ctxTD) {
+        new Chart(ctxTD, {
+            type: 'line',
+            data: {
+                labels: chartData.labels,
+                datasets: [
+                    { 
+                        label: 'Sistolik', 
+                        data: chartData.sistolik, 
+                        borderColor: '#EF4444', 
+                        backgroundColor: 'rgba(239,68,68, 0.1)', 
+                        borderWidth: 3, 
+                        tension: 0.3, 
+                        fill: true 
+                    },
+                    { 
+                        label: 'Diastolik', 
+                        data: chartData.diastolik, 
+                        borderColor: '#3B5BDB', 
+                        backgroundColor: 'rgba(59,91,219, 0.05)', 
+                        borderWidth: 3, 
+                        tension: 0.3, 
+                        fill: true 
+                    }
+                ]
             },
-            scales: { 
-                y: { 
-                    min: 50, 
-                    max: 200, 
-                    ticks: { stepSize: 20, callback: v => v + ' mmHg' },
-                    grid: { borderDash: [5, 5] }
-                }, 
-                x: { grid: { display: false } } 
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'top', labels: { usePointStyle: true, font: { weight: 'bold' } } }
+                }
             }
-        }
-    });
+        });
+    }
+
+    // TFU Chart
+    const ctxTFU = document.getElementById('chartTFU')?.getContext('2d');
+    if (ctxTFU) {
+        new Chart(ctxTFU, {
+            type: 'line',
+            data: {
+                labels: chartData.labels,
+                datasets: [{ 
+                    label: 'Tinggi Fundus', 
+                    data: chartData.tfu, 
+                    borderColor: '#0D7A35', 
+                    backgroundColor: 'rgba(13, 122, 53, 0.1)', 
+                    borderWidth: 3, 
+                    tension: 0.4, 
+                    fill: true 
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: { y: { beginAtZero: false, min: 10 } }
+            }
+        });
+    }
+
+    // DJJ Chart
+    const ctxDJJ = document.getElementById('chartDJJ')?.getContext('2d');
+    if (ctxDJJ) {
+        new Chart(ctxDJJ, {
+            type: 'bar',
+            data: {
+                labels: chartData.labels,
+                datasets: [{ 
+                    label: 'Denyut Jantung Janin', 
+                    data: chartData.djj, 
+                    backgroundColor: '#E84393', 
+                    borderRadius: 8,
+                    barThickness: 25
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { 
+                    legend: { display: false },
+                    tooltip: { callbacks: { label: c => c.raw + ' bpm' } }
+                },
+                scales: { y: { min: 100, max: 180 } }
+            }
+        });
+    }
 });
 </script>
 @endpush

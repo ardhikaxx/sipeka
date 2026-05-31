@@ -129,7 +129,9 @@ class PasienController extends Controller
         $chartData = [
             'labels' => [],
             'sistolik' => [],
-            'diastolik' => []
+            'diastolik' => [],
+            'tfu' => [],
+            'djj' => []
         ];
 
         if ($kehamilanAktif) {
@@ -137,6 +139,8 @@ class PasienController extends Controller
                 $chartData['labels'][] = $kunjungan->tanggal->format('d M');
                 $chartData['sistolik'][] = $kunjungan->tekanan_darah_sistolik;
                 $chartData['diastolik'][] = $kunjungan->tekanan_darah_diastolik;
+                $chartData['tfu'][] = $kunjungan->tinggi_fundus_uteri;
+                $chartData['djj'][] = $kunjungan->djj;
             }
         }
 
