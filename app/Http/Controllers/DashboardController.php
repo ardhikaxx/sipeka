@@ -8,6 +8,7 @@ use App\Models\LaporanDarurat;
 use App\Models\Pasien;
 use App\Models\Peringatan;
 use App\Models\Rujukan;
+use App\Models\Kehamilan;
 use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
@@ -95,7 +96,13 @@ class DashboardController extends Controller
                 ->when($user->role === 'bidan', fn ($q) => $q->where('bidan_id', $user->id))
                 ->count(),
             'pasien_risiko_tinggi' => ($riskCounts['MERAH'] ?? 0) + ($riskCounts['MERAH_KRITIS'] ?? 0),
-            'akan_bersalin' => $pasiens->filter(fn ($pasien) => ($pasien->kehamilanAktif ? now()->diffInWeeks($pasien->kehamilanAktif->hpht) : 0) > 36)->count(),
+            'akan_bersalin' => Kehamilan::where('status', 'aktif')
+                ->where('hpht', '<=', now()->subWeeks(36))
+                ->when($user->role === 'bidan', fn ($q) => $q->whereHas('pasien', fn ($p) => $p->where('bidan_id', $user->id)))
+                ->when($user->role === 'dokter', fn ($q) => $q->whereHas('rujukans', function ($query) use ($user) {
+                    $query->where('dokter_id', $user->id)->orWhere('fasilitas_tujuan_id', $user->fasilitas_id);
+                }))
+                ->count(),
             'pasien_terbaru' => $pasienTerbaru,
             'risk_counts' => array_values($riskCounts),
             'monthly_labels' => $labels,
