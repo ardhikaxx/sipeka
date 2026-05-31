@@ -24,6 +24,9 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::middleware(['auth'])->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
+    Route::get('/profile', [\App\Http\Controllers\ProfileController::class, 'index'])->name('profile');
+    Route::get('/settings', [\App\Http\Controllers\SettingController::class, 'index'])->name('settings');
+
     Route::middleware('role:admin,dokter,bidan')->group(function () {
         Route::resource('pasien', PasienController::class)->only(['index', 'create', 'store', 'show']);
         Route::resource('kunjungan', KunjunganAncController::class)->only(['index', 'create', 'store', 'show']);
