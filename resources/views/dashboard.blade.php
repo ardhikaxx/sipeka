@@ -4,19 +4,19 @@
 @section('page_title', 'Dasboard Pelayanan Kesehatan Ibu')
 
 @section('content')
-<div class="premium-hero mb-5">
+<div class="premium-hero mb-4 mb-md-5 p-4 p-md-5">
     <div class="hero-glow"></div>
     <div class="row align-items-center position-relative" style="z-index: 2;">
-        <div class="col-lg-8">
-            <h1 class="fw-extrabold mb-3 text-white" style="font-family: var(--font-heading); font-size: 2.8rem; letter-spacing: -0.03em; line-height: 1.1;">
-                Selamat Pagi,<br> {{ auth()->user()->name }}! 
+        <div class="col-12 col-lg-8 text-center text-lg-start">
+            <h1 class="fw-extrabold mb-3 text-white" style="font-family: var(--font-heading); font-size: calc(1.8rem + 1vw); letter-spacing: -0.03em; line-height: 1.1;">
+                Selamat Pagi,<br class="d-none d-md-block"> {{ auth()->user()->name }}! 
             </h1>
-            <div class="d-flex flex-wrap gap-3 mt-2">
-                <a href="{{ route('pasien.create') }}" class="btn btn-premium-outline">
-                    <i class="fas fa-plus-circle me-2"></i> REGISTRASI PASIEN
+            <div class="d-flex flex-wrap justify-content-center justify-content-lg-start gap-2 gap-md-3 mt-4">
+                <a href="{{ route('pasien.create') }}" class="btn btn-premium-outline px-3 py-2 small flex-fill flex-sm-grow-0">
+                    <i class="fas fa-plus-circle me-1"></i> PASIEN BARU
                 </a>
-                <a href="{{ route('pasien.index') }}" class="btn btn-premium-outline">
-                    <i class="fas fa-clipboard-check me-2"></i> DAFTAR PEMERIKSAAN
+                <a href="{{ route('pasien.index') }}" class="btn btn-premium-outline px-3 py-2 small flex-fill flex-sm-grow-0">
+                    <i class="fas fa-clipboard-check me-1"></i> DAFTAR ANC
                 </a>
             </div>
         </div>
@@ -35,7 +35,6 @@
                     <div class="progress bg-white bg-opacity-10" style="height: 6px; border-radius: 10px;">
                         <div class="progress-bar bg-warning shadow-warning" style="width: 15%"></div>
                     </div>
-                    <div class="text-white small fw-bold mt-1">Efisiensi Pelayanan: 92%</div>
                 </div>
              </div>
         </div>
@@ -43,66 +42,62 @@
 </div>
 
 <!-- Dynamic Stats Cards -->
-<div class="row g-4 mb-5">
-    <div class="col-xl-3 col-sm-6">
-        <div class="card-stat-premium primary">
-            <div class="card-stat-premium__icon"><i class="fas fa-hospital-user"></i></div>
+<div class="row g-2 g-md-4 mb-5">
+    <div class="col-6 col-xl-3">
+        <div class="card-stat-premium primary h-100 p-3 p-md-4">
+            <div class="card-stat-premium__icon d-none d-sm-flex"><i class="fas fa-hospital-user"></i></div>
             <div class="card-stat-premium__data">
-                <div class="value">{{ $total_pasien }}</div>
-                <div class="label">PASIEN BINAAN</div>
+                <div class="value fs-3 fs-md-2">{{ $total_pasien }}</div>
+                <div class="label x-small">PASIEN</div>
             </div>
-            <div class="card-stat-premium__trend text-success"><i class="fas fa-chart-line"></i> +12%</div>
         </div>
     </div>
-    <div class="col-xl-3 col-sm-6">
-        <div class="card-stat-premium info">
-            <div class="card-stat-premium__icon"><i class="fas fa-stethoscope"></i></div>
+    <div class="col-6 col-xl-3">
+        <div class="card-stat-premium info h-100 p-3 p-md-4">
+            <div class="card-stat-premium__icon d-none d-sm-flex"><i class="fas fa-stethoscope"></i></div>
             <div class="card-stat-premium__data">
-                <div class="value">{{ $kunjungan_hari_ini }}</div>
-                <div class="label">ANC HARI INI</div>
+                <div class="value fs-3 fs-md-2">{{ $kunjungan_hari_ini }}</div>
+                <div class="label x-small">ANC HARI INI</div>
             </div>
-            <div class="card-stat-premium__trend"><span class="badge bg-info-subtle text-info rounded-pill px-2">AKTIF</span></div>
         </div>
     </div>
-    <div class="col-xl-3 col-sm-6">
-        <div class="card-stat-premium danger">
-            <div class="card-stat-premium__icon"><i class="fas fa-biohazard"></i></div>
+    <div class="col-6 col-xl-3">
+        <div class="card-stat-premium danger h-100 p-3 p-md-4">
+            <div class="card-stat-premium__icon d-none d-sm-flex"><i class="fas fa-biohazard"></i></div>
             <div class="card-stat-premium__data">
-                <div class="value text-danger">{{ $pasien_risiko_tinggi }}</div>
-                <div class="label">RISIKO TINGGI</div>
+                <div class="value text-danger fs-3 fs-md-2">{{ $pasien_risiko_tinggi }}</div>
+                <div class="label x-small">RISIKO TINGGI</div>
             </div>
-            <div class="card-stat-premium__trend text-danger"><i class="fas fa-triangle-exclamation"></i> URGENT</div>
         </div>
     </div>
-    <div class="col-xl-3 col-sm-6">
-        <div class="card-stat-premium secondary">
-            <div class="card-stat-premium__icon"><i class="fas fa-baby-carriage"></i></div>
+    <div class="col-6 col-xl-3">
+        <div class="card-stat-premium secondary h-100 p-3 p-md-4">
+            <div class="card-stat-premium__icon d-none d-sm-flex"><i class="fas fa-baby-carriage"></i></div>
             <div class="card-stat-premium__data">
-                <div class="value">{{ $akan_bersalin }}</div>
-                <div class="label">ESTIMASI HPL</div>
+                <div class="value fs-3 fs-md-2">{{ $akan_bersalin }}</div>
+                <div class="label x-small">ESTIMASI HPL</div>
             </div>
-            <div class="card-stat-premium__trend text-muted"><i class="fas fa-calendar-check"></i> 4 MGG</div>
         </div>
     </div>
 </div>
 
-<div class="row g-4">
+<div class="row g-3 g-md-4">
     <!-- Center Column -->
-    <div class="col-lg-8">
+    <div class="col-12 col-lg-8">
         <!-- Visual Intelligence Card -->
         <div class="card border-0 shadow-card rounded-xl mb-4 overflow-hidden">
-            <div class="card-header bg-white py-4 px-4 border-0 d-flex justify-content-between align-items-center">
+            <div class="card-header bg-white py-3 py-md-4 px-3 px-md-4 border-0 d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
                 <div>
-                    <h5 class="section-title mb-1">Health Intelligence <span class="badge bg-peka-primary-pale text-peka-primary small ms-2" style="font-size: 0.6rem;">REAL-TIME</span></h5>
-                    <p class="text-hint mb-0" id="chartSubtitle">Visualisasi tren kasus Preeklampsia bulanan</p>
+                    <h5 class="section-title mb-1 small fw-bold">Health Intelligence</h5>
+                    <p class="text-hint mb-0 x-small" id="chartSubtitle">Tren kasus Preeklampsia bulanan</p>
                 </div>
                 <div class="btn-group shadow-sm rounded-pill p-1 bg-light">
-                    <button class="btn btn-sm btn-white rounded-pill px-3 active fw-bold" id="btnShowKasus" onclick="switchChart('kasus')">Kasus</button>
-                    <button class="btn btn-sm btn-light rounded-pill px-3 fw-bold" id="btnShowRujukan" onclick="switchChart('rujukan')">Rujukan</button>
+                    <button class="btn btn-sm btn-white rounded-pill px-3 active fw-bold x-small" id="btnShowKasus" onclick="switchChart('kasus')">Kasus</button>
+                    <button class="btn btn-sm btn-light rounded-pill px-3 fw-bold x-small" id="btnShowRujukan" onclick="switchChart('rujukan')">Rujukan</button>
                 </div>
             </div>
-            <div class="card-body px-4 pb-4 pt-2">
-                <div style="height: 320px;">
+            <div class="card-body px-3 px-md-4 pb-4 pt-2">
+                <div style="height: 250px;">
                     <canvas id="chartKasusBulanan"></canvas>
                 </div>
             </div>
@@ -110,62 +105,44 @@
 
         <!-- Action Table Card -->
         <div class="card border-0 shadow-card rounded-xl overflow-hidden">
-            <div class="card-header bg-white py-4 px-4 border-0 d-flex justify-content-between align-items-center">
-                <div>
-                    <h5 class="section-title mb-1">Action Center: Pasien Terbaru</h5>
-                    <p class="text-hint mb-0">Klik pada baris pasien untuk melihat rekam medis lengkap</p>
-                </div>
-                <a href="{{ route('pasien.index') }}" class="btn btn-link text-peka-primary text-decoration-none fw-bold small p-0">LIHAT SEMUA PASIEN <i class="fas fa-arrow-right ms-1"></i></a>
+            <div class="card-header bg-white py-3 py-md-4 px-3 px-md-4 border-0 d-flex justify-content-between align-items-center">
+                <h5 class="section-title mb-0 small fw-bold">Pasien Terbaru</h5>
+                <a href="{{ route('pasien.index') }}" class="text-peka-primary text-decoration-none fw-bold x-small">LIHAT SEMUA</a>
             </div>
-            <div class="card-body p-0 mt-2">
+            <div class="card-body p-0">
                 <div class="table-responsive">
                     <table class="table table-hover align-middle mb-0 border-top">
-                        <thead class="bg-light text-muted uppercase-font" style="font-size: 0.65rem;">
+                        <thead class="bg-light text-muted uppercase-font" style="font-size: 0.6rem;">
                             <tr>
-                                <th class="ps-4 py-3">IDENTITAS PASIEN</th>
-                                <th>UK</th>
-                                <th>TEMUAN TERAKHIR</th>
-                                <th>STATUS RISIKO</th>
-                                <th class="pe-4 text-end">INTERVENSI</th>
+                                <th class="ps-3 ps-md-4 py-3">PASIEN</th>
+                                <th class="d-none d-sm-table-cell">UK</th>
+                                <th class="d-none d-md-table-cell">TEMUAN</th>
+                                <th>RISIKO</th>
+                                <th class="pe-3 pe-md-4 text-end">AKSI</th>
                             </tr>
                         </thead>
                         <tbody>
                             @forelse($pasien_terbaru as $p)
                             <tr class="clickable-row" onclick="window.location='{{ route('pasien.show', $p['id']) }}'">
-                                <td class="ps-4 py-3">
-                                    <div class="d-flex align-items-center gap-3">
-                                        <div class="avatar-stat bg-peka-primary-pale text-peka-primary fw-bold shadow-sm">
-                                            {{ substr($p['nama'], 0, 1) }}
-                                        </div>
-                                        <div>
-                                            <div class="fw-bold text-dark mb-0">{{ $p['nama'] }}</div>
-                                            <div class="text-hint x-small"><i class="fas fa-location-dot me-1"></i>{{ $p['desa'] }}</div>
-                                        </div>
-                                    </div>
+                                <td class="ps-3 ps-md-4 py-3">
+                                    <div class="fw-bold text-dark small">{{ $p['nama'] }}</div>
+                                    <div class="text-hint x-small">{{ $p['desa'] }}</div>
                                 </td>
-                                <td><span class="badge bg-light text-dark border-0 fw-bold px-3 py-2 rounded-pill shadow-sm" style="font-size: 0.75rem;">{{ $p['uk'] }} Mgg</span></td>
-                                <td>
-                                    <div class="d-flex flex-column gap-1">
-                                        <span class="text-dark small fw-bold"><i class="fas fa-heart-pulse text-danger me-2"></i>{{ $p['td'] }}</span>
-                                        <span class="text-muted x-small">Protein: {{ $p['protein'] }}</span>
-                                    </div>
+                                <td class="d-none d-sm-table-cell"><span class="badge bg-light text-dark border-0 fw-bold px-2 py-1 rounded-pill small">{{ $p['uk'] }} Mg</span></td>
+                                <td class="d-none d-md-table-cell">
+                                    <span class="text-dark x-small fw-bold">{{ $p['td'] }}</span>
                                 </td>
                                 <td>
-                                    <span class="badge-risk-premium {{ $p['risiko'] }}">
+                                    <span class="badge-risk-premium {{ $p['risiko'] }}" style="font-size: 0.6rem; padding: 4px 10px;">
                                         {{ strtoupper($p['risiko_label']) }}
                                     </span>
                                 </td>
-                                <td class="pe-4 text-end">
-                                    <div class="btn-group shadow-sm rounded-3">
-                                        <a href="{{ route('pasien.show', $p['id']) }}" class="btn btn-sm btn-white text-primary" title="Buka Medis"><i class="fas fa-folder-open"></i></a>
-                                        @if($p['kehamilan_id'])
-                                        <a href="{{ route('kunjungan.create', ['kehamilan_id' => $p['kehamilan_id']]) }}" class="btn btn-sm btn-white text-success" title="Tambah ANC"><i class="fas fa-plus"></i></a>
-                                        @endif
-                                    </div>
+                                <td class="pe-3 pe-md-4 text-end">
+                                    <a href="{{ route('pasien.show', $p['id']) }}" class="btn btn-sm btn-light border p-1 px-2"><i class="fas fa-folder-open x-small"></i></a>
                                 </td>
                             </tr>
                             @empty
-                            <tr><td colspan="5" class="text-center py-5 text-muted small">Tidak ada aktivitas pelayanan baru terdeteksi.</td></tr>
+                            <tr><td colspan="5" class="text-center py-5 text-muted x-small">Tidak ada aktivitas baru.</td></tr>
                             @endforelse
                         </tbody>
                     </table>
@@ -175,19 +152,20 @@
     </div>
 
     <!-- Right Column -->
-    <div class="col-lg-4">
+    <div class="col-12 col-lg-4">
         <!-- Distribution Dashboard -->
         <div class="card border-0 shadow-card rounded-xl mb-4 overflow-hidden">
-            <div class="card-header bg-white border-0 pt-4 pb-0 px-4">
-                <h5 class="section-title mb-1">Analitik Sebaran Risiko</h5>
-                <p class="text-hint mb-0">Proporsi kondisi kesehatan ibu binaan</p>
+            <div class="card-header bg-white border-0 pt-4 px-3 px-md-4">
+                <h5 class="section-title mb-1 small fw-bold">Sebaran Risiko</h5>
+                <p class="text-hint mb-0 x-small">Proporsi kondisi kesehatan ibu</p>
             </div>
-            <div class="card-body px-4 pb-4 pt-3 text-center">
-                <div style="height: 280px; position: relative;">
+            <div class="card-body px-3 px-md-4 pb-4 pt-3 text-center">
+                <div style="height: 220px; position: relative;">
                     <canvas id="chartDistribusiRisiko"></canvas>
                 </div>
             </div>
         </div>
+...
 
         <!-- Command Emergency Center -->
         @if(count($laporan_darurat) > 0)
