@@ -10,7 +10,7 @@
   </div>
   
   <div class="d-flex align-items-center gap-3 gap-md-4">
-    <div class="vr d-none d-sm-block opacity-25" style="height: 304px;"></div>
+    <div class="vr d-none d-sm-block opacity-25" style="height: auto;"></div>
     <div class="dropdown">
       <a href="#" class="d-flex align-items-center gap-2 text-decoration-none text-dark user-dropdown-toggle p-1 rounded-pill" data-bs-toggle="dropdown" aria-expanded="false">
         <div class="d-none d-sm-flex flex-column text-end pe-1">
