@@ -312,7 +312,10 @@
           <label class="form-label">Password</label>
           <div class="input-group-wrapper has-icon">
             <i class="fas fa-lock input-icon"></i>
-            <input type="password" id="password" name="password" class="form-control-peka" placeholder="Masukkan password anda" required>
+            <input type="password" id="password" name="password" class="form-control-peka" placeholder="Masukkan password anda" style="padding-right: 45px;" required>
+            <span class="toggle-password" onclick="togglePassword('password', this)" style="position: absolute; right: 16px; top: 50%; transform: translateY(-50%); cursor: pointer; color: #94A3B8;">
+              <i class="far fa-eye"></i>
+            </span>
           </div>
         </div>
 
@@ -330,5 +333,20 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    function togglePassword(inputId, iconSpan) {
+      const input = document.getElementById(inputId);
+      const icon = iconSpan.querySelector('i');
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+      } else {
+        input.type = 'password';
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
+      }
+    }
+  </script>
 </body>
 </html>
