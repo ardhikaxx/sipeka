@@ -9,7 +9,7 @@
         <!-- Profile Card -->
         <div class="card border-0 shadow-card rounded-xl overflow-hidden mb-4">
             <div class="card-header bg-gradient-premium p-5 text-center position-relative">
-                <div class="position-absolute top-0 end-0 p-3">
+                <div class="position-absolute top-0 inset-e-0 p-3">
                     <span class="badge bg-white text-dark rounded-pill px-3 py-2 fw-bold shadow-sm" style="font-size: 0.7rem;">
                         {{ strtoupper($user->role) }}
                     </span>
@@ -23,21 +23,21 @@
             <div class="card-body p-4">
                 <div class="d-flex flex-column gap-3">
                     <div class="d-flex align-items-center gap-3 p-3 bg-light rounded-3 border border-white shadow-sm">
-                        <div class="icon-box-sm bg-primary-subtle text-primary rounded-circle flex-shrink-0"><i class="fas fa-hospital-user"></i></div>
+                        <div class="icon-box-sm bg-primary-subtle text-primary rounded-circle shrink-0"><i class="fas fa-hospital-user"></i></div>
                         <div class="grow">
                             <div class="text-hint x-small uppercase-font mb-1">FASILITAS KERJA</div>
                             <div class="fw-bold text-dark small">{{ $user->fasilitas?->nama ?? 'Sistem Pusat (Global)' }}</div>
                         </div>
                     </div>
                     <div class="d-flex align-items-center gap-3 p-3 bg-light rounded-3 border border-white shadow-sm">
-                        <div class="icon-box-sm bg-success-subtle text-success rounded-circle flex-shrink-0"><i class="fas fa-calendar-check"></i></div>
+                        <div class="icon-box-sm bg-success-subtle text-success rounded-circle shrink-0"><i class="fas fa-calendar-check"></i></div>
                         <div class="grow">
                             <div class="text-hint x-small uppercase-font mb-1">TANGGAL BERGABUNG</div>
                             <div class="fw-bold text-dark small">{{ $user->created_at->format('d F Y') }}</div>
                         </div>
                     </div>
                     <div class="d-flex align-items-center gap-3 p-3 bg-light rounded-3 border border-white shadow-sm">
-                        <div class="icon-box-sm bg-info-subtle text-info rounded-circle flex-shrink-0"><i class="fas fa-user-check"></i></div>
+                        <div class="icon-box-sm bg-info-subtle text-info rounded-circle shrink-0"><i class="fas fa-user-check"></i></div>
                         <div class="grow">
                             <div class="text-hint x-small uppercase-font mb-1">STATUS AKUN</div>
                             <div class="fw-bold text-dark small">Aktif & Terverifikasi</div>
