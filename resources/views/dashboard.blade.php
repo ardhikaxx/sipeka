@@ -4,35 +4,35 @@
 @section('page_title', 'Dasboard Pelayanan Kesehatan Ibu')
 
 @section('content')
-<div class="premium-hero mb-3 mb-md-4 p-4 p-md-5">
+<div class="premium-hero mb-3 mb-md-4 p-3 p-md-4">
     <div class="hero-glow"></div>
     <div class="row align-items-center position-relative" style="z-index: 2;">
         <div class="col-12 col-lg-8 text-center text-lg-start">
-            <h1 class="fw-extrabold mb-3 text-white" style="font-family: var(--font-heading); font-size: calc(1.8rem + 1vw); letter-spacing: -0.03em; line-height: 1.1;">
+            <h1 class="fw-extrabold mb-2 text-white" style="font-family: var(--font-heading); font-size: calc(1.5rem + 1vw); letter-spacing: -0.03em; line-height: 1.1;">
                 Selamat Pagi,<br class="d-none d-md-block"> {{ auth()->user()->name }}! 
             </h1>
-            <div class="d-flex flex-wrap justify-content-center justify-content-lg-start gap-2 gap-md-3 mt-4">
-                <a href="{{ route('pasien.create') }}" class="btn btn-premium-outline px-3 py-2 small flex-fill flex-sm-grow-0">
+            <div class="d-flex flex-wrap justify-content-center justify-content-lg-start gap-2 mt-3">
+                <a href="{{ route('pasien.create') }}" class="btn btn-premium-outline px-3 py-2 small flex-fill flex-sm-grow-0" style="padding-top: 0.5rem; padding-bottom: 0.5rem;">
                     <i class="fas fa-plus-circle me-1"></i> PASIEN BARU
                 </a>
-                <a href="{{ route('pasien.index') }}" class="btn btn-premium-outline px-3 py-2 small flex-fill flex-sm-grow-0">
+                <a href="{{ route('pasien.index') }}" class="btn btn-premium-outline px-3 py-2 small flex-fill flex-sm-grow-0" style="padding-top: 0.5rem; padding-bottom: 0.5rem;">
                     <i class="fas fa-clipboard-check me-1"></i> DAFTAR ANC
                 </a>
             </div>
         </div>
         <div class="col-lg-4 d-none d-lg-block">
-             <div class="hero-stats-glass p-4 rounded-4 shadow-lg border border-white border-opacity-20">
-                <div class="text-white-50 small uppercase-font fw-bold mb-3 border-bottom border-white border-opacity-10 pb-2">RINGKASAN TUGAS</div>
-                <div class="d-flex flex-column gap-3">
+             <div class="hero-stats-glass p-3 rounded-4 shadow-lg border border-white border-opacity-20">
+                <div class="text-white-50 small uppercase-font fw-bold mb-2 border-bottom border-white border-opacity-10 pb-2">RINGKASAN TUGAS</div>
+                <div class="d-flex flex-column gap-2">
                     <div class="d-flex justify-content-between align-items-center">
                         <span class="text-white-50 small">Kunjungan Selesai</span>
-                        <span class="badge bg-white bg-opacity-10 rounded-pill px-3 fw-bold">0 / {{ $kunjungan_hari_ini }}</span>
+                        <span class="badge bg-white bg-opacity-10 rounded-pill px-2 fw-bold">0 / {{ $kunjungan_hari_ini }}</span>
                     </div>
                     <div class="d-flex justify-content-between align-items-center">
                         <span class="text-white-50 small">Rujukan Dipantau</span>
-                        <span class="badge bg-white bg-opacity-10 rounded-pill px-3 fw-bold">{{ count($rujukan_masuk) }}</span>
+                        <span class="badge bg-white bg-opacity-10 rounded-pill px-2 fw-bold">{{ count($rujukan_masuk) }}</span>
                     </div>
-                    <div class="progress bg-white bg-opacity-10" style="height: 6px; border-radius: 10px;">
+                    <div class="progress bg-white bg-opacity-10 mt-1" style="height: 4px; border-radius: 10px;">
                         <div class="progress-bar bg-warning shadow-warning" style="width: 15%"></div>
                     </div>
                 </div>
