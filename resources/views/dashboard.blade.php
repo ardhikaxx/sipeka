@@ -104,7 +104,7 @@
         </div>
 
         <!-- Action Table Card -->
-        <div class="card border-0 shadow-card rounded-xl overflow-hidden">
+        <div class="card border-0 shadow-card rounded-xl overflow-hidden mb-4 mb-lg-0">
             <div class="card-header bg-white py-3 py-md-4 px-3 px-md-4 border-0 d-flex justify-content-between align-items-center">
                 <h5 class="section-title mb-0 small fw-bold">Pasien Terbaru</h5>
                 <a href="{{ route('pasien.index') }}" class="text-peka-primary text-decoration-none fw-bold x-small">LIHAT SEMUA</a>
@@ -112,12 +112,12 @@
             <div class="card-body p-0">
                 <div class="table-responsive">
                     <table class="table table-hover align-middle mb-0 border-top">
-                        <thead class="bg-light text-muted uppercase-font" style="font-size: 0.6rem;">
+                        <thead class="bg-light text-muted uppercase-font" style="font-size: 0.65rem;">
                             <tr>
                                 <th class="ps-3 ps-md-4 py-3">PASIEN</th>
                                 <th class="d-none d-sm-table-cell">UK</th>
-                                <th class="d-none d-md-table-cell">TEMUAN</th>
-                                <th>RISIKO</th>
+                                <th class="d-none d-md-table-cell">T. DARAH</th>
+                                <th>STATUS</th>
                                 <th class="pe-3 pe-md-4 text-end">AKSI</th>
                             </tr>
                         </thead>
@@ -125,12 +125,22 @@
                             @forelse($pasien_terbaru as $p)
                             <tr class="clickable-row" onclick="window.location='{{ route('pasien.show', $p['id']) }}'">
                                 <td class="ps-3 ps-md-4 py-3">
-                                    <div class="fw-bold text-dark small">{{ $p['nama'] }}</div>
-                                    <div class="text-hint x-small">{{ $p['desa'] }}</div>
+                                    <div class="d-flex align-items-center gap-2 gap-md-3">
+                                        <div class="avatar-sm bg-peka-primary-pale text-peka-primary rounded-circle d-none d-sm-flex align-items-center justify-content-center fw-bold"
+                                            style="width: 32px; height: 32px; font-size: 0.8rem;">
+                                            {{ substr($p['nama'], 0, 1) }}
+                                        </div>
+                                        <div>
+                                            <div class="fw-bold text-dark small">{{ $p['nama'] }}</div>
+                                            <div class="text-hint x-small"><i class="fas fa-map-marker-alt me-1 opacity-50"></i> {{ $p['desa'] }}</div>
+                                        </div>
+                                    </div>
                                 </td>
-                                <td class="d-none d-sm-table-cell"><span class="badge bg-light text-dark border-0 fw-bold px-2 py-1 rounded-pill small">{{ $p['uk'] }} Mg</span></td>
+                                <td class="d-none d-sm-table-cell">
+                                    <span class="badge bg-light text-dark border fw-medium px-2 py-1 x-small">{{ $p['uk'] }} Mg</span>
+                                </td>
                                 <td class="d-none d-md-table-cell">
-                                    <span class="text-dark x-small fw-bold">{{ $p['td'] }}</span>
+                                    <span class="text-dark x-small fw-bold border-bottom border-secondary border-2 pb-1">{{ $p['td'] }}</span>
                                 </td>
                                 <td>
                                     <span class="badge-risk-premium {{ $p['risiko'] }}" style="font-size: 0.6rem; padding: 4px 10px;">
@@ -138,11 +148,11 @@
                                     </span>
                                 </td>
                                 <td class="pe-3 pe-md-4 text-end">
-                                    <a href="{{ route('pasien.show', $p['id']) }}" class="btn btn-sm btn-light border p-1 px-2"><i class="fas fa-folder-open x-small"></i></a>
+                                    <a href="{{ route('pasien.show', $p['id']) }}" class="btn btn-sm btn-light border p-1 px-2 text-primary" title="Buka Rekam Medis"><i class="fas fa-folder-open x-small"></i></a>
                                 </td>
                             </tr>
                             @empty
-                            <tr><td colspan="5" class="text-center py-5 text-muted x-small">Tidak ada aktivitas baru.</td></tr>
+                            <tr><td colspan="5" class="text-center py-5 text-muted x-small">Tidak ada aktivitas pasien baru.</td></tr>
                             @endforelse
                         </tbody>
                     </table>
