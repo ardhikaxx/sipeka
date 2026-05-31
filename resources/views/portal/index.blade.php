@@ -7,40 +7,39 @@
 <style>
     /* Custom Portal Styles */
     .portal-hero {
-        background: linear-gradient(135deg, #1A6B6B 0%, #2A8F8F 100%);
-        border-radius: 24px;
-        padding: 40px;
+        background: linear-gradient(135deg, #1A6B6B 0%, #0c3d3d 100%);
+        border-radius: 28px;
         color: white;
         position: relative;
         overflow: hidden;
-        margin-bottom: 30px;
-        box-shadow: 0 10px 30px rgba(26, 107, 107, 0.15);
+        box-shadow: 0 20px 40px rgba(12, 61, 61, 0.2);
     }
     .portal-hero::after {
-        content: '\f596';
-        font-family: 'Font Awesome 6 Free';
-        font-weight: 900;
+        content: '';
         position: absolute;
-        right: -20px;
-        bottom: -20px;
-        font-size: 12rem;
-        opacity: 0.1;
-        transform: rotate(-15deg);
+        top: -50%;
+        left: -20%;
+        width: 100%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(42, 143, 143, 0.2) 0%, transparent 70%);
+        z-index: 1;
+        pointer-events: none;
     }
     .hero-stat {
-        background: rgba(255, 255, 255, 0.15);
-        backdrop-filter: blur(8px);
-        border-radius: 16px;
-        padding: 15px 20px;
-        border: 1px solid rgba(255, 255, 255, 0.2);
+        background: rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(20px);
+        border-radius: 20px;
+        padding: 16px 24px;
+        border: 1px solid rgba(255, 255, 255, 0.15);
     }
     .portal-card {
-        border: none;
-        border-radius: 20px;
-        transition: transform 0.2s;
+        border: 1px solid rgba(0,0,0,0.02);
+        border-radius: 24px;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .portal-card:hover {
         transform: translateY(-5px);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.06) !important;
     }
     .timeline-modern {
         position: relative;
@@ -53,12 +52,12 @@
         top: 0;
         bottom: 0;
         width: 3px;
-        background: #E2E8F0;
+        background: #F1F5F9;
         border-radius: 3px;
     }
     .timeline-modern-item {
         position: relative;
-        padding-bottom: 30px;
+        padding-bottom: 35px;
     }
     .timeline-dot {
         position: absolute;
@@ -70,19 +69,19 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        border: 4px solid #F1F5F9;
+        border: 4px solid #F8FAFC;
         z-index: 2;
         color: var(--peka-primary);
-        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        box-shadow: 0 4px 10px rgba(0,0,0,0.08);
     }
-    .timeline-dot.active { border-color: var(--peka-primary); background: var(--peka-primary); color: white; }
-    .timeline-dot.warning { border-color: var(--risk-yellow); color: var(--risk-yellow); }
-    .timeline-dot.danger { border-color: var(--risk-red); color: var(--risk-red); }
+    .timeline-dot.active { border-color: var(--peka-primary-pale); background: var(--peka-primary); color: white; }
+    .timeline-dot.warning { border-color: #FEF3C7; background: #F59E0B; color: white; }
+    .timeline-dot.danger { border-color: #FEE2E2; background: #EF4444; color: white; }
     
     .status-pill {
-        padding: 6px 16px;
+        padding: 8px 20px;
         border-radius: 50px;
-        font-weight: 700;
+        font-weight: 800;
         font-size: 0.75rem;
         text-transform: uppercase;
         letter-spacing: 0.05em;
@@ -92,10 +91,14 @@
         bottom: 30px;
         right: 30px;
         z-index: 1000;
-        padding: 15px 25px;
+        padding: 16px 28px;
         border-radius: 50px;
         font-weight: 800;
-        box-shadow: 0 10px 25px rgba(220, 38, 38, 0.4);
+        box-shadow: 0 15px 30px rgba(220, 38, 38, 0.3);
+        transition: transform 0.2s;
+    }
+    .btn-emergency-float:hover {
+        transform: scale(1.05);
     }
 
     @media (min-width: 993px) {
@@ -112,31 +115,33 @@
     <div class="col-12 col-xxl-10 mx-auto">
         
         <!-- Welcome Hero Section -->
-        <div class="portal-hero mb-3 mb-md-4 p-3 p-md-4 p-lg-5">
-            <div class="row align-items-center">
+        <div class="portal-hero mb-4 p-4 p-md-5">
+            <div class="row align-items-center position-relative" style="z-index: 2;">
                 <div class="col-12 col-lg-7 text-center text-lg-start">
-                    <h1 class="display-6 fw-bold mb-2 fs-3 fs-md-2">Halo, Bunda {{ explode(' ', $pasien->nama)[0] }}! 👋</h1>
-                    <p class="fs-6 opacity-90 mb-4 px-2 px-lg-0">Mari terus pantau kesehatan Bunda dan si kecil bersama SIPEKA.</p>
+                    <h1 class="fw-extrabold mb-3 text-white" style="font-family: var(--font-heading); font-size: calc(1.8rem + 1vw); letter-spacing: -0.03em; line-height: 1.1;">
+                        Halo, Bunda<br class="d-none d-md-block"> {{ explode(' ', $pasien->nama)[0] }}! 👋
+                    </h1>
+                    <p class="fs-6 opacity-90 mb-4">Mari terus pantau kesehatan Bunda dan si kecil bersama SIPEKA.</p>
                     
                     @if($kehamilanAktif)
-                    <div class="row g-2 g-md-3">
-                        <div class="col-6">
+                    <div class="row g-3 justify-content-center justify-content-lg-start">
+                        <div class="col-6 col-sm-auto">
                             <div class="hero-stat">
-                                <div class="x-small opacity-75">Usia Kandungan</div>
-                                <div class="fs-5 fw-bold">{{ \Carbon\Carbon::parse($kehamilanAktif->hpht)->diffInWeeks(now()) }} <span class="x-small fw-normal">Mg</span></div>
+                                <div class="x-small text-white-50 uppercase-font fw-bold mb-1">Usia Kandungan</div>
+                                <div class="fs-4 fw-bold">{{ \Carbon\Carbon::parse($kehamilanAktif->hpht)->diffInWeeks(now()) }} <span class="small fw-normal">Mg</span></div>
                             </div>
                         </div>
-                        <div class="col-6">
+                        <div class="col-6 col-sm-auto">
                             <div class="hero-stat">
-                                <div class="x-small opacity-75">Taksiran Lahir</div>
-                                <div class="fs-5 fw-bold">{{ \Carbon\Carbon::parse($kehamilanAktif->tp)->format('d M') }}</div>
+                                <div class="x-small text-white-50 uppercase-font fw-bold mb-1">Taksiran Lahir</div>
+                                <div class="fs-4 fw-bold">{{ \Carbon\Carbon::parse($kehamilanAktif->tp)->format('d M') }}</div>
                             </div>
                         </div>
                     </div>
                     @endif
                 </div>
                 <div class="col-lg-5 d-none d-lg-block text-end">
-                    <img src="https://img.freepik.com/free-vector/pregnant-woman-concept-illustration_114360-3103.jpg" class="img-fluid rounded-4 shadow-sm" style="max-height: 200px; mix-blend-mode: multiply; opacity: 0.8;" alt="Pregnancy">
+                    <img src="https://img.freepik.com/free-vector/pregnant-woman-concept-illustration_114360-3103.jpg" class="img-fluid rounded-4 shadow-lg border border-white border-opacity-20" style="max-height: 220px; mix-blend-mode: multiply; opacity: 0.9;" alt="Pregnancy">
                 </div>
             </div>
         </div>
