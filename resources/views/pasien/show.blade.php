@@ -291,42 +291,68 @@
 
     <!-- Rujukan Tab -->
     <div class="tab-pane fade" id="pills-rujukan" role="tabpanel">
-        <div class="card border-0 shadow-card rounded-xl">
-            <div class="card-header bg-white py-3 px-4 d-flex justify-content-between align-items-center">
-                <h5 class="section-title mb-0">Riwayat Rujukan</h5>
+        <div class="card border-0 shadow-card rounded-xl overflow-hidden">
+            <div class="card-header bg-white py-3 px-3 px-md-4 d-flex justify-content-between align-items-center border-bottom-0">
+                <h5 class="section-title mb-0">Riwayat Rujukan Faskes Lanjutan</h5>
             </div>
-            <div class="card-body p-4">
-                <div class="row g-4">
-                    @forelse($kehamilanAktif->rujukans as $rujukan)
-                        <div class="col-md-6">
-                            <div class="patient-card shadow-sm border p-3 rounded-3 position-relative overflow-hidden">
-                                <div class="position-absolute top-0 inset-e-0 p-3">
-                                    <span class="badge bg-warning text-dark rounded-pill px-3">{{ ucfirst($rujukan->status) }}</span>
-                                </div>
-                                <div class="d-flex gap-3 align-items-start">
-                                    <div class="stat-card__icon bg-warning-subtle text-warning rounded-circle" style="width: 48px; height: 48px;">
-                                        <i class="fas fa-ambulance"></i>
+            <div class="card-body p-3 p-md-4 pt-0">
+                <div class="row g-3 g-md-4">
+                    @forelse($kehamilanAktif->rujukans->sortByDesc('created_at') as $rujukan)
+                        @php
+                            $rStatus = match($rujukan->status) {
+                                'dibuat', 'dikirim' => ['bg-warning-subtle', 'text-warning', 'border-warning', 'Menunggu', 'fa-clock'],
+                                'diterima' => ['bg-info-subtle', 'text-info', 'border-info', 'Diproses', 'fa-user-doctor'],
+                                'selesai' => ['bg-success-subtle', 'text-success', 'border-success', 'Selesai', 'fa-check-circle'],
+                                default => ['bg-secondary-subtle', 'text-secondary', 'border-secondary', 'Unknown', 'fa-question']
+                            };
+                        @endphp
+                        <div class="col-12 col-xl-6">
+                            <div class="card border-0 shadow-sm rounded-4 h-100 referral-card" style="border: 1px solid rgba(0,0,0,0.05) !important;">
+                                <div class="card-header bg-white border-bottom border-light p-3 d-flex justify-content-between align-items-center">
+                                    <div class="d-flex align-items-center gap-2 text-muted x-small uppercase-font fw-bold">
+                                        <i class="fas fa-hashtag"></i> REF-{{ str_pad($rujukan->id, 5, '0', STR_PAD_LEFT) }}
                                     </div>
-                                    <div class="grow">
-                                        <div class="fw-bold text-dark fs-5 mb-1">{{ $rujukan->fasilitasTujuan->nama }}</div>
-                                        <div class="text-hint mb-3"><i class="fas fa-calendar-day me-1"></i> {{ $rujukan->created_at->format('d M Y, H:i') }}</div>
-                                        <div class="p-2 bg-light rounded small mb-3 border-start border-4 border-warning">
-                                            <strong>Diagnosa:</strong><br>
-                                            {{ $rujukan->diagnosa_sementara }}
+                                    <span class="badge {{ $rStatus[0] }} {{ $rStatus[1] }} px-3 py-2 rounded-pill fw-bold border" style="font-size: 0.65rem;">
+                                        <i class="fas {{ $rStatus[4] }} me-1"></i> {{ $rStatus[3] }}
+                                    </span>
+                                </div>
+                                <div class="card-body p-3 p-md-4 d-flex flex-column">
+                                    <div class="d-flex gap-3 align-items-start mb-3">
+                                        <div class="avatar-stat {{ $rStatus[0] }} {{ $rStatus[1] }} rounded-3 flex-shrink-0 d-flex align-items-center justify-content-center" style="width: 48px; height: 48px; font-size: 1.25rem;">
+                                            <i class="fas fa-hospital"></i>
                                         </div>
-                                        <div class="d-flex gap-2">
-                                            <a href="{{ route('rujukan.show', $rujukan) }}" class="btn btn-sm btn-peka-primary grow">Lihat Detail Rujukan</a>
-                                            <button class="btn btn-sm btn-light border"><i class="fas fa-print"></i></button>
+                                        <div class="grow">
+                                            <div class="fw-bold text-dark fs-6 mb-1">{{ $rujukan->fasilitasTujuan->nama }}</div>
+                                            <div class="text-hint x-small"><i class="fas fa-calendar-day me-1"></i> {{ $rujukan->created_at->format('d M Y • H:i') }} WIB</div>
                                         </div>
+                                    </div>
+                                    
+                                    <div class="p-3 bg-light rounded-3 mb-4 border-start border-3 {{ $rStatus[2] }} grow">
+                                        <div class="text-hint x-small uppercase-font mb-1">DIAGNOSA SEMENTARA</div>
+                                        <div class="fw-bold text-dark small mb-2">{{ $rujukan->diagnosa_sementara }}</div>
+                                        
+                                        @if($rujukan->catatanDokter)
+                                            <hr class="opacity-10 my-2">
+                                            <div class="text-hint x-small uppercase-font mb-1 text-success"><i class="fas fa-reply me-1"></i> BALASAN DOKTER</div>
+                                            <div class="fw-bold text-dark small text-truncate">{{ $rujukan->catatanDokter->diagnosis }}</div>
+                                        @endif
+                                    </div>
+
+                                    <div class="d-flex gap-2 mt-auto">
+                                        <a href="{{ route('rujukan.show', $rujukan) }}" class="btn btn-sm btn-peka-primary grow fw-bold">
+                                            <i class="fas fa-file-invoice me-1"></i> Buka Surat Rujukan
+                                        </a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     @empty
                         <div class="col-12 text-center py-5">
-                            <i class="fas fa-ambulance fa-3x text-light mb-3"></i>
-                            <h6>Tidak Ada Data Rujukan</h6>
-                            <p class="text-muted">Pasien ini belum pernah dirujuk selama masa kehamilan ini.</p>
+                            <div class="empty-state">
+                                <i class="fas fa-ambulance fa-3x text-light mb-3 opacity-50"></i>
+                                <h6 class="text-muted fw-bold">Tidak Ada Data Rujukan</h6>
+                                <p class="text-hint small mb-0">Pasien ini belum pernah dirujuk selama episode kehamilan ini.</p>
+                            </div>
                         </div>
                     @endforelse
                 </div>
