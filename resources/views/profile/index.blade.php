@@ -115,25 +115,34 @@
                     <div class="row g-4">
                         <div class="col-12">
                             <label class="form-label fw-bold small">Kata Sandi Saat Ini</label>
-                            <div class="input-group-peka">
+                            <div class="input-group-peka position-relative">
                                 <i class="fas fa-key input-icon"></i>
-                                <input type="password" name="current_password" class="form-control-peka @error('current_password', 'updatePassword') is-invalid @enderror" placeholder="Masukkan kata sandi lama" required>
+                                <input type="password" id="current_password" name="current_password" class="form-control-peka @error('current_password', 'updatePassword') is-invalid @enderror" placeholder="Masukkan kata sandi lama" style="padding-right: 45px;" required>
+                                <span class="toggle-password" onclick="togglePassword('current_password', this)" style="position: absolute; right: 16px; top: 50%; transform: translateY(-50%); cursor: pointer; color: #94A3B8; z-index: 10;">
+                                  <i class="far fa-eye"></i>
+                                </span>
                             </div>
                             @error('current_password', 'updatePassword') <div class="invalid-feedback d-block">{{ $message }}</div> @enderror
                         </div>
                         <div class="col-12 col-md-6">
                             <label class="form-label fw-bold small">Kata Sandi Baru</label>
-                            <div class="input-group-peka">
+                            <div class="input-group-peka position-relative">
                                 <i class="fas fa-lock input-icon"></i>
-                                <input type="password" name="password" class="form-control-peka @error('password', 'updatePassword') is-invalid @enderror" placeholder="Minimal 8 karakter" required>
+                                <input type="password" id="new_password" name="password" class="form-control-peka @error('password', 'updatePassword') is-invalid @enderror" placeholder="Minimal 8 karakter" style="padding-right: 45px;" required>
+                                <span class="toggle-password" onclick="togglePassword('new_password', this)" style="position: absolute; right: 16px; top: 50%; transform: translateY(-50%); cursor: pointer; color: #94A3B8; z-index: 10;">
+                                  <i class="far fa-eye"></i>
+                                </span>
                             </div>
                             @error('password', 'updatePassword') <div class="invalid-feedback d-block">{{ $message }}</div> @enderror
                         </div>
                         <div class="col-12 col-md-6">
                             <label class="form-label fw-bold small">Konfirmasi Kata Sandi Baru</label>
-                            <div class="input-group-peka">
+                            <div class="input-group-peka position-relative">
                                 <i class="fas fa-check-circle input-icon"></i>
-                                <input type="password" name="password_confirmation" class="form-control-peka" placeholder="Ulangi kata sandi baru" required>
+                                <input type="password" id="password_confirmation" name="password_confirmation" class="form-control-peka" placeholder="Ulangi kata sandi baru" style="padding-right: 45px;" required>
+                                <span class="toggle-password" onclick="togglePassword('password_confirmation', this)" style="position: absolute; right: 16px; top: 50%; transform: translateY(-50%); cursor: pointer; color: #94A3B8; z-index: 10;">
+                                  <i class="far fa-eye"></i>
+                                </span>
                             </div>
                         </div>
                         <div class="col-12 text-end mt-2">
@@ -148,3 +157,21 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+    function togglePassword(inputId, iconSpan) {
+      const input = document.getElementById(inputId);
+      const icon = iconSpan.querySelector('i');
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+      } else {
+        input.type = 'password';
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
+      }
+    }
+</script>
+@endpush

@@ -48,9 +48,12 @@
                                 </div>
                                 <div class="col-12 col-md-6">
                                     <label class="form-label form-label-required fw-bold small">Password</label>
-                                    <div class="input-group-peka">
+                                    <div class="input-group-peka position-relative">
                                         <i class="fas fa-key input-icon"></i>
-                                        <input type="password" name="password" class="form-control-peka @error('password') is-invalid @enderror" placeholder="Min. 8 karakter" required>
+                                        <input type="password" id="password" name="password" class="form-control-peka @error('password') is-invalid @enderror" placeholder="Min. 8 karakter" style="padding-right: 45px;" required>
+                                        <span class="toggle-password" onclick="togglePassword('password', this)" style="position: absolute; right: 16px; top: 50%; transform: translateY(-50%); cursor: pointer; color: #94A3B8; z-index: 10;">
+                                          <i class="far fa-eye"></i>
+                                        </span>
                                     </div>
                                     @error('password') <div class="invalid-feedback d-block text-danger small mt-1">{{ $message }}</div> @enderror
                                 </div>
@@ -107,3 +110,21 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+    function togglePassword(inputId, iconSpan) {
+      const input = document.getElementById(inputId);
+      const icon = iconSpan.querySelector('i');
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+      } else {
+        input.type = 'password';
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
+      }
+    }
+</script>
+@endpush
