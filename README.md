@@ -1,59 +1,90 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
-
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+  <h1 align="center">SIPEKA</h1>
+  <p align="center"><strong>Sistem Skrining Preeklampsia dan Kehamilan Aman</strong></p>
 </p>
 
-## About Laravel
+## 📌 Tentang SIPEKA
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+**SIPEKA** adalah sistem informasi berbasis web yang dibangun untuk mendeteksi dini dan memantau risiko preeklampsia pada ibu hamil. Sistem ini dirancang untuk beroperasi di fasilitas kesehatan tingkat pertama (Puskesmas, Polindes, Poskesdes) hingga fasilitas rujukan (RSUD, RSIA), memfasilitasi kolaborasi proaktif antara Bidan, Dokter, dan Pasien dalam menjaga keselamatan ibu dan janin.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## ✨ Fitur Utama
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **🩺 Modul Rekam Medis & Kunjungan ANC**: Pencatatan lengkap identitas, riwayat obstetri, faktor risiko, dan data vital setiap kunjungan (Antenatal Care).
+- **🧠 Algoritma Skrining Otomatis**: Deteksi dini tingkat risiko preeklampsia secara otomatis (Risiko Rendah, Waspada, Preeklampsia, Eklampsia) berdasarkan kalkulasi parameter klinis (seperti Tekanan Darah, Protein Urine, Usia Kehamilan) yang merujuk pada pedoman POGI.
+- **🚨 Early Warning System (EWS)**: Peringatan visual dengan indikator warna (Hijau, Kuning, Merah, Merah Kritis) serta notifikasi *pop-up* otomatis jika terdeteksi indikasi bahaya kritis pada pasien.
+- **📄 Rujukan Digital Terintegrasi**: Pembuatan surat rujukan secara otomatis dari sistem berdasarkan data kunjungan terakhir dan pengiriman rujukan seketika ke dokter di fasilitas tujuan.
+- **📊 Dasbor Analitik & Grafik Tren**: Visualisasi interaktif tren tekanan darah pasien menggunakan grafik, memantau daftar antrean, serta statistik kondisi ibu hamil di wilayah kerja.
+- **📱 Portal Pasien & Edukasi**: Antarmuka khusus untuk ibu hamil agar dapat memantau jadwal kunjungan, membaca artikel edukasi seputar kehamilan, serta menggunakan fitur **Lapor Darurat** (Emergency Report) saat mengalami gejala berbahaya.
 
-## Learning Laravel
+## 🚀 Teknologi yang Digunakan
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+Aplikasi ini dikembangkan dengan *tech stack* modern yang tangguh:
+- **Backend**: Laravel 12 (PHP)
+- **Frontend**: HTML/CSS, Vanilla JS, Bootstrap 5 (CDN)
+- **Database**: MySQL 8+
+- **Library Pendukung**: 
+  - **Chart.js**: Untuk visualisasi grafik tren medis
+  - **SweetAlert2**: Untuk notifikasi dan konfirmasi interaktif
+  - **DomPDF / Maatwebsite Excel**: Untuk ekspor data dan cetak laporan/rujukan
+  - **Font Awesome 6**: Untuk ikonografi antarmuka
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## 👥 Hak Akses & Peran Pengguna (Role)
 
-## Laravel Sponsors
+Sistem SIPEKA mendukung 4 peran pengguna dengan batasan hak akses (Authorization Matrix) yang disesuaikan dengan alur kerja medis:
+1. **Bidan Desa**: Pengguna garis depan; bertugas mencatat rekam medis, input kunjungan ANC rutin, memantau risiko pasien di wilayahnya, serta memicu surat rujukan digital.
+2. **Dokter / Spesialis**: Berada di fasilitas rujukan; bertugas menerima dan memverifikasi rujukan, melihat grafik tren klinis, serta memberikan diagnosis akhir dan instruksi medis.
+3. **Ibu Hamil (Pasien)**: Mengakses portal pasien untuk melihat data kesehatannya sendiri secara *read-only*, jadwal periksa, modul edukasi, dan tombol lapor darurat.
+4. **Admin Sistem**: Mengelola master data faskes, akun pengguna, modul edukasi, serta memantau laporan operasional dan statistik regional secara menyeluruh.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## 🎨 Filosofi Desain (UI/UX)
 
-### Premium Partners
+SIPEKA menggunakan pendekatan desain **"Clinical Warmth"** — perpaduan antara ketegasan antarmuka medis yang profesional namun tetap memberikan kehangatan yang menenangkan bagi penggunanya (terutama ibu hamil).
+- **Clarity First**: Informasi krusial (seperti tekanan darah kritis atau peringatan EWS) dirancang agar terlihat dalam 3 detik pertama.
+- **Contextual Color**: Warna UI digunakan secara semantik (contoh: Hijau = Aman, Kuning = Waspada, Merah = Rujuk/Darurat).
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+## 🛠️ Panduan Instalasi (Development)
 
-## Contributing
+Ikuti langkah-langkah berikut untuk menjalankan SIPEKA di lingkungan lokal (Localhost):
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+1. **Clone repositori ini:**
+   ```bash
+   git clone <url-repo-sipeka>
+   cd sipeka
+   ```
 
-## Code of Conduct
+2. **Instal dependensi PHP (Composer):**
+   ```bash
+   composer install
+   ```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+3. **Instal dependensi Node.js (NPM):**
+   *(Langkah ini diperlukan jika Anda menggunakan Vite untuk asset bundling)*
+   ```bash
+   npm install
+   npm run build
+   ```
 
-## Security Vulnerabilities
+4. **Konfigurasi Environment:**
+   Salin file `.env.example` menjadi `.env` dan sesuaikan konfigurasi koneksi database Anda (DB_DATABASE, DB_USERNAME, DB_PASSWORD).
+   ```bash
+   cp .env.example .env
+   ```
+   Generate application key:
+   ```bash
+   php artisan key:generate
+   ```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+5. **Migrasi Database & Seeding (Opsional):**
+   Jalankan migrasi untuk membuat struktur tabel dan *seeder* untuk mengisi data awal (role, admin, dll).
+   ```bash
+   php artisan migrate --seed
+   ```
 
-## License
+6. **Jalankan Server Lokal:**
+   ```bash
+   php artisan serve
+   ```
+   Aplikasi dapat diakses melalui browser pada `http://localhost:8000`.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+---
+*Untuk rincian lebih dalam mengenai logika algoritma dan aturan bisnis, silakan merujuk pada file `rule-peka.md` dan `design-peka.md` di dalam repositori ini.*
