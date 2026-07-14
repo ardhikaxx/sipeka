@@ -1,4 +1,4 @@
-<p align="center">
+﻿<p align="center">
   <h1 align="center">SIPEKA</h1>
   <p align="center"><strong>Sistem Skrining Preeklampsia dan Kehamilan Aman</strong></p>
 </p>
@@ -96,7 +96,7 @@ Jika project ini bermanfaat, Anda dapat mendukung pengembangan selanjutnya melal
 
 <div align="center">
 
-![QRIS](public/assets/qris.png)
+<img src="public/assets/qris.png" alt="QRIS" width="250" />
 
 **Scan QRIS di atas untuk berdonasi**
 
